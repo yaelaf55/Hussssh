@@ -25,7 +25,7 @@
 
 <div style="width: 1440px; margin: 0 auto; background: #ffffff; font-family: 'IBM Plex Sans', -apple-system, sans-serif; color: #0b0f14; display: flex; min-height: 1024px;">
 
-  <div style="width: 56px; flex: 0 0 56px; background: #0b0f14; display: flex; flex-direction: column; align-items: center; padding: 14px 0; gap: 6px;">
+  <div style="width: 56px; flex: 0 0 56px; position: sticky; top: 0; align-self: flex-start; height: 100vh; background: #0b0f14; display: flex; flex-direction: column; align-items: center; padding: 14px 0; gap: 6px; z-index: 35; box-sizing: border-box;">
     <div style="width: 28px; height: 28px; border-radius: 6px; background: #ffffff; color: #0b0f14; font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center; margin-bottom: 18px;">H</div>
     <div style="width: 32px; height: 32px; border-radius: 6px; display: flex; align-items: center; justify-content: center;"><div style="width: 11px; height: 11px; border: 1px solid #78828f;"></div></div>
     <div style="width: 32px; height: 32px; border-radius: 6px; display: flex; align-items: center; justify-content: center;"><div style="width: 11px; height: 11px; border: 1px solid #78828f; transform: rotate(45deg);"></div></div>
@@ -40,13 +40,30 @@
   <div style="flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column;">
 
     <div style="position: sticky; top: 0; z-index: 30; background: #ffffff; height: 48px; flex: 0 0 48px; border-bottom: 1px solid #dde2ea; display: flex; align-items: center; gap: 26px; padding: 0 32px;">
-      <span style="font-size: 13px; color: #495260;">Applications</span>
-      <span style="font-size: 13px; color: #495260;">Catalog</span>
-      <span style="font-size: 13px; color: #495260;">User Requests</span>
-      <span style="font-size: 13px; font-weight: 500; color: #0b0f14; box-shadow: inset 0 -2px 0 #0b0f14; height: 47px; display: flex; align-items: center;">Activity</span>
-      <span style="font-size: 13px; color: #495260;">Discovery</span>
+      <span style="font-size: 13px; color: #69737f; padding: 6px 12px; border-radius: 999px; cursor: pointer;" style-hover="background: #f0f3f8; color: #2f3742;">Applications</span>
+      <span style="font-size: 13px; color: #69737f; padding: 6px 12px; border-radius: 999px; cursor: pointer;" style-hover="background: #f0f3f8; color: #2f3742;">Catalog</span>
+      <span style="font-size: 13px; color: #69737f; padding: 6px 12px; border-radius: 999px; cursor: pointer;" style-hover="background: #f0f3f8; color: #2f3742;">User Requests</span>
+      <span style="font-size: 13px; font-weight: 500; color: #ffffff; background: #2f3742; padding: 6px 14px; border-radius: 999px;">Activity</span>
+      <span style="font-size: 13px; color: #69737f; padding: 6px 12px; border-radius: 999px; cursor: pointer;" style-hover="background: #f0f3f8; color: #2f3742;">Discovery</span>
       <div style="flex: 1 1 auto;"></div>
-      <span style="font-size: 11px; font-family: 'IBM Plex Mono', monospace; color: #69737f; display: flex; align-items: center; gap: 6px;"><span style="width: 5px; height: 5px; border-radius: 50%; background: #0b0f14; display: inline-block;"></span>Live · updated 12s ago</span>
+      <span style="font-size: 12px; font-family: 'IBM Plex Mono', monospace; color: #69737f; display: flex; align-items: center; gap: 6px;"><span style="width: 5px; height: 5px; border-radius: 50%; background: #0b0f14; display: inline-block;"></span>Live&#8202;·&#8202;updated 12s ago</span>
+      <div style="position: relative; display: flex;">
+        <button onClick="{{ togglePeriodMenu }}" style="display: flex; align-items: center; gap: 16px; border: 1px solid #cfd6e0; border-radius: 6px; background: #ffffff; padding: 6px 12px; font-size: 12px; color: #0b0f14;" style-hover="border-color: #0b0f14;">
+          <span>{{ periodLabel }}</span><span style="color: #69737f; font-size: 9px;">▼</span>
+        </button>
+        <sc-if value="{{ periodMenuOpen }}" hint-placeholder-val="{{ false }}">
+          <div onClick="{{ closeSelects }}" style="position: fixed; inset: 0; z-index: 55;"></div>
+        </sc-if>
+        <sc-if value="{{ periodMenuOpen }}" hint-placeholder-val="{{ false }}">
+          <div style="position: absolute; top: calc(100% + 8px); right: 0; z-index: 60; min-width: 198px; background: #ffffff; border: 1px solid #c6cdd9; border-radius: 8px; box-shadow: 0 8px 24px rgba(11,15,20,0.16); padding: 5px;">
+            <sc-for list="{{ periodMenuOptions }}" as="opt" hint-placeholder-count="4">
+              <div onClick="{{ opt.pick }}" style="{{ opt.style }}" style-hover="background: #eef2f7;">
+                <span>{{ opt.label }}</span><span style="{{ opt.tickStyle }}">✓</span>
+              </div>
+            </sc-for>
+          </div>
+        </sc-if>
+      </div>
     </div>
 
     <sc-if value="{{ isDiscovery }}" hint-placeholder-val="{{ false }}">
@@ -85,19 +102,19 @@
           <div style="font-size: 28px; font-weight: 600; letter-spacing: -0.015em; margin-top: 3px;">Activity</div>
         </div>
         <div style="flex: 1 1 auto; display: flex; justify-content: center; padding-top: 12px;">
-          <div style="display: flex; border: 1px solid #cfd6e0; border-radius: 6px; padding: 3px; gap: 2px;">
+          <div style="display: flex; background: #eef1f5; border: 1px solid #e2e7ef; border-radius: 999px; padding: 3px; gap: 2px;">
             <button onClick="{{ pickSecurity }}" style="{{ secBtnStyle }}">Security view</button>
             <button onClick="{{ pickCompliance }}" style="{{ compBtnStyle }}">Compliance view</button>
           </div>
         </div>
         <div style="flex: 0 0 auto; display: flex; gap: 10px; padding-top: 12px; align-items: center;">
-          <div style="border: 1px solid #cfd6e0; border-radius: 6px; padding: 8px 14px; font-size: 12px; display: flex; gap: 18px; align-items: center;"><span>{{ periodLabel }}</span><span style="color: #69737f; font-size: 9px;">▼</span></div>
-          <button onClick="{{ openExport }}" style="{{ exportBtnStyle }}">{{ exportLabel }}</button>
+          <button style="{{ exportBtnStyle }}">{{ exportLabel }}</button>
         </div>
       </div>
 
       <sc-if value="{{ isSecurity }}" hint-placeholder-val="{{ true }}">
         <div style="margin-top: 26px;">
+          <div style="font-size: 12px; letter-spacing: 0.01em; color: #69737f; font-weight: 600; margin-bottom: 10px;">Current posture — last 30 days · 12,904 governed actions · 214 agents · 61 applications</div>
           <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;">
             <div onClick="{{ filterCoverage }}" style="border: 1px solid #d6dce5; border-radius: 10px; padding: 18px; min-height: 172px; box-sizing: border-box; display: flex; flex-direction: column; cursor: pointer; background: #eef2f7; box-shadow: 0 2px 6px rgba(11,15,20,0.10), 0 1px 1px rgba(11,15,20,0.05); transition: box-shadow 120ms ease, border-color 120ms ease, transform 120ms ease;" style-hover="border-color: #0b0f14; box-shadow: 0 5px 16px rgba(11,15,20,0.10); transform: translateY(-1px);">
               <div style="font-size: 44px; font-weight: 600; letter-spacing: -0.03em; line-height: 1;">3</div>
@@ -135,7 +152,7 @@
             <div onClick="{{ filterUnauthorized }}" style="border: 1px solid #d6dce5; border-radius: 10px; padding: 18px; min-height: 172px; box-sizing: border-box; display: flex; flex-direction: column; cursor: pointer; background: #eef2f7; box-shadow: 0 2px 6px rgba(11,15,20,0.10), 0 1px 1px rgba(11,15,20,0.05); transition: box-shadow 120ms ease, border-color 120ms ease, transform 120ms ease;" style-hover="border-color: #0b0f14; box-shadow: 0 5px 16px rgba(11,15,20,0.10); transform: translateY(-1px);">
               <div style="font-size: 44px; font-weight: 600; letter-spacing: -0.03em; line-height: 1;">94%</div>
               <div style="font-size: 15px; font-weight: 600; margin-top: 12px;">Authorized and justified activities</div>
-              <div style="display: flex; align-items: center; gap: 8px; font-size: 12px; color: #0b0f14; line-height: 1.4; margin-top: 8px;">
+              <div style="display: flex; align-items: center; gap: 8px; font-size: 12px; color: #0b0f14; line-height: 1.4; margin-top: 4px;">
                 <span style="position: relative; width: 15px; height: 14px; flex: 0 0 15px; display: flex; align-items: flex-end; justify-content: center;">
                   <span style="position: absolute; top: 0; left: 0; width: 0; height: 0; border-left: 7.5px solid transparent; border-right: 7.5px solid transparent; border-bottom: 14px solid #0b0f14;"></span>
                   <span style="position: relative; color: #ffffff; font-size: 9px; font-weight: 600; line-height: 1; padding-bottom: 2px;">!</span>
@@ -186,26 +203,41 @@
         </sc-for>
         <div style="flex: 1 1 auto;"></div>
         <span style="font-size: 12px; color: #495260;">Group by</span>
-        <span style="position: relative; display: inline-flex; align-items: center;">
-          <select value="{{ groupBy }}" onChange="{{ onGroupBy }}" style="appearance: none; -webkit-appearance: none; border: 1px solid #cfd6e0; border-radius: 6px; padding: 7px 32px 7px 11px; font-size: 12px; background: #fff; color: #0b0f14;">
-            <option value="none">None</option>
-            <option value="agent">Agent</option>
-            <option value="user">User</option>
-            <option value="app">Application</option>
-            <option value="tier">Tool tier</option>
-            <option value="outcome">Outcome</option>
-            <option value="session">Session</option>
-          </select>
-          <span style="position: absolute; right: 12px; font-size: 9px; color: #69737f; pointer-events: none;">▼</span>
-        </span>
+        <div style="position: relative; display: flex;">
+          <button onClick="{{ toggleGroupMenu }}" style="display: flex; align-items: center; gap: 14px; border: 1px solid #cfd6e0; border-radius: 6px; background: #ffffff; padding: 7px 11px; font-size: 12px; color: #0b0f14;" style-hover="border-color: #0b0f14;">
+            <span>{{ groupLabel }}</span><span style="font-size: 9px; color: #69737f;">▼</span>
+          </button>
+          <sc-if value="{{ groupMenuOpen }}" hint-placeholder-val="{{ false }}">
+            <div onClick="{{ closeSelects }}" style="position: fixed; inset: 0; z-index: 55;"></div>
+          </sc-if>
+          <sc-if value="{{ groupMenuOpen }}" hint-placeholder-val="{{ false }}">
+            <div style="position: absolute; top: calc(100% + 6px); left: 0; z-index: 60; min-width: 186px; background: #ffffff; border: 1px solid #c6cdd9; border-radius: 8px; box-shadow: 0 8px 24px rgba(11,15,20,0.16); padding: 5px;">
+              <sc-for list="{{ groupOptions }}" as="opt" hint-placeholder-count="4">
+                <div onClick="{{ opt.pick }}" style="{{ opt.style }}" style-hover="background: #eef2f7;">
+                  <span>{{ opt.label }}</span><span style="{{ opt.tickStyle }}">✓</span>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+        </div>
         <span style="font-size: 12px; color: #495260; margin-left: 8px;">Sort</span>
-        <span style="position: relative; display: inline-flex; align-items: center;">
-          <select value="{{ sortBy }}" onChange="{{ onSort }}" style="appearance: none; -webkit-appearance: none; border: 1px solid #cfd6e0; border-radius: 6px; padding: 7px 32px 7px 11px; font-size: 12px; background: #fff; color: #0b0f14;">
-            <option value="recent">Newest first</option>
-            <option value="deviations">Deviations first</option>
-          </select>
-          <span style="position: absolute; right: 12px; font-size: 9px; color: #69737f; pointer-events: none;">▼</span>
-        </span>
+        <div style="position: relative; display: flex;">
+          <button onClick="{{ toggleSortMenu }}" style="display: flex; align-items: center; gap: 14px; border: 1px solid #cfd6e0; border-radius: 6px; background: #ffffff; padding: 7px 11px; font-size: 12px; color: #0b0f14;" style-hover="border-color: #0b0f14;">
+            <span>{{ sortLabel }}</span><span style="font-size: 9px; color: #69737f;">▼</span>
+          </button>
+          <sc-if value="{{ sortMenuOpen }}" hint-placeholder-val="{{ false }}">
+            <div onClick="{{ closeSelects }}" style="position: fixed; inset: 0; z-index: 55;"></div>
+          </sc-if>
+          <sc-if value="{{ sortMenuOpen }}" hint-placeholder-val="{{ false }}">
+            <div style="position: absolute; top: calc(100% + 6px); right: 0; z-index: 60; min-width: 186px; background: #ffffff; border: 1px solid #c6cdd9; border-radius: 8px; box-shadow: 0 8px 24px rgba(11,15,20,0.16); padding: 5px;">
+              <sc-for list="{{ sortOptions }}" as="opt" hint-placeholder-count="2">
+                <div onClick="{{ opt.pick }}" style="{{ opt.style }}" style-hover="background: #eef2f7;">
+                  <span>{{ opt.label }}</span><span style="{{ opt.tickStyle }}">✓</span>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+        </div>
       </div>
 
       <div style="display: flex; align-items: baseline; gap: 9px; padding: 2px 2px 10px;">
@@ -214,18 +246,18 @@
       </div>
       <div style="border: 1px solid #c6cdd9; border-radius: 10px;">
       <table style="width: 100%; border-collapse: collapse; table-layout: fixed;">
-        <thead>
+        <thead ref="{{ theadRef }}">
           <tr style="background: #f7f9fc;">
-            <th style="position: sticky; top: 108px; z-index: 10; background: #f7f9fc; box-sizing: border-box; width: 158px; text-align: left; font-size: 13px; letter-spacing: 0.01em; font-weight: 600; color: #0b0f14; padding: 12px 14px 12px 30px; border-bottom: 1px solid #c6cdd9; cursor: pointer; user-select: none;" onClick="{{ sort.flag.click }}" style-hover="background: #f0f3f8;"><span style="display: inline-flex; align-items: center; gap: 5px;">Flag<span data-arrow="1" data-on="{{ sort.flag.on }}" style="font-size: 10px; color: #495260;">{{ sort.flag.arrow }}</span></span></th>
-            <th style="position: sticky; top: 108px; z-index: 10; background: #f7f9fc; box-sizing: border-box; width: 112px; text-align: left; font-size: 13px; letter-spacing: 0.01em; font-weight: 600; color: #0b0f14; padding: 12px 14px; border-bottom: 1px solid #c6cdd9; cursor: pointer; user-select: none;" onClick="{{ sort.time.click }}" style-hover="background: #f0f3f8;"><span style="display: inline-flex; align-items: center; gap: 5px;">Time<span data-arrow="1" data-on="{{ sort.time.on }}" style="font-size: 10px; color: #495260;">{{ sort.time.arrow }}</span></span></th>
-            <th style="position: sticky; top: 108px; z-index: 10; background: #f7f9fc; box-sizing: border-box; width: 172px; text-align: left; font-size: 13px; letter-spacing: 0.01em; font-weight: 600; color: #0b0f14; padding: 12px 14px; border-bottom: 1px solid #c6cdd9; cursor: pointer; user-select: none;" onClick="{{ sort.identity.click }}" style-hover="background: #f0f3f8;"><span style="display: inline-flex; align-items: center; gap: 5px;">Identity<span data-arrow="1" data-on="{{ sort.identity.on }}" style="font-size: 10px; color: #495260;">{{ sort.identity.arrow }}</span></span></th>
-            <th style="position: sticky; top: 108px; z-index: 10; background: #f7f9fc; box-sizing: border-box; width: 162px; text-align: left; font-size: 13px; letter-spacing: 0.01em; font-weight: 600; color: #0b0f14; padding: 12px 14px; border-bottom: 1px solid #c6cdd9; cursor: pointer; user-select: none;" onClick="{{ sort.agent.click }}" style-hover="background: #f0f3f8;"><span style="display: inline-flex; align-items: center; gap: 5px;">Agent<span data-arrow="1" data-on="{{ sort.agent.on }}" style="font-size: 10px; color: #495260;">{{ sort.agent.arrow }}</span></span></th>
-            <th style="position: sticky; top: 108px; z-index: 10; background: #f7f9fc; box-sizing: border-box; width: 94px; text-align: left; font-size: 13px; letter-spacing: 0.01em; font-weight: 600; color: #0b0f14; padding: 12px 14px; border-bottom: 1px solid #c6cdd9; cursor: pointer; user-select: none;" onClick="{{ sort.app.click }}" style-hover="background: #f0f3f8;"><span style="display: inline-flex; align-items: center; gap: 5px;">Application<span data-arrow="1" data-on="{{ sort.app.on }}" style="font-size: 10px; color: #495260;">{{ sort.app.arrow }}</span></span></th>
-            <th style="position: sticky; top: 108px; z-index: 10; background: #f7f9fc; box-sizing: border-box; width: 176px; text-align: left; font-size: 13px; letter-spacing: 0.01em; font-weight: 600; color: #0b0f14; padding: 12px 14px; border-bottom: 1px solid #c6cdd9; cursor: pointer; user-select: none;" onClick="{{ sort.tool.click }}" style-hover="background: #f0f3f8;"><span style="display: inline-flex; align-items: center; gap: 5px;">Tool<span data-arrow="1" data-on="{{ sort.tool.on }}" style="font-size: 10px; color: #495260;">{{ sort.tool.arrow }}</span></span></th>
-            <th style="position: sticky; top: 108px; z-index: 10; background: #f7f9fc; box-sizing: border-box; width: 172px; text-align: left; font-size: 13px; letter-spacing: 0.01em; font-weight: 600; color: #0b0f14; padding: 12px 14px; border-bottom: 1px solid #c6cdd9; cursor: pointer; user-select: none;" onClick="{{ sort.resource.click }}" style-hover="background: #f0f3f8;"><span style="display: inline-flex; align-items: center; gap: 5px;">Resource<span data-arrow="1" data-on="{{ sort.resource.on }}" style="font-size: 10px; color: #495260;">{{ sort.resource.arrow }}</span></span></th>
-            <th style="position: sticky; top: 108px; z-index: 10; background: #f7f9fc; box-sizing: border-box; width: 126px; text-align: left; font-size: 13px; letter-spacing: 0.01em; font-weight: 600; color: #0b0f14; padding: 12px 14px; border-bottom: 1px solid #c6cdd9; cursor: pointer; user-select: none;" onClick="{{ sort.outcome.click }}" style-hover="background: #f0f3f8;"><span style="display: inline-flex; align-items: center; gap: 5px;">Outcome<span data-arrow="1" data-on="{{ sort.outcome.on }}" style="font-size: 10px; color: #495260;">{{ sort.outcome.arrow }}</span></span></th>
-            <th style="position: sticky; top: 108px; z-index: 10; background: #f7f9fc; box-sizing: border-box; width: 114px; text-align: left; font-size: 13px; letter-spacing: 0.01em; font-weight: 600; color: #0b0f14; padding: 12px 14px; border-bottom: 1px solid #c6cdd9; cursor: pointer; user-select: none;" onClick="{{ sort.decision.click }}" style-hover="background: #f0f3f8;"><span style="display: inline-flex; align-items: center; gap: 5px;">Decision<span data-arrow="1" data-on="{{ sort.decision.on }}" style="font-size: 10px; color: #495260;">{{ sort.decision.arrow }}</span></span></th>
-            <th style="position: sticky; top: 108px; z-index: 10; background: #f7f9fc; box-sizing: border-box; width: 34px; border-bottom: 1px solid #d6dce5;"></th>
+            <th style="position: sticky; top: 108px; z-index: 10; background: #f7f9fc; box-shadow: inset 0 -1px 0 #c6cdd9, 0 2px 5px -5px rgba(11,15,20,0.14); box-sizing: border-box; width: 158px; text-align: left; font-size: 13px; letter-spacing: 0.01em; font-weight: 600; color: #0b0f14; padding: 12px 14px 12px 30px; border-bottom: 1px solid #c6cdd9; cursor: pointer; user-select: none;" onClick="{{ sort.flag.click }}" style-hover="background: #f0f3f8;"><span style="display: inline-flex; align-items: center; gap: 5px;">Flag<span data-arrow="1" data-on="{{ sort.flag.on }}" style="font-size: 10px; color: #495260;">{{ sort.flag.arrow }}</span></span></th>
+            <th style="position: sticky; top: 108px; z-index: 10; background: #f7f9fc; box-shadow: inset 0 -1px 0 #c6cdd9, 0 2px 5px -5px rgba(11,15,20,0.14); box-sizing: border-box; width: 112px; text-align: left; font-size: 13px; letter-spacing: 0.01em; font-weight: 600; color: #0b0f14; padding: 12px 14px; border-bottom: 1px solid #c6cdd9; cursor: pointer; user-select: none;" onClick="{{ sort.time.click }}" style-hover="background: #f0f3f8;"><span style="display: inline-flex; align-items: center; gap: 5px;">Time<span data-arrow="1" data-on="{{ sort.time.on }}" style="font-size: 10px; color: #495260;">{{ sort.time.arrow }}</span></span></th>
+            <th style="position: sticky; top: 108px; z-index: 10; background: #f7f9fc; box-shadow: inset 0 -1px 0 #c6cdd9, 0 2px 5px -5px rgba(11,15,20,0.14); box-sizing: border-box; width: 172px; text-align: left; font-size: 13px; letter-spacing: 0.01em; font-weight: 600; color: #0b0f14; padding: 12px 14px; border-bottom: 1px solid #c6cdd9; cursor: pointer; user-select: none;" onClick="{{ sort.identity.click }}" style-hover="background: #f0f3f8;"><span style="display: inline-flex; align-items: center; gap: 5px;">Identity<span data-arrow="1" data-on="{{ sort.identity.on }}" style="font-size: 10px; color: #495260;">{{ sort.identity.arrow }}</span></span></th>
+            <th style="position: sticky; top: 108px; z-index: 10; background: #f7f9fc; box-shadow: inset 0 -1px 0 #c6cdd9, 0 2px 5px -5px rgba(11,15,20,0.14); box-sizing: border-box; width: 162px; text-align: left; font-size: 13px; letter-spacing: 0.01em; font-weight: 600; color: #0b0f14; padding: 12px 14px; border-bottom: 1px solid #c6cdd9; cursor: pointer; user-select: none;" onClick="{{ sort.agent.click }}" style-hover="background: #f0f3f8;"><span style="display: inline-flex; align-items: center; gap: 5px;">Agent<span data-arrow="1" data-on="{{ sort.agent.on }}" style="font-size: 10px; color: #495260;">{{ sort.agent.arrow }}</span></span></th>
+            <th style="position: sticky; top: 108px; z-index: 10; background: #f7f9fc; box-shadow: inset 0 -1px 0 #c6cdd9, 0 2px 5px -5px rgba(11,15,20,0.14); box-sizing: border-box; width: 94px; text-align: left; font-size: 13px; letter-spacing: 0.01em; font-weight: 600; color: #0b0f14; padding: 12px 14px; border-bottom: 1px solid #c6cdd9; cursor: pointer; user-select: none;" onClick="{{ sort.app.click }}" style-hover="background: #f0f3f8;"><span style="display: inline-flex; align-items: center; gap: 5px;">Application<span data-arrow="1" data-on="{{ sort.app.on }}" style="font-size: 10px; color: #495260;">{{ sort.app.arrow }}</span></span></th>
+            <th style="position: sticky; top: 108px; z-index: 10; background: #f7f9fc; box-shadow: inset 0 -1px 0 #c6cdd9, 0 2px 5px -5px rgba(11,15,20,0.14); box-sizing: border-box; width: 176px; text-align: left; font-size: 13px; letter-spacing: 0.01em; font-weight: 600; color: #0b0f14; padding: 12px 14px; border-bottom: 1px solid #c6cdd9; cursor: pointer; user-select: none;" onClick="{{ sort.tool.click }}" style-hover="background: #f0f3f8;"><span style="display: inline-flex; align-items: center; gap: 5px;">Tool<span data-arrow="1" data-on="{{ sort.tool.on }}" style="font-size: 10px; color: #495260;">{{ sort.tool.arrow }}</span></span></th>
+            <th style="position: sticky; top: 108px; z-index: 10; background: #f7f9fc; box-shadow: inset 0 -1px 0 #c6cdd9, 0 2px 5px -5px rgba(11,15,20,0.14); box-sizing: border-box; width: 172px; text-align: left; font-size: 13px; letter-spacing: 0.01em; font-weight: 600; color: #0b0f14; padding: 12px 14px; border-bottom: 1px solid #c6cdd9; cursor: pointer; user-select: none;" onClick="{{ sort.resource.click }}" style-hover="background: #f0f3f8;"><span style="display: inline-flex; align-items: center; gap: 5px;">Resource<span data-arrow="1" data-on="{{ sort.resource.on }}" style="font-size: 10px; color: #495260;">{{ sort.resource.arrow }}</span></span></th>
+            <th style="position: sticky; top: 108px; z-index: 10; background: #f7f9fc; box-shadow: inset 0 -1px 0 #c6cdd9, 0 2px 5px -5px rgba(11,15,20,0.14); box-sizing: border-box; width: 126px; text-align: left; font-size: 13px; letter-spacing: 0.01em; font-weight: 600; color: #0b0f14; padding: 12px 14px; border-bottom: 1px solid #c6cdd9; cursor: pointer; user-select: none;" onClick="{{ sort.outcome.click }}" style-hover="background: #f0f3f8;"><span style="display: inline-flex; align-items: center; gap: 5px;">Outcome<span data-arrow="1" data-on="{{ sort.outcome.on }}" style="font-size: 10px; color: #495260;">{{ sort.outcome.arrow }}</span></span></th>
+            <th style="position: sticky; top: 108px; z-index: 10; background: #f7f9fc; box-shadow: inset 0 -1px 0 #c6cdd9, 0 2px 5px -5px rgba(11,15,20,0.14); box-sizing: border-box; width: 114px; text-align: left; font-size: 13px; letter-spacing: 0.01em; font-weight: 600; color: #0b0f14; padding: 12px 14px; border-bottom: 1px solid #c6cdd9; cursor: pointer; user-select: none;" onClick="{{ sort.decision.click }}" style-hover="background: #f0f3f8;"><span style="display: inline-flex; align-items: center; gap: 5px;">Decision<span data-arrow="1" data-on="{{ sort.decision.on }}" style="font-size: 10px; color: #495260;">{{ sort.decision.arrow }}</span></span></th>
+            <th style="position: sticky; top: 108px; z-index: 10; background: #f7f9fc; box-shadow: inset 0 -1px 0 #c6cdd9, 0 2px 5px -5px rgba(11,15,20,0.14); box-sizing: border-box; width: 34px; border-bottom: 1px solid #d6dce5;"></th>
           </tr>
         </thead>
         <tbody>
@@ -387,37 +419,36 @@
         <div style="padding: 18px 0 14px; border-bottom: 1px solid #e8ecf2;">
           <div style="font-size: 12px; letter-spacing: 0.01em; color: #69737f; font-weight: 600; margin-bottom: 11px;">Time period</div>
           <div style="display: flex; flex-wrap: wrap; gap: 6px;">
-            <span style="border: 1px solid #0b0f14; border-radius: 6px; background: #0b0f14; color: #fff; padding: 6px 11px; font-size: 12px;">Last 30 days</span>
-            <span style="border: 1px solid #cfd6e0; border-radius: 6px; padding: 6px 11px; font-size: 12px;">This quarter</span>
-            <span style="border: 1px solid #cfd6e0; border-radius: 6px; padding: 6px 11px; font-size: 12px;">Q2 2026</span>
-            <span style="border: 1px solid #cfd6e0; border-radius: 6px; padding: 6px 11px; font-size: 12px;">Custom…</span>
+            <sc-for list="{{ periodOptions }}" as="opt" hint-placeholder-count="4">
+              <span onClick="{{ opt.pick }}" style="{{ opt.style }}" style-hover="border-color: #0b0f14;">{{ opt.label }}</span>
+            </sc-for>
           </div>
         </div>
         <div style="padding: 18px 0 14px; border-bottom: 1px solid #e8ecf2;">
           <div style="font-size: 12px; letter-spacing: 0.01em; color: #69737f; font-weight: 600; margin-bottom: 11px;">Deviation</div>
           <div style="display: flex; flex-direction: column; gap: 10px; font-size: 13px;">
-            <label style="display: flex; align-items: center; gap: 10px;"><span style="width: 13px; height: 13px; border: 1px solid #78828f; border-radius: 3px;"></span>Attempted — blocked or held<span style="margin-left: auto; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #69737f;">1,903</span></label>
-            <label style="display: flex; align-items: center; gap: 10px;"><span style="width: 13px; height: 13px; border: 1px solid #78828f; border-radius: 3px;"></span>No justification recorded<span style="margin-left: auto; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #69737f;">117</span></label>
-            <label style="display: flex; align-items: center; gap: 10px;"><span style="width: 13px; height: 13px; border: 1px solid #78828f; border-radius: 3px;"></span>Rule changed after the call<span style="margin-left: auto; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #69737f;">62</span></label>
-            <label style="display: flex; align-items: center; gap: 10px;"><span style="width: 13px; height: 13px; border: 1px solid #78828f; border-radius: 3px;"></span>First-seen resource<span style="margin-left: auto; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #69737f;">148</span></label>
-            <label style="display: flex; align-items: center; gap: 10px;"><span style="width: 13px; height: 13px; border: 1px solid #78828f; border-radius: 3px;"></span>Flagged by a person<span style="margin-left: auto; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #69737f;">9</span></label>
-            <label style="display: flex; align-items: center; gap: 10px;"><span style="width: 13px; height: 13px; border: 1px solid #78828f; border-radius: 3px;"></span>Reviewed &amp; closed<span style="margin-left: auto; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #69737f;">71</span></label>
+            <sc-for list="{{ deviationOptions }}" as="opt" hint-placeholder-count="6">
+              <label onClick="{{ opt.pick }}" style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                <span style="{{ opt.boxStyle }}">{{ opt.mark }}</span>{{ opt.label }}<span style="margin-left: auto; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #69737f;">{{ opt.count }}</span>
+              </label>
+            </sc-for>
           </div>
         </div>
         <div style="padding: 18px 0 14px; border-bottom: 1px solid #e8ecf2;">
           <div style="font-size: 12px; letter-spacing: 0.01em; color: #69737f; font-weight: 600; margin-bottom: 11px;">Outcome</div>
           <div style="display: flex; flex-wrap: wrap; gap: 6px;">
-            <span style="border: 1px solid #cfd6e0; border-radius: 6px; padding: 6px 11px; font-size: 12px;">Pass</span>
-            <span style="border: 1px solid #cfd6e0; border-radius: 6px; padding: 6px 11px; font-size: 12px;">Blocked</span>
-            <span style="border: 1px solid #cfd6e0; border-radius: 6px; padding: 6px 11px; font-size: 12px;">Awaiting</span>
+            <sc-for list="{{ outcomeOptions }}" as="opt" hint-placeholder-count="3">
+              <span onClick="{{ opt.pick }}" style="{{ opt.style }}" style-hover="border-color: #0b0f14;">{{ opt.label }}</span>
+            </sc-for>
           </div>
         </div>
         <div style="padding: 18px 0 14px; border-bottom: 1px solid #e8ecf2;">
           <div style="font-size: 12px; letter-spacing: 0.01em; color: #69737f; font-weight: 600; margin-bottom: 11px;">Identity</div>
           <div style="border: 1px solid #cfd6e0; border-radius: 6px; padding: 8px 11px; font-size: 12px; color: #69737f;">Search users and service accounts…</div>
           <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 9px;">
-            <span style="border: 1px solid #cfd6e0; border-radius: 6px; padding: 6px 11px; font-size: 12px;">Itay Ben-David</span>
-            <span style="border: 1px solid #cfd6e0; border-radius: 6px; padding: 6px 11px; font-size: 12px;">svc-agent-07</span>
+            <sc-for list="{{ identityOptions }}" as="opt" hint-placeholder-count="4">
+              <span onClick="{{ opt.pick }}" style="{{ opt.style }}" style-hover="border-color: #0b0f14;">{{ opt.label }}</span>
+            </sc-for>
           </div>
         </div>
         <div style="padding: 18px 0 14px; border-bottom: 1px solid #e8ecf2;">
@@ -425,22 +456,25 @@
           <div style="display: flex; flex-wrap: wrap; gap: 6px;">
             <span style="border: 1px solid #cfd6e0; border-radius: 6px; padding: 6px 11px; font-size: 12px;">All agents</span>
             <span style="border: 1px solid #cfd6e0; border-radius: 6px; padding: 6px 11px; font-size: 12px;">All applications</span>
-            <span onClick="{{ tierRead }}" style="border: 1px solid #cfd6e0; border-radius: 6px; padding: 6px 11px; font-size: 12px; cursor: pointer;" style-hover="border-color: #0b0f14;">Read</span>
-            <span onClick="{{ tierWrite }}" style="border: 1px solid #cfd6e0; border-radius: 6px; padding: 6px 11px; font-size: 12px; cursor: pointer;" style-hover="border-color: #0b0f14;">Write</span>
-            <span onClick="{{ tierDestructive }}" style="border: 1px solid #cfd6e0; border-radius: 6px; padding: 6px 11px; font-size: 12px; cursor: pointer;" style-hover="border-color: #0b0f14;">Destructive</span>
+            <sc-for list="{{ tierOptions }}" as="opt" hint-placeholder-count="3">
+              <span onClick="{{ opt.pick }}" style="{{ opt.style }}" style-hover="border-color: #0b0f14;">{{ opt.label }}</span>
+            </sc-for>
           </div>
         </div>
         <div style="padding: 18px 0 6px;">
           <div style="font-size: 12px; letter-spacing: 0.01em; color: #69737f; font-weight: 600; margin-bottom: 11px;">Suggested queries</div>
           <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 7px; font-size: 12px;">
-            <a href="#" style="display: inline-block; max-width: 100%; background: #ffffff; border: 1px solid #cfd6e0; border-radius: 999px; padding: 9px 16px; line-height: 1.4; color: #2f3742;" style-hover="border-color: #0b0f14; color: #0b0f14; text-decoration: none;">Everything Claude Code did in Q2</a>
-            <a href="#" style="display: inline-block; max-width: 100%; background: #ffffff; border: 1px solid #cfd6e0; border-radius: 999px; padding: 9px 16px; line-height: 1.4; color: #2f3742;" style-hover="border-color: #0b0f14; color: #0b0f14; text-decoration: none;">Destructive attempts, all agents, this quarter</a>
-            <a href="#" style="display: inline-block; max-width: 100%; background: #ffffff; border: 1px solid #cfd6e0; border-radius: 999px; padding: 9px 16px; line-height: 1.4; color: #2f3742;" style-hover="border-color: #0b0f14; color: #0b0f14; text-decoration: none;">Unreviewed deviations older than 7 days</a>
+            <sc-for list="{{ suggestions }}" as="q" hint-placeholder-count="3">
+              <div onClick="{{ q.pick }}" style="{{ q.style }}" style-hover="border-color: #0b0f14; color: #0b0f14;">{{ q.label }}</div>
+            </sc-for>
+            <div style="display: flex; align-items: center; gap: 7px; background: #ffffff; border: 1px dashed #a9b2c0; border-radius: 999px; padding: 5px 14px; font-size: 12px; color: #8a93a1; line-height: 1.35; cursor: pointer; transition: border-color 120ms ease, color 120ms ease;" style-hover="border-color: #0b0f14; color: #2f3742;">
+              <span style="font-size: 13px; line-height: 1;">+</span>Add a question
+            </div>
           </div>
         </div>
       </div>
       <div style="padding: 16px 24px; border-top: 1px solid #dde2ea; display: flex; gap: 9px;">
-        <button onClick="{{ closeDrawer }}" style="flex: 1 1 auto; background: #0b0f14; color: #fff; border: none; border-radius: 6px; padding: 11px; font-size: 13px; font-weight: 500;">Apply filters</button>
+        <button onClick="{{ applyDrawer }}" style="flex: 1 1 auto; background: #0b0f14; color: #fff; border: none; border-radius: 6px; padding: 11px; font-size: 13px; font-weight: 500;">Apply filters</button>
         <button onClick="{{ clearFilters }}" style="background: #fff; border: 1px solid #cfd6e0; border-radius: 6px; padding: 11px 15px; font-size: 13px;">Reset</button>
       </div>
     </div>
@@ -569,31 +603,90 @@ const FLAG_META = {
     "No automated pattern fired here. A reviewer marked it for follow-up, and that judgement is part of the record."]
 };
 
-const FILTER_FIELDS = ["Deviation", "Outcome", "Coverage"];
-const CELL_FIELDS = ["Identity", "Agent", "Application", "Tool", "Tool tier"];
+const PERIODS = ["Last 30 days", "This quarter", "Q3 2026 to date", "Q2 2026", "Custom…"];
+const DEVS = [
+  ["attempted", "Attempted — blocked or held", "1,903", "Attempted"],
+  ["no-reason", "No justification recorded", "117", "No justification"],
+  ["drift", "Rule changed after the call", "62", "Rule changed"],
+  ["first-seen", "First-seen resource", "148", "First-seen"],
+  ["manual", "Flagged by a person", "9", "Flagged"],
+  ["reviewed", "Reviewed & closed", "71", "Reviewed"]
+];
+const DEV_LABEL = {};
+DEVS.forEach(d => { DEV_LABEL[d[0]] = d[3]; });
+const IDENTITIES = ["Mor Levi", "Itay Ben-David", "Rafael Cohen", "Noa Peretz", "svc-billing-02"];
+const TIERS = ["Read", "Write", "Destructive"];
+const GROUPS = [["none", "None"], ["agent", "Agent"], ["user", "User"], ["app", "Application"], ["tier", "Tool tier"], ["outcome", "Outcome"], ["session", "Session"]];
+const SORTS = [["recent", "Newest first"], ["deviations", "Deviations first"]];
+const PRESETS = [
+  ["Everything Claude Code did in Q2", { period: "Q2 2026" }, { field: "Agent", value: "Claude Code" }],
+  ["Destructive attempts, all agents, this quarter", { period: "This quarter", tiers: ["Destructive"], deviations: ["attempted"] }, null],
+  ["Unreviewed deviations older than 7 days", { deviations: ["attempted", "no-reason", "drift", "first-seen"] }, null]
+];
 
 class Component extends DCLogic {
   state = {
     lens: null, groupBy: "none", sortBy: null, colSort: null, expanded: {},
-    drawerOpen: false, exportOpen: false, view: "activity",
-    filter: null, filterLabel: null, cellFilter: null, menu: null, chips: null, reviewed: { e15: true, e19: true, e25: true }, manualFlag: {}
+    drawerOpen: false, exportOpen: false, view: "activity", selectOpen: null,
+    filter: null, filterLabel: null, filterField: null, cellFilter: null, menu: null,
+    applied: null, draft: null, addingQuery: false, queryText: "", customQueries: [],
+    reviewed: { e15: true, e19: true, e25: true }, manualFlag: {}
   };
+
+  theadRef = React.createRef();
+  REST_SHADOW = "inset 0 -1px 0 #c6cdd9, 0 2px 5px -5px rgba(11,15,20,0.14)";
+  STUCK_SHADOW = "inset 0 -1px 0 #c6cdd9, 0 7px 12px -8px rgba(11,15,20,0.30)";
+
+  componentDidMount() {
+    this.onScroll = () => {
+      const el = this.theadRef.current;
+      if (!el) return;
+      const stuck = el.getBoundingClientRect().top <= 109;
+      if (stuck === this._stuck) return;
+      this._stuck = stuck;
+      const sh = stuck ? this.STUCK_SHADOW : this.REST_SHADOW;
+      Array.prototype.forEach.call(el.querySelectorAll("th"), th => { th.style.boxShadow = sh; });
+    };
+    window.addEventListener("scroll", this.onScroll, { passive: true });
+    this.onScroll();
+  }
+  componentWillUnmount() { window.removeEventListener("scroll", this.onScroll); }
+  componentDidUpdate() { this._stuck = null; if (this.onScroll) this.onScroll(); }
 
   get lens() { return this.state.lens || this.props.lens || "security"; }
   get sortBy() { return this.state.sortBy || (this.lens === "compliance" ? "deviations" : "recent"); }
-  get chips() {
-    if (this.state.chips) return this.state.chips;
-    return this.lens === "compliance"
-      ? [["Period", "Q3 2026 to date"], ["Tool tier", "All"]]
-      : [["Period", "Last 30 days"], ["Agent", "All"], ["Application", "All"]];
-  }
 
-  setLens(lens) { this.setState({ lens: lens, sortBy: null, chips: null, filter: null, expanded: {} }); }
+  defaults() {
+    return { period: this.lens === "compliance" ? "Q3 2026 to date" : "Last 30 days", deviations: [], outcomes: [], identities: [], tiers: [] };
+  }
+  get applied() { return this.state.applied || this.defaults(); }
+  get draft() { return this.state.draft || this.applied; }
+  clone(o) { return { period: o.period, deviations: o.deviations.slice(), outcomes: o.outcomes.slice(), identities: o.identities.slice(), tiers: o.tiers.slice() }; }
+
+  setLens(lens) { this.setState({ lens: lens, sortBy: null, applied: null, draft: null, filter: null, filterLabel: null, cellFilter: null, expanded: {} }); }
+
+  toggleDraft(key, val) {
+    const d = this.clone(this.draft);
+    const i = d[key].indexOf(val);
+    if (i >= 0) d[key].splice(i, 1); else d[key].push(val);
+    this.setState({ draft: d });
+  }
+  setDraftPeriod(p) { const d = this.clone(this.draft); d.period = p; this.setState({ draft: d }); }
+  setPeriod(p) {
+    const a = this.clone(this.applied); a.period = p;
+    const d = this.clone(this.draft); d.period = p;
+    this.setState({ applied: a, draft: d, selectOpen: null });
+  }
+  dropApplied(key, val) {
+    const a = this.clone(this.applied);
+    const i = a[key].indexOf(val);
+    if (i >= 0) a[key].splice(i, 1);
+    this.setState({ applied: a, draft: null });
+  }
 
   applyFilter(kind, label, field) {
     this.setState({
-      filter: kind, filterLabel: label,
-      chips: this.chips.filter(c => FILTER_FIELDS.indexOf(c[0]) < 0).concat([[field, label]]),
+      filter: kind, filterLabel: label, filterField: field,
       view: kind === "coverage" ? "discovery" : "activity"
     });
   }
@@ -604,24 +697,29 @@ class Component extends DCLogic {
     this.setState({ menu: { field: field, value: value, x: Math.round(r.left), y: Math.round(r.bottom + 6) } });
   }
 
-  setCellFilter(field, value) {
-    this.setState({
-      cellFilter: { field: field, value: value },
-      chips: this.chips.filter(c => CELL_FIELDS.indexOf(c[0]) < 0).concat([[field, value]])
-    });
+  setCellFilter(field, value) { this.setState({ cellFilter: { field: field, value: value } }); }
+
+  saveQueryText() {
+    const t = (this.state.queryText || "").trim();
+    if (!t) { this.setState({ addingQuery: false, queryText: "" }); return; }
+    this.setState(s => ({ customQueries: s.customQueries.concat([t]), addingQuery: false, queryText: "" }));
   }
 
-  removeChip(i) {
-    const next = this.chips.slice();
-    const gone = next.splice(i, 1)[0];
-    const wasFilter = FILTER_FIELDS.indexOf(gone[0]) >= 0;
-    const wasCell = CELL_FIELDS.indexOf(gone[0]) >= 0;
-    this.setState({
-      chips: next,
-      filter: wasFilter ? null : this.state.filter,
-      filterLabel: wasFilter ? null : this.state.filterLabel,
-      cellFilter: wasCell ? null : this.state.cellFilter
-    });
+  chipList() {
+    const A = this.applied;
+    const out = [];
+    A.deviations.forEach(v => out.push(["Deviation", DEV_LABEL[v], () => this.dropApplied("deviations", v)]));
+    A.outcomes.forEach(v => out.push(["Outcome", v, () => this.dropApplied("outcomes", v)]));
+    A.identities.forEach(v => out.push(["Identity", v, () => this.dropApplied("identities", v)]));
+    A.tiers.forEach(v => out.push(["Tool tier", v, () => this.dropApplied("tiers", v)]));
+    if (this.state.filter && this.state.filterLabel) {
+      out.push([this.state.filterField || "Deviation", this.state.filterLabel, () => this.setState({ filter: null, filterLabel: null, filterField: null })]);
+    }
+    if (this.state.cellFilter) {
+      const c = this.state.cellFilter;
+      out.push([c.field, c.value, () => this.setState({ cellFilter: null })]);
+    }
+    return out;
   }
 
   flagOf(r, id) {
@@ -646,7 +744,7 @@ class Component extends DCLogic {
       const NOW = 14 * 60 + 15;
       const t = clock.split(":");
       const mins = NOW - (+t[0] * 60 + +t[1]) + (day === "Today" ? 0 : day === "Yesterday" ? 1440 : 2880);
-      const P = "Pending · ";
+      const P = "Pending\u2009·\u2009";
       if (mins < 60) return P + mins + " min";
       const hrs = Math.round(mins / 60);
       if (hrs < 24) return P + hrs + " hr";
@@ -735,6 +833,12 @@ class Component extends DCLogic {
     }
     if (f && f !== "coverage") rows = rows.filter(r => f === "any" ? !!r.flagKind : f === "awaiting" ? r.isAwaiting : f === "unauthorized" ? !r.isPass : r.flagKind === f);
 
+    const A = this.applied;
+    if (A.deviations.length) rows = rows.filter(r => A.deviations.some(d => d === "reviewed" ? r.reviewedFlag : (r.flagKind === d && !r.reviewedFlag)));
+    if (A.outcomes.length) rows = rows.filter(r => A.outcomes.indexOf(r.outcome) >= 0);
+    if (A.identities.length) rows = rows.filter(r => A.identities.indexOf(r.userName) >= 0);
+    if (A.tiers.length) rows = rows.filter(r => A.tiers.indexOf(r.tier) >= 0);
+
     const rank = { attempted: 0, "no-reason": 1, drift: 2, "first-seen": 3, manual: 4 };
     rows = rows.slice().sort((a, b) => a.sortKey - b.sortKey);
     if (this.sortBy === "deviations") {
@@ -797,7 +901,8 @@ class Component extends DCLogic {
       });
     }
 
-    const filtered = !!(f && f !== "coverage") || !!cf;
+    const anyApplied = A.deviations.length + A.outcomes.length + A.identities.length + A.tiers.length > 0;
+    const filtered = !!(f && f !== "coverage") || !!cf || anyApplied;
     const shown = rows.length;
     const countLine = filtered
       ? "Showing " + shown + " of " + shown + " matching events · filtered from " + total.toLocaleString()
@@ -808,27 +913,86 @@ class Component extends DCLogic {
     const exReviewed = exRows.filter(r => r.reviewedFlag).length;
     const exOpen = exCount - exReviewed;
 
-    const btn = (on) => ({ border: "none", background: on ? "#0b0f14" : "transparent", color: on ? "#ffffff" : "#2f3742", padding: "8px 17px", borderRadius: "5px", fontSize: "13px", fontWeight: on ? 600 : 400 });
+    const btn = (on) => ({ border: "none", background: on ? "#2f3742" : "transparent", color: on ? "#ffffff" : "#69737f", padding: "7px 18px", borderRadius: "999px", fontSize: "13px", fontWeight: on ? 600 : 400, boxShadow: on ? "0 1px 2px rgba(11,15,20,0.18)" : "none" });
+    const D = this.draft;
+    const pill = (on) => ({ border: "1px solid " + (on ? "#0b0f14" : "#cfd6e0"), borderRadius: "6px", background: on ? "#0b0f14" : "#ffffff", color: on ? "#ffffff" : "#0b0f14", padding: "6px 11px", fontSize: "12px", cursor: "pointer" });
+    const box = (on) => ({ width: "13px", height: "13px", flex: "0 0 13px", boxSizing: "border-box", border: "1px solid " + (on ? "#0b0f14" : "#78828f"), borderRadius: "3px", background: on ? "#0b0f14" : "transparent", color: "#ffffff", fontSize: "9px", lineHeight: 1, display: "flex", alignItems: "center", justifyContent: "center" });
+    const item = (on) => ({ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "14px", padding: "8px 10px", borderRadius: "5px", fontSize: "13px", cursor: "pointer", fontWeight: on ? 600 : 400 });
+    const tick = (on) => ({ fontSize: "10px", color: "#0b0f14", opacity: on ? 1 : 0 });
+    const queryPill = { display: "inline-block", maxWidth: "100%", background: "#ffffff", border: "1px solid #cfd6e0", borderRadius: "999px", padding: "5px 14px", lineHeight: 1.35, color: "#2f3742", cursor: "pointer" };
 
     return {
       isSecurity: isSec, isCompliance: !isSec,
       isActivity: this.state.view === "activity", isDiscovery: this.state.view === "discovery",
       secBtnStyle: btn(isSec), compBtnStyle: btn(!isSec),
-      periodLabel: isSec ? "Last 30 days" : "Q3 2026 to date",
+      periodLabel: A.period,
       exportLabel: isSec ? "Share findings" : "Export as evidence",
       exportBtnStyle: isSec
         ? { border: "1px solid #0b0f14", borderRadius: "6px", background: "#ffffff", color: "#0b0f14", padding: "8px 15px", fontSize: "12px", fontWeight: 500 }
         : { border: "none", borderRadius: "6px", background: "#0b0f14", color: "#ffffff", padding: "9px 17px", fontSize: "13px", fontWeight: 600 },
+      theadRef: this.theadRef,
       groups: groups, groupBy: gb, sortBy: this.sortBy, countLine: countLine, sort: sortCol,
       filtered: filtered, showPager: !filtered,
       scopeCount: filtered ? shown.toLocaleString() + " / " + total.toLocaleString() : total.toLocaleString(),
       scopeLabel: "activities",
       lastPage: Math.ceil(total / 25).toLocaleString(),
-      chips: this.chips.map((c, i) => ({
+      chips: this.chipList().map(c => ({
         field: c[0], value: c[1],
-        style: { display: "flex", alignItems: "center", gap: "6px", border: "1px solid #cfd6e0", borderRadius: "6px", background: FILTER_FIELDS.indexOf(c[0]) >= 0 ? "#e8ecf2" : "#ffffff", padding: "7px 10px", fontSize: "12px" },
-        remove: () => this.removeChip(i)
+        style: { display: "flex", alignItems: "center", gap: "6px", border: "1px solid #cfd6e0", borderRadius: "6px", background: "#e8ecf2", padding: "7px 10px", fontSize: "12px" },
+        remove: c[2]
       })),
+      groupLabel: (GROUPS.filter(g => g[0] === gb)[0] || GROUPS[0])[1],
+      sortLabel: (SORTS.filter(s => s[0] === this.sortBy)[0] || SORTS[0])[1],
+      groupMenuOpen: this.state.selectOpen === "group",
+      sortMenuOpen: this.state.selectOpen === "sort",
+      periodMenuOpen: this.state.selectOpen === "period",
+      toggleGroupMenu: () => this.setState(s => ({ selectOpen: s.selectOpen === "group" ? null : "group" })),
+      toggleSortMenu: () => this.setState(s => ({ selectOpen: s.selectOpen === "sort" ? null : "sort" })),
+      togglePeriodMenu: () => this.setState(s => ({ selectOpen: s.selectOpen === "period" ? null : "period" })),
+      closeSelects: () => this.setState({ selectOpen: null }),
+      groupOptions: GROUPS.map(g => ({
+        label: g[1], style: item(g[0] === gb), tickStyle: tick(g[0] === gb),
+        pick: () => this.setState({ groupBy: g[0], selectOpen: null })
+      })),
+      sortOptions: SORTS.map(s => ({
+        label: s[1], style: item(s[0] === this.sortBy), tickStyle: tick(s[0] === this.sortBy),
+        pick: () => this.setState({ sortBy: s[0], colSort: null, selectOpen: null })
+      })),
+      periodMenuOptions: PERIODS.map(p => ({
+        label: p, style: item(p === A.period), tickStyle: tick(p === A.period),
+        pick: () => this.setPeriod(p)
+      })),
+      periodOptions: PERIODS.map(p => ({ label: p, style: pill(p === D.period), pick: () => this.setDraftPeriod(p) })),
+      deviationOptions: DEVS.map(d => {
+        const on = D.deviations.indexOf(d[0]) >= 0;
+        return { label: d[1], count: d[2], boxStyle: box(on), mark: on ? "✓" : "", pick: () => this.toggleDraft("deviations", d[0]) };
+      }),
+      outcomeOptions: ["Pass", "Blocked", "Awaiting"].map(o => ({
+        label: o, style: pill(D.outcomes.indexOf(o) >= 0), pick: () => this.toggleDraft("outcomes", o)
+      })),
+      identityOptions: IDENTITIES.map(n => ({
+        label: n, style: pill(D.identities.indexOf(n) >= 0), pick: () => this.toggleDraft("identities", n)
+      })),
+      tierOptions: TIERS.map(t => ({
+        label: t, style: pill(D.tiers.indexOf(t) >= 0), pick: () => this.toggleDraft("tiers", t)
+      })),
+      suggestions: PRESETS.map(p => ({
+        label: p[0], style: queryPill,
+        pick: () => {
+          const d = this.clone(this.defaults());
+          Object.keys(p[1]).forEach(k => { d[k] = p[1][k]; });
+          this.setState({ draft: d, cellFilter: p[2] ? { field: p[2].field, value: p[2].value } : null, filter: null, filterLabel: null });
+        }
+      })).concat(this.state.customQueries.map(q => ({ label: q, style: queryPill, pick: () => {} }))),
+      addingQuery: this.state.addingQuery,
+      canAddQuery: !this.state.addingQuery,
+      queryText: this.state.queryText,
+      onQueryText: (e) => this.setState({ queryText: e.target.value }),
+      onQueryKey: (e) => { if (e.key === "Enter") { e.preventDefault(); this.saveQueryText(); } if (e.key === "Escape") this.setState({ addingQuery: false, queryText: "" }); },
+      startAddQuery: () => this.setState({ addingQuery: true, queryText: "" }),
+      saveQuery: () => this.saveQueryText(),
+      cancelQuery: () => this.setState({ addingQuery: false, queryText: "" }),
+      applyDrawer: () => this.setState({ applied: this.clone(this.draft), drawerOpen: false }),
       drawerOpen: this.state.drawerOpen, exportOpen: this.state.exportOpen,
       menuOpen: !!this.state.menu,
       menuField: this.state.menu ? this.state.menu.field.toLowerCase() : "",
@@ -838,9 +1002,7 @@ class Component extends DCLogic {
         ? { position: "fixed", left: this.state.menu.x + "px", top: this.state.menu.y + "px", zIndex: 60, minWidth: "246px", background: "#ffffff", border: "1px solid #c6cdd9", borderRadius: "8px", boxShadow: "0 8px 24px rgba(11,15,20,0.16)", padding: "5px", fontFamily: "'IBM Plex Sans', sans-serif" }
         : {},
       closeMenu: () => this.setState({ menu: null }),
-      tierRead: () => { this.setCellFilter("Tool tier", "Read"); this.setState({ drawerOpen: false }); },
-      tierWrite: () => { this.setCellFilter("Tool tier", "Write"); this.setState({ drawerOpen: false }); },
-      tierDestructive: () => { this.setCellFilter("Tool tier", "Destructive"); this.setState({ drawerOpen: false }); },
+
       applyMenuFilter: () => {
         const m = this.state.menu;
         this.setState({ menu: null });
@@ -858,14 +1020,12 @@ class Component extends DCLogic {
       exportOpenCount: exOpen,
       pickSecurity: () => this.setLens("security"),
       pickCompliance: () => this.setLens("compliance"),
-      onGroupBy: (e) => this.setState({ groupBy: e.target.value }),
-      onSort: (e) => this.setState({ sortBy: e.target.value }),
-      openDrawer: () => this.setState({ drawerOpen: true }),
+      openDrawer: () => this.setState({ drawerOpen: true, draft: this.clone(this.applied), selectOpen: null }),
       closeDrawer: () => this.setState({ drawerOpen: false }),
-      clearFilters: () => this.setState({ filter: null, filterLabel: null, cellFilter: null, chips: [], drawerOpen: false }),
+      clearFilters: () => this.setState({ filter: null, filterLabel: null, filterField: null, cellFilter: null, applied: this.defaults(), draft: this.defaults(), drawerOpen: false }),
       openExport: () => this.setState({ exportOpen: true }),
       closeExport: () => this.setState({ exportOpen: false }),
-      backToActivity: () => this.setState({ view: "activity", filter: null, filterLabel: null, chips: null }),
+      backToActivity: () => this.setState({ view: "activity", filter: null, filterLabel: null, filterField: null }),
       filterCoverage: () => this.applyFilter("coverage", "No governing application", "Coverage"),
       filterAttempted: () => this.applyFilter("attempted", "Attempted", "Deviation"),
       filterFirstSeen: () => this.applyFilter("first-seen", "First-seen", "Deviation"),
