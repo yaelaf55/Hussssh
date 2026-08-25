@@ -71,7 +71,7 @@
         <button onClick="{{ backToActivity }}" style="background: none; border: none; padding: 0; font-size: 12px; color: #495260; margin-bottom: 18px;">← Back to Activity</button>
         <div style="font-size: 12px; letter-spacing: 0.01em; color: #69737f; font-weight: 600;">Agentic AI</div>
         <div style="font-size: 28px; font-weight: 600; letter-spacing: -0.015em; margin: 4px 0 8px;">Discovery</div>
-        <div style="font-size: 13px; color: #495260; max-width: 620px; line-height: 1.55;">Runtime sensors observe agent traffic independently of configuration. These agents reached MCP servers that are not registered as applications in Hush — so their calls never passed a gate and produce no Activity rows.</div>
+        <div style="font-size: 13px; color: #495260; max-width: 620px; line-height: 1.55;">Runtime sensors observe agent traffic independently of configuration. These agents reached MCP servers that are not registered as applications in Hush - so their calls never passed a gate and produce no Activity rows.</div>
         <div style="margin-top: 26px; border: 1px solid #dde2ea; border-radius: 6px;">
           <div style="display: grid; grid-template-columns: 220px 240px 160px 120px 1fr; padding: 11px 16px; background: #f7f9fc; border-bottom: 1px solid #dde2ea; font-size: 11px; letter-spacing: 0.06em; color: #495260; font-weight: 500;">
             <div>Agent</div><div>Observed endpoint</div><div>First seen</div><div>Calls</div><div></div>
@@ -89,7 +89,7 @@
             <div style="text-align: right;"><button style="background: #0b0f14; color: #fff; border: none; border-radius: 6px; padding: 7px 13px; font-size: 12px; font-weight: 500;">Register application</button></div>
           </div>
         </div>
-        <div style="margin-top: 14px; font-size: 12px; color: #69737f; line-height: 1.5; max-width: 620px;">Discovery narrows the coverage gap but does not close it — it depends on sensor deployment. Coverage is reported alongside every export so an auditor sees the boundary of the evidence.</div>
+        <div style="margin-top: 14px; font-size: 12px; color: #69737f; line-height: 1.5; max-width: 620px;">Discovery narrows the coverage gap but does not close it - it depends on sensor deployment. Coverage is reported alongside every export so an auditor sees the boundary of the evidence.</div>
       </div>
     </sc-if>
 
@@ -114,11 +114,12 @@
 
       <sc-if value="{{ isSecurity }}" hint-placeholder-val="{{ true }}">
         <div style="margin-top: 26px;">
-          <div style="font-size: 12px; letter-spacing: 0.01em; color: #69737f; font-weight: 600; margin-bottom: 10px;">Current posture — last 30 days · 12,904 governed actions · 214 agents · 61 applications</div>
+          <div style="font-size: 12px; letter-spacing: 0.01em; color: #69737f; font-weight: 600; margin-bottom: 10px;">{{ postureLine }}</div>
           <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;">
-            <div onClick="{{ filterCoverage }}" style="border: 1px solid #d6dce5; border-radius: 10px; padding: 18px; min-height: 172px; box-sizing: border-box; display: flex; flex-direction: column; cursor: pointer; background: #eef2f7; box-shadow: 0 2px 6px rgba(11,15,20,0.10), 0 1px 1px rgba(11,15,20,0.05); transition: box-shadow 120ms ease, border-color 120ms ease, transform 120ms ease;" style-hover="border-color: #0b0f14; box-shadow: 0 5px 16px rgba(11,15,20,0.10); transform: translateY(-1px);">
+            <div style="border: 1px solid #d6dce5; border-radius: 10px; padding: 18px; min-height: 172px; box-sizing: border-box; display: flex; flex-direction: column; cursor: pointer; background: #eef2f7; box-shadow: 0 2px 6px rgba(11,15,20,0.10), 0 1px 1px rgba(11,15,20,0.05); transition: box-shadow 120ms ease, border-color 120ms ease, transform 120ms ease;" style-hover="border-color: #0b0f14; box-shadow: 0 5px 16px rgba(11,15,20,0.10); transform: translateY(-1px);">
               <div style="font-size: 44px; font-weight: 600; letter-spacing: -0.03em; line-height: 1;">3</div>
               <div style="font-size: 15px; font-weight: 600; margin-top: 12px;">Ungoverned agents / MCP servers</div>
+              <div style="display: flex; align-items: center; gap: 8px; font-size: 12px; color: #0b0f14; line-height: 1.4; margin-top: 4px;">2 agents&nbsp;·&nbsp;1 MCP server</div>
               <div style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: #495260; margin-top: auto; padding-top: 14px; border-top: 1px solid #dde2ea;">Open Discovery <span>→</span></div>
             </div>
             <div onClick="{{ filterAttempted }}" style="border: 1px solid #d6dce5; border-radius: 10px; padding: 18px; min-height: 172px; box-sizing: border-box; display: flex; flex-direction: column; cursor: pointer; background: #fbfcfe; box-shadow: 0 2px 6px rgba(11,15,20,0.10), 0 1px 1px rgba(11,15,20,0.05); transition: box-shadow 120ms ease, border-color 120ms ease, transform 120ms ease;" style-hover="border-color: #0b0f14; box-shadow: 0 5px 16px rgba(11,15,20,0.10); transform: translateY(-1px);">
@@ -142,11 +143,12 @@
 
       <sc-if value="{{ isCompliance }}" hint-placeholder-val="{{ false }}">
         <div style="margin-top: 26px;">
-          <div style="font-size: 12px; letter-spacing: 0.01em; color: #69737f; font-weight: 600; margin-bottom: 10px;">Period posture — Q3 2026 to date · 47,382 governed actions · 214 agents · 61 applications</div>
+          <div style="font-size: 12px; letter-spacing: 0.01em; color: #69737f; font-weight: 600; margin-bottom: 10px;">{{ postureLine }}</div>
           <div style="display: grid; grid-template-columns: 321px 321px 1fr; gap: 12px; align-items: stretch;">
-            <div onClick="{{ filterCoverage }}" style="border: 1px solid #d6dce5; border-radius: 10px; padding: 18px; min-height: 172px; box-sizing: border-box; display: flex; flex-direction: column; cursor: pointer; background: #eef2f7; box-shadow: 0 2px 6px rgba(11,15,20,0.10), 0 1px 1px rgba(11,15,20,0.05); transition: box-shadow 120ms ease, border-color 120ms ease, transform 120ms ease;" style-hover="border-color: #0b0f14; box-shadow: 0 5px 16px rgba(11,15,20,0.10); transform: translateY(-1px);">
+            <div style="border: 1px solid #d6dce5; border-radius: 10px; padding: 18px; min-height: 172px; box-sizing: border-box; display: flex; flex-direction: column; cursor: pointer; background: #eef2f7; box-shadow: 0 2px 6px rgba(11,15,20,0.10), 0 1px 1px rgba(11,15,20,0.05); transition: box-shadow 120ms ease, border-color 120ms ease, transform 120ms ease;" style-hover="border-color: #0b0f14; box-shadow: 0 5px 16px rgba(11,15,20,0.10); transform: translateY(-1px);">
               <div style="font-size: 44px; font-weight: 600; letter-spacing: -0.03em; line-height: 1;">3</div>
               <div style="font-size: 15px; font-weight: 600; margin-top: 12px;">Ungoverned agents / MCP servers</div>
+              <div style="display: flex; align-items: center; gap: 8px; font-size: 12px; color: #0b0f14; line-height: 1.4; margin-top: 4px;">2 agents&nbsp;·&nbsp;1 MCP server</div>
               <div style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: #495260; margin-top: auto; padding-top: 14px; border-top: 1px solid #dde2ea;">Open Discovery <span>→</span></div>
             </div>
             <div onClick="{{ filterUnauthorized }}" style="border: 1px solid #d6dce5; border-radius: 10px; padding: 18px; min-height: 172px; box-sizing: border-box; display: flex; flex-direction: column; cursor: pointer; background: #eef2f7; box-shadow: 0 2px 6px rgba(11,15,20,0.10), 0 1px 1px rgba(11,15,20,0.05); transition: box-shadow 120ms ease, border-color 120ms ease, transform 120ms ease;" style-hover="border-color: #0b0f14; box-shadow: 0 5px 16px rgba(11,15,20,0.10); transform: translateY(-1px);">
@@ -248,15 +250,15 @@
       <table style="width: 100%; border-collapse: collapse; table-layout: fixed;">
         <thead ref="{{ theadRef }}">
           <tr style="background: #f7f9fc;">
-            <th style="position: sticky; top: 108px; z-index: 10; background: #f7f9fc; box-shadow: inset 0 -1px 0 #c6cdd9, 0 2px 5px -5px rgba(11,15,20,0.14); box-sizing: border-box; width: 158px; text-align: left; font-size: 13px; letter-spacing: 0.01em; font-weight: 600; color: #0b0f14; padding: 12px 14px 12px 30px; border-bottom: 1px solid #c6cdd9; cursor: pointer; user-select: none;" onClick="{{ sort.flag.click }}" style-hover="background: #f0f3f8;"><span style="display: inline-flex; align-items: center; gap: 5px;">Flag<span data-arrow="1" data-on="{{ sort.flag.on }}" style="font-size: 10px; color: #495260;">{{ sort.flag.arrow }}</span></span></th>
-            <th style="position: sticky; top: 108px; z-index: 10; background: #f7f9fc; box-shadow: inset 0 -1px 0 #c6cdd9, 0 2px 5px -5px rgba(11,15,20,0.14); box-sizing: border-box; width: 112px; text-align: left; font-size: 13px; letter-spacing: 0.01em; font-weight: 600; color: #0b0f14; padding: 12px 14px; border-bottom: 1px solid #c6cdd9; cursor: pointer; user-select: none;" onClick="{{ sort.time.click }}" style-hover="background: #f0f3f8;"><span style="display: inline-flex; align-items: center; gap: 5px;">Time<span data-arrow="1" data-on="{{ sort.time.on }}" style="font-size: 10px; color: #495260;">{{ sort.time.arrow }}</span></span></th>
-            <th style="position: sticky; top: 108px; z-index: 10; background: #f7f9fc; box-shadow: inset 0 -1px 0 #c6cdd9, 0 2px 5px -5px rgba(11,15,20,0.14); box-sizing: border-box; width: 172px; text-align: left; font-size: 13px; letter-spacing: 0.01em; font-weight: 600; color: #0b0f14; padding: 12px 14px; border-bottom: 1px solid #c6cdd9; cursor: pointer; user-select: none;" onClick="{{ sort.identity.click }}" style-hover="background: #f0f3f8;"><span style="display: inline-flex; align-items: center; gap: 5px;">Identity<span data-arrow="1" data-on="{{ sort.identity.on }}" style="font-size: 10px; color: #495260;">{{ sort.identity.arrow }}</span></span></th>
-            <th style="position: sticky; top: 108px; z-index: 10; background: #f7f9fc; box-shadow: inset 0 -1px 0 #c6cdd9, 0 2px 5px -5px rgba(11,15,20,0.14); box-sizing: border-box; width: 162px; text-align: left; font-size: 13px; letter-spacing: 0.01em; font-weight: 600; color: #0b0f14; padding: 12px 14px; border-bottom: 1px solid #c6cdd9; cursor: pointer; user-select: none;" onClick="{{ sort.agent.click }}" style-hover="background: #f0f3f8;"><span style="display: inline-flex; align-items: center; gap: 5px;">Agent<span data-arrow="1" data-on="{{ sort.agent.on }}" style="font-size: 10px; color: #495260;">{{ sort.agent.arrow }}</span></span></th>
-            <th style="position: sticky; top: 108px; z-index: 10; background: #f7f9fc; box-shadow: inset 0 -1px 0 #c6cdd9, 0 2px 5px -5px rgba(11,15,20,0.14); box-sizing: border-box; width: 94px; text-align: left; font-size: 13px; letter-spacing: 0.01em; font-weight: 600; color: #0b0f14; padding: 12px 14px; border-bottom: 1px solid #c6cdd9; cursor: pointer; user-select: none;" onClick="{{ sort.app.click }}" style-hover="background: #f0f3f8;"><span style="display: inline-flex; align-items: center; gap: 5px;">Application<span data-arrow="1" data-on="{{ sort.app.on }}" style="font-size: 10px; color: #495260;">{{ sort.app.arrow }}</span></span></th>
-            <th style="position: sticky; top: 108px; z-index: 10; background: #f7f9fc; box-shadow: inset 0 -1px 0 #c6cdd9, 0 2px 5px -5px rgba(11,15,20,0.14); box-sizing: border-box; width: 176px; text-align: left; font-size: 13px; letter-spacing: 0.01em; font-weight: 600; color: #0b0f14; padding: 12px 14px; border-bottom: 1px solid #c6cdd9; cursor: pointer; user-select: none;" onClick="{{ sort.tool.click }}" style-hover="background: #f0f3f8;"><span style="display: inline-flex; align-items: center; gap: 5px;">Tool<span data-arrow="1" data-on="{{ sort.tool.on }}" style="font-size: 10px; color: #495260;">{{ sort.tool.arrow }}</span></span></th>
-            <th style="position: sticky; top: 108px; z-index: 10; background: #f7f9fc; box-shadow: inset 0 -1px 0 #c6cdd9, 0 2px 5px -5px rgba(11,15,20,0.14); box-sizing: border-box; width: 172px; text-align: left; font-size: 13px; letter-spacing: 0.01em; font-weight: 600; color: #0b0f14; padding: 12px 14px; border-bottom: 1px solid #c6cdd9; cursor: pointer; user-select: none;" onClick="{{ sort.resource.click }}" style-hover="background: #f0f3f8;"><span style="display: inline-flex; align-items: center; gap: 5px;">Resource<span data-arrow="1" data-on="{{ sort.resource.on }}" style="font-size: 10px; color: #495260;">{{ sort.resource.arrow }}</span></span></th>
-            <th style="position: sticky; top: 108px; z-index: 10; background: #f7f9fc; box-shadow: inset 0 -1px 0 #c6cdd9, 0 2px 5px -5px rgba(11,15,20,0.14); box-sizing: border-box; width: 126px; text-align: left; font-size: 13px; letter-spacing: 0.01em; font-weight: 600; color: #0b0f14; padding: 12px 14px; border-bottom: 1px solid #c6cdd9; cursor: pointer; user-select: none;" onClick="{{ sort.outcome.click }}" style-hover="background: #f0f3f8;"><span style="display: inline-flex; align-items: center; gap: 5px;">Outcome<span data-arrow="1" data-on="{{ sort.outcome.on }}" style="font-size: 10px; color: #495260;">{{ sort.outcome.arrow }}</span></span></th>
-            <th style="position: sticky; top: 108px; z-index: 10; background: #f7f9fc; box-shadow: inset 0 -1px 0 #c6cdd9, 0 2px 5px -5px rgba(11,15,20,0.14); box-sizing: border-box; width: 114px; text-align: left; font-size: 13px; letter-spacing: 0.01em; font-weight: 600; color: #0b0f14; padding: 12px 14px; border-bottom: 1px solid #c6cdd9; cursor: pointer; user-select: none;" onClick="{{ sort.decision.click }}" style-hover="background: #f0f3f8;"><span style="display: inline-flex; align-items: center; gap: 5px;">Decision<span data-arrow="1" data-on="{{ sort.decision.on }}" style="font-size: 10px; color: #495260;">{{ sort.decision.arrow }}</span></span></th>
+            <th style="position: sticky; top: 108px; z-index: 10; background: #f7f9fc; box-shadow: inset 0 -1px 0 #c6cdd9, 0 2px 5px -5px rgba(11,15,20,0.14); box-sizing: border-box; width: 158px; text-align: left; font-size: 13px; letter-spacing: 0.01em; font-weight: 600; color: #0b0f14; padding: 12px 14px 12px 30px; border-bottom: 1px solid #c6cdd9; cursor: pointer; user-select: none;" onClick="{{ sort.flag.click }}" style-hover="background: #f0f3f8;"><span style="display: inline-flex; align-items: center; gap: 5px;">Flag<span data-arrow="1" data-on="{{ sort.flag.on }}" style="font-size: 13px; color: #495260;">{{ sort.flag.arrow }}</span></span></th>
+            <th style="position: sticky; top: 108px; z-index: 10; background: #f7f9fc; box-shadow: inset 0 -1px 0 #c6cdd9, 0 2px 5px -5px rgba(11,15,20,0.14); box-sizing: border-box; width: 112px; text-align: left; font-size: 13px; letter-spacing: 0.01em; font-weight: 600; color: #0b0f14; padding: 12px 14px; border-bottom: 1px solid #c6cdd9; cursor: pointer; user-select: none;" onClick="{{ sort.time.click }}" style-hover="background: #f0f3f8;"><span style="display: inline-flex; align-items: center; gap: 5px;">Time<span data-arrow="1" data-on="{{ sort.time.on }}" style="font-size: 13px; color: #495260;">{{ sort.time.arrow }}</span></span></th>
+            <th style="position: sticky; top: 108px; z-index: 10; background: #f7f9fc; box-shadow: inset 0 -1px 0 #c6cdd9, 0 2px 5px -5px rgba(11,15,20,0.14); box-sizing: border-box; width: 172px; text-align: left; font-size: 13px; letter-spacing: 0.01em; font-weight: 600; color: #0b0f14; padding: 12px 14px; border-bottom: 1px solid #c6cdd9; cursor: pointer; user-select: none;" onClick="{{ sort.identity.click }}" style-hover="background: #f0f3f8;"><span style="display: inline-flex; align-items: center; gap: 5px;">Identity<span data-arrow="1" data-on="{{ sort.identity.on }}" style="font-size: 13px; color: #495260;">{{ sort.identity.arrow }}</span></span></th>
+            <th style="position: sticky; top: 108px; z-index: 10; background: #f7f9fc; box-shadow: inset 0 -1px 0 #c6cdd9, 0 2px 5px -5px rgba(11,15,20,0.14); box-sizing: border-box; width: 162px; text-align: left; font-size: 13px; letter-spacing: 0.01em; font-weight: 600; color: #0b0f14; padding: 12px 14px; border-bottom: 1px solid #c6cdd9; cursor: pointer; user-select: none;" onClick="{{ sort.agent.click }}" style-hover="background: #f0f3f8;"><span style="display: inline-flex; align-items: center; gap: 5px;">Agent<span data-arrow="1" data-on="{{ sort.agent.on }}" style="font-size: 13px; color: #495260;">{{ sort.agent.arrow }}</span></span></th>
+            <th style="position: sticky; top: 108px; z-index: 10; background: #f7f9fc; box-shadow: inset 0 -1px 0 #c6cdd9, 0 2px 5px -5px rgba(11,15,20,0.14); box-sizing: border-box; width: 94px; text-align: left; font-size: 13px; letter-spacing: 0.01em; font-weight: 600; color: #0b0f14; padding: 12px 14px; border-bottom: 1px solid #c6cdd9; cursor: pointer; user-select: none;" onClick="{{ sort.app.click }}" style-hover="background: #f0f3f8;"><span style="display: inline-flex; align-items: center; gap: 5px;">Application<span data-arrow="1" data-on="{{ sort.app.on }}" style="font-size: 13px; color: #495260;">{{ sort.app.arrow }}</span></span></th>
+            <th style="position: sticky; top: 108px; z-index: 10; background: #f7f9fc; box-shadow: inset 0 -1px 0 #c6cdd9, 0 2px 5px -5px rgba(11,15,20,0.14); box-sizing: border-box; width: 176px; text-align: left; font-size: 13px; letter-spacing: 0.01em; font-weight: 600; color: #0b0f14; padding: 12px 14px; border-bottom: 1px solid #c6cdd9; cursor: pointer; user-select: none;" onClick="{{ sort.tool.click }}" style-hover="background: #f0f3f8;"><span style="display: inline-flex; align-items: center; gap: 5px;">Tool<span data-arrow="1" data-on="{{ sort.tool.on }}" style="font-size: 13px; color: #495260;">{{ sort.tool.arrow }}</span></span></th>
+            <th style="position: sticky; top: 108px; z-index: 10; background: #f7f9fc; box-shadow: inset 0 -1px 0 #c6cdd9, 0 2px 5px -5px rgba(11,15,20,0.14); box-sizing: border-box; width: 172px; text-align: left; font-size: 13px; letter-spacing: 0.01em; font-weight: 600; color: #0b0f14; padding: 12px 14px; border-bottom: 1px solid #c6cdd9; cursor: pointer; user-select: none;" onClick="{{ sort.resource.click }}" style-hover="background: #f0f3f8;"><span style="display: inline-flex; align-items: center; gap: 5px;">Resource<span data-arrow="1" data-on="{{ sort.resource.on }}" style="font-size: 13px; color: #495260;">{{ sort.resource.arrow }}</span></span></th>
+            <th style="position: sticky; top: 108px; z-index: 10; background: #f7f9fc; box-shadow: inset 0 -1px 0 #c6cdd9, 0 2px 5px -5px rgba(11,15,20,0.14); box-sizing: border-box; width: 126px; text-align: left; font-size: 13px; letter-spacing: 0.01em; font-weight: 600; color: #0b0f14; padding: 12px 14px; border-bottom: 1px solid #c6cdd9; cursor: pointer; user-select: none;" onClick="{{ sort.outcome.click }}" style-hover="background: #f0f3f8;"><span style="display: inline-flex; align-items: center; gap: 5px;">Outcome<span data-arrow="1" data-on="{{ sort.outcome.on }}" style="font-size: 13px; color: #495260;">{{ sort.outcome.arrow }}</span></span></th>
+            <th style="position: sticky; top: 108px; z-index: 10; background: #f7f9fc; box-shadow: inset 0 -1px 0 #c6cdd9, 0 2px 5px -5px rgba(11,15,20,0.14); box-sizing: border-box; width: 114px; text-align: left; font-size: 13px; letter-spacing: 0.01em; font-weight: 600; color: #0b0f14; padding: 12px 14px; border-bottom: 1px solid #c6cdd9; cursor: pointer; user-select: none;" onClick="{{ sort.decision.click }}" style-hover="background: #f0f3f8;"><span style="display: inline-flex; align-items: center; gap: 5px;">Decision<span data-arrow="1" data-on="{{ sort.decision.on }}" style="font-size: 13px; color: #495260;">{{ sort.decision.arrow }}</span></span></th>
             <th style="position: sticky; top: 108px; z-index: 10; background: #f7f9fc; box-shadow: inset 0 -1px 0 #c6cdd9, 0 2px 5px -5px rgba(11,15,20,0.14); box-sizing: border-box; width: 34px; border-bottom: 1px solid #d6dce5;"></th>
           </tr>
         </thead>
@@ -399,7 +401,7 @@
           </div>
         </sc-if>
         <sc-if value="{{ filtered }}" hint-placeholder-val="{{ false }}">
-          <button onClick="{{ clearFilters }}" style="border: 1px solid #0b0f14; border-radius: 6px; background: #fff; padding: 7px 13px; font-size: 12px; font-weight: 500;">Clear filter — back to all events</button>
+          <button onClick="{{ clearFilters }}" style="border: 1px solid #0b0f14; border-radius: 6px; background: #fff; padding: 7px 13px; font-size: 12px; font-weight: 500;">Clear filter - back to all events</button>
         </sc-if>
       </div>
     </div>
@@ -500,25 +502,25 @@
             <div style="color: #495260; font-weight: 400;">Filters</div><div>{{ exportFilters }}</div>
             <div style="color: #495260; font-weight: 400;">Events</div><div style="font-family: 'IBM Plex Mono', monospace;">{{ exportCount }}</div>
             <div style="color: #495260; font-weight: 400;">Exceptions</div><div style="font-family: 'IBM Plex Mono', monospace;">{{ exportExceptions }}</div>
-            <div style="color: #495260; font-weight: 400;">Coverage</div><div>3 observed agents outside governance — declared</div>
+            <div style="color: #495260; font-weight: 400;">Coverage</div><div>3 observed agents outside governance - declared</div>
           </div>
         </div>
         <div style="font-size: 12px; letter-spacing: 0.01em; color: #69737f; font-weight: 600; margin: 22px 0 11px;">The pack contains</div>
         <div style="display: flex; flex-direction: column; gap: 11px; font-size: 13px;">
-          <label style="display: flex; gap: 10px; align-items: flex-start;"><span style="width: 13px; height: 13px; background: #0b0f14; border-radius: 3px; flex: 0 0 13px; margin-top: 2px;"></span><span>Cover sheet — scope, generated by, generated at, integrity hash</span></label>
-          <label style="display: flex; gap: 10px; align-items: flex-start;"><span style="width: 13px; height: 13px; background: #0b0f14; border-radius: 3px; flex: 0 0 13px; margin-top: 2px;"></span><span>Posture summary — in-policy rate, outcome split, coverage statement</span></label>
-          <label style="display: flex; gap: 10px; align-items: flex-start;"><span style="width: 13px; height: 13px; background: #0b0f14; border-radius: 3px; flex: 0 0 13px; margin-top: 2px;"></span><span>Exception register — every deviation with its disposition and reviewer</span></label>
-          <label style="display: flex; gap: 10px; align-items: flex-start;"><span style="width: 13px; height: 13px; background: #0b0f14; border-radius: 3px; flex: 0 0 13px; margin-top: 2px;"></span><span>Governing rules appendix — rule versions in force at each call</span></label>
-          <label style="display: flex; gap: 10px; align-items: flex-start;"><span style="width: 13px; height: 13px; border: 1px solid #78828f; border-radius: 3px; flex: 0 0 13px; margin-top: 2px;"></span><span>Full event appendix — all {{ exportCount }} rows (CSV)</span></label>
+          <label style="display: flex; gap: 10px; align-items: flex-start;"><span style="width: 13px; height: 13px; background: #0b0f14; border-radius: 3px; flex: 0 0 13px; margin-top: 2px;"></span><span>Cover sheet - scope, generated by, generated at, integrity hash</span></label>
+          <label style="display: flex; gap: 10px; align-items: flex-start;"><span style="width: 13px; height: 13px; background: #0b0f14; border-radius: 3px; flex: 0 0 13px; margin-top: 2px;"></span><span>Posture summary - in-policy rate, outcome split, coverage statement</span></label>
+          <label style="display: flex; gap: 10px; align-items: flex-start;"><span style="width: 13px; height: 13px; background: #0b0f14; border-radius: 3px; flex: 0 0 13px; margin-top: 2px;"></span><span>Exception register - every deviation with its disposition and reviewer</span></label>
+          <label style="display: flex; gap: 10px; align-items: flex-start;"><span style="width: 13px; height: 13px; background: #0b0f14; border-radius: 3px; flex: 0 0 13px; margin-top: 2px;"></span><span>Governing rules appendix - rule versions in force at each call</span></label>
+          <label style="display: flex; gap: 10px; align-items: flex-start;"><span style="width: 13px; height: 13px; border: 1px solid #78828f; border-radius: 3px; flex: 0 0 13px; margin-top: 2px;"></span><span>Full event appendix - all {{ exportCount }} rows (CSV)</span></label>
         </div>
         <div style="border: 1px solid #dde2ea; border-radius: 6px; background: #f7f9fc; padding: 14px 16px; margin-top: 22px;">
-          <div style="font-size: 12px; color: #2f3742; line-height: 1.6;">{{ exportOpenCount }} exceptions have no reviewer disposition. They will be listed as <strong style="font-weight: 600;">open</strong> in the register — an auditor reads a blank disposition as an unanswered question.</div>
+          <div style="font-size: 12px; color: #2f3742; line-height: 1.6;">{{ exportOpenCount }} exceptions have no reviewer disposition. They will be listed as <strong style="font-weight: 600;">open</strong> in the register - an auditor reads a blank disposition as an unanswered question.</div>
           <a href="#" style="font-size: 12px; border-bottom: 1px solid #0b0f14; display: inline-block; margin-top: 9px;">Review the open exceptions first →</a>
         </div>
       </div>
       <div style="padding: 16px 24px; border-top: 1px solid #dde2ea;">
         <button style="width: 100%; background: #0b0f14; color: #fff; border: none; border-radius: 6px; padding: 12px; font-size: 13px; font-weight: 500;">Generate evidence pack</button>
-        <div style="font-size: 11px; color: #69737f; margin-top: 9px; line-height: 1.5;">Every export is itself logged — who exported what scope, when. Generated packs are immutable.</div>
+        <div style="font-size: 11px; color: #69737f; margin-top: 9px; line-height: 1.5;">Every export is itself logged - who exported what scope, when. Generated packs are immutable.</div>
       </div>
     </div>
   </sc-if>
@@ -552,7 +554,7 @@ const RAW = [
   ["Today","13:57","Itay Ben-David","itay@hush.security","Claude Desktop","Datadog","Delete Dashboard","prod-overview","","Blocked","Automated","attempted","Burst · 3 in 6 min"],
   ["Today","13:56","Itay Ben-David","itay@hush.security","Claude Desktop","Datadog","Revoke API Key","monitoring-key-04","","Awaiting","Manual","attempted","Burst · 3 in 6 min"],
   ["Today","13:20","Mor Levi","mor@hush.security","Claude Code","GitHub","Merge Pull Request","payments-core #409","","Pass","Manual","no-reason",null],
-  ["Today","13:55","Itay Ben-David","itay@hush.security","Claude Desktop","Datadog","List Monitors","—","","Pass","Automated",null,null],
+  ["Today","13:55","Itay Ben-David","itay@hush.security","Claude Desktop","Datadog","List Monitors","-","","Pass","Automated",null,null],
   ["Today","12:40","Rafael Cohen","rafael@hush.security","Cursor","HubSpot","Update Contact Property","contact 88213","","Pass","Automated","first-seen",null],
   ["Today","11:58","svc-billing-02","service account","openclaw-bundle-mcp","Stripe","List Invoices","acct_9f21b","","Pass","Automated",null,null],
   ["Today","11:02","Noa Peretz","noa@hush.security","Claude Code","Linear","Create Issue","identity-gateway","","Pass","Manual",null,null],
@@ -579,19 +581,19 @@ const DESTRUCTIVE = ["Delete Monitor","Delete Dashboard","Revoke API Key","Force
 const READ = ["List Issues","List Monitors","List Invoices","List Commits","Get Dashboard","List Deals","Run Query","List Pull Requests"];
 
 const RULE_BY_USER = {
-  "Mor Levi": ['Assignment Rule "Platform — Full Access" (#A-011) · matched via group platform-eng', "v4"],
-  "Itay Ben-David": ['Assignment Rule "SecOps — Full Access" (#A-014) · matched via group secops-eng', "v3"],
+  "Mor Levi": ['Assignment Rule "Platform - Full Access" (#A-011) · matched via group platform-eng', "v4"],
+  "Itay Ben-David": ['Assignment Rule "SecOps - Full Access" (#A-014) · matched via group secops-eng', "v3"],
   "Rafael Cohen": ['Assignment Rule "GTM Tools" (#A-022) · matched via group revops', "v2"],
-  "Noa Peretz": ['Assignment Rule "Platform — Full Access" (#A-011) · matched via group platform-eng', "v4"],
-  "Dana Shaked": ['Assignment Rule "Infra — Restricted" (#A-018) · matched via group infra-oncall', "v6"],
+  "Noa Peretz": ['Assignment Rule "Platform - Full Access" (#A-011) · matched via group platform-eng', "v4"],
+  "Dana Shaked": ['Assignment Rule "Infra - Restricted" (#A-018) · matched via group infra-oncall', "v6"],
   "Yael Brandt": ['Assignment Rule "Analytics Read" (#A-031) · matched via group data-eng', "v1"],
   "svc-agent-07": ['Assignment Rule "Outbound Automation" (#A-047) · service account, non-interactive', "v2"],
   "svc-billing-02": ['Assignment Rule "Billing Automation" (#A-052) · service account, non-interactive', "v3"],
-  "Tomer Gil": ["No assignment rule matched", "—"]
+  "Tomer Gil": ["No assignment rule matched", "-"]
 };
 
 const FLAG_META = {
-  "attempted": ["Attempted", "Attempted deviation — blocked at the gate",
+  "attempted": ["Attempted", "Attempted deviation - blocked at the gate",
     "A destructive-tier action was attempted but blocked. The attempt itself is the finding."],
   "first-seen": ["First-seen", "First contact with this resource",
     "The call was allowed, but this agent has not accessed this resource before. This new access may need verification."],
@@ -604,8 +606,15 @@ const FLAG_META = {
 };
 
 const PERIODS = ["Last 30 days", "This quarter", "Q3 2026 to date", "Q2 2026", "Custom…"];
+const PERIOD_STATS = {
+  "Last 30 days": [12904, 214, 61],
+  "This quarter": [47382, 268, 74],
+  "Q3 2026 to date": [47382, 268, 74],
+  "Q2 2026": [38610, 241, 69],
+  "Custom…": [8241, 147, 44]
+};
 const DEVS = [
-  ["attempted", "Attempted — blocked or held", "1,903", "Attempted"],
+  ["attempted", "Attempted - blocked or held", "1,903", "Attempted"],
   ["no-reason", "No justification recorded", "117", "No justification"],
   ["drift", "Rule changed after the call", "62", "Rule changed"],
   ["first-seen", "First-seen resource", "148", "First-seen"],
@@ -760,10 +769,10 @@ class Component extends DCLogic {
       : (outcome === "Awaiting" ? " · Awaiting a named approver" : "");
 
     const gates = [
-      { name: "Agent allowlist", text: r[4] + " — permitted client type for " + r[5] + " (#AG-006, v2)", link: "View allowlist →" },
+      { name: "Agent allowlist", text: r[4] + " - permitted client type for " + r[5] + " (#AG-006, v2)", link: "View allowlist →" },
       { name: "User authorization", text: cause === "User request" ? "No assignment rule matched · User Request #" + urId + verdict : ur[0].replace(/\(#([A-Za-z0-9-]+)\)/, "(#$1, " + ur[1] + ")"), link: cause === "User request" ? "View user request →" : "View rule →" },
       { name: "Tool authorization", text: cause === "User request"
-        ? 'Tool Permission "' + r[6] + '" (#T-091, v1) · not evaluated — ' + (outcome === "Blocked" ? "denied at user authorization" : "held at user authorization")
+        ? 'Tool Permission "' + r[6] + '" (#T-091, v1) · not evaluated - ' + (outcome === "Blocked" ? "denied at user authorization" : "held at user authorization")
         : 'Tool Permission "' + r[6] + '" (#T-091, v1) · category default: ' + tier + " → " + (r[10] === "Manual" || outcome === "Awaiting" ? "Consent" : outcome === "Blocked" ? "Block" : "Allow") + verdict, link: "View tool setting →" }
     ];
 
@@ -823,7 +832,7 @@ class Component extends DCLogic {
     const lens = this.lens;
     const isSec = lens === "security";
     let rows = RAW.map((r, i) => this.buildRow(r, i));
-    const total = this.props.totalEvents || 47382;
+    const total = (PERIOD_STATS[this.applied.period] || PERIOD_STATS["Last 30 days"])[0];
 
     const f = this.state.filter;
     const cf = this.state.cellFilter;
@@ -926,6 +935,11 @@ class Component extends DCLogic {
       isActivity: this.state.view === "activity", isDiscovery: this.state.view === "discovery",
       secBtnStyle: btn(isSec), compBtnStyle: btn(!isSec),
       periodLabel: A.period,
+      postureLine: (() => {
+        const st = PERIOD_STATS[A.period] || PERIOD_STATS["Last 30 days"];
+        const tail = A.period + " · " + st[0].toLocaleString() + " governed activities · " + st[1] + " agents · " + st[2] + " applications";
+        return isSec ? tail : "Period posture - " + tail;
+      })(),
       exportLabel: isSec ? "Share findings" : "Export as evidence",
       exportBtnStyle: isSec
         ? { border: "1px solid #0b0f14", borderRadius: "6px", background: "#ffffff", color: "#0b0f14", padding: "8px 15px", fontSize: "12px", fontWeight: 500 }
@@ -1014,7 +1028,7 @@ class Component extends DCLogic {
         const g = m.field === "Identity" ? "user" : m.field === "Agent" ? "agent" : m.field === "Tool tier" ? "tier" : "app";
         this.setState({ menu: null, groupBy: g });
       },
-      exportFilters: this.state.filterLabel || (cf ? cf.field + " = " + cf.value : "None — full period"),
+      exportFilters: this.state.filterLabel || (cf ? cf.field + " = " + cf.value : "None - full period"),
       exportCount: filtered ? shown.toString() : total.toLocaleString(),
       exportExceptions: exCount + " · " + exReviewed + " reviewed, " + exOpen + " open",
       exportOpenCount: exOpen,
