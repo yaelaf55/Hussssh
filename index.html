@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  body { margin: 0; background: #eef1f5; -webkit-font-smoothing: antialiased; }
+  a { color: #0b0f14; text-decoration: none; }
+  a:hover { color: #0b0f14; text-decoration: underline; }
+  select { font-family: 'IBM Plex Sans', sans-serif; }
+  button { font-family: 'IBM Plex Sans', sans-serif; cursor: pointer; }
+  th [data-arrow] { opacity: 0; transition: opacity .12s; }
+  th:hover [data-arrow] { opacity: .5; }
+  th [data-arrow][data-on="on"] { opacity: 1; }
+</style>
+</helmet>
+
+<div style="width: 1440px; margin: 0 auto; background: #ffffff; font-family: 'IBM Plex Sans', -apple-system, sans-serif; color: #0b0f14; display: flex; min-height: 1024px;">
+
+  <div style="width: 56px; flex: 0 0 56px; background: #0b0f14; display: flex; flex-direction: column; align-items: center; padding: 14px 0; gap: 6px;">
+    <div style="width: 28px; height: 28px; border-radius: 6px; background: #ffffff; color: #0b0f14; font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center; margin-bottom: 18px;">H</div>
+    <div style="width: 32px; height: 32px; border-radius: 6px; display: flex; align-items: center; justify-content: center;"><div style="width: 11px; height: 11px; border: 1px solid #78828f;"></div></div>
+    <div style="width: 32px; height: 32px; border-radius: 6px; display: flex; align-items: center; justify-content: center;"><div style="width: 11px; height: 11px; border: 1px solid #78828f; transform: rotate(45deg);"></div></div>
+    <div style="width: 32px; height: 32px; border-radius: 6px; display: flex; align-items: center; justify-content: center;"><div style="width: 11px; height: 11px; border-radius: 50%; border: 1px solid #78828f;"></div></div>
+    <div style="width: 32px; height: 32px; border-radius: 6px; background: #ffffff; display: flex; align-items: center; justify-content: center;"><div style="width: 9px; height: 9px; background: #0b0f14;"></div></div>
+    <div style="width: 32px; height: 32px; border-radius: 6px; display: flex; align-items: center; justify-content: center;"><div style="width: 11px; height: 11px; border: 1px solid #78828f; border-radius: 2px;"></div></div>
+    <div style="width: 32px; height: 32px; border-radius: 6px; display: flex; align-items: center; justify-content: center;"><div style="width: 11px; height: 3px; background: #78828f;"></div></div>
+    <div style="flex: 1 1 auto;"></div>
+    <div style="width: 26px; height: 26px; border-radius: 50%; background: #2f3742;"></div>
+  </div>
+
+  <div style="flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column;">
+
+    <div style="position: sticky; top: 0; z-index: 30; background: #ffffff; height: 48px; flex: 0 0 48px; border-bottom: 1px solid #dde2ea; display: flex; align-items: center; gap: 26px; padding: 0 32px;">
+      <span style="font-size: 13px; color: #495260;">Applications</span>
+      <span style="font-size: 13px; color: #495260;">Catalog</span>
+      <span style="font-size: 13px; color: #495260;">User Requests</span>
+      <span style="font-size: 13px; font-weight: 500; color: #0b0f14; box-shadow: inset 0 -2px 0 #0b0f14; height: 47px; display: flex; align-items: center;">Activity</span>
+      <span style="font-size: 13px; color: #495260;">Discovery</span>
+      <div style="flex: 1 1 auto;"></div>
+      <span style="font-size: 11px; font-family: 'IBM Plex Mono', monospace; color: #69737f; display: flex; align-items: center; gap: 6px;"><span style="width: 5px; height: 5px; border-radius: 50%; background: #0b0f14; display: inline-block;"></span>Live · updated 12s ago</span>
+    </div>
+
+    <sc-if value="{{ isDiscovery }}" hint-placeholder-val="{{ false }}">
+      <div style="padding: 28px 32px 60px;">
+        <button onClick="{{ backToActivity }}" style="background: none; border: none; padding: 0; font-size: 12px; color: #495260; margin-bottom: 18px;">← Back to Activity</button>
+        <div style="font-size: 12px; letter-spacing: 0.01em; color: #69737f; font-weight: 600;">Agentic AI</div>
+        <div style="font-size: 28px; font-weight: 600; letter-spacing: -0.015em; margin: 4px 0 8px;">Discovery</div>
+        <div style="font-size: 13px; color: #495260; max-width: 620px; line-height: 1.55;">Runtime sensors observe agent traffic independently of configuration. These agents reached MCP servers that are not registered as applications in Hush — so their calls never passed a gate and produce no Activity rows.</div>
+        <div style="margin-top: 26px; border: 1px solid #dde2ea; border-radius: 6px;">
+          <div style="display: grid; grid-template-columns: 220px 240px 160px 120px 1fr; padding: 11px 16px; background: #f7f9fc; border-bottom: 1px solid #dde2ea; font-size: 11px; letter-spacing: 0.06em; color: #495260; font-weight: 500;">
+            <div>Agent</div><div>Observed endpoint</div><div>First seen</div><div>Calls</div><div></div>
+          </div>
+          <div style="display: grid; grid-template-columns: 220px 240px 160px 120px 1fr; padding: 15px 16px; border-bottom: 1px solid #e8ecf2; font-size: 13px; align-items: center;">
+            <div>Claude Desktop</div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #2f3742;">mcp-notion.internal</div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #495260;">Aug 19 08:12</div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px;">1,284</div>
+            <div style="text-align: right;"><button style="background: #0b0f14; color: #fff; border: none; border-radius: 6px; padding: 7px 13px; font-size: 12px; font-weight: 500;">Register application</button></div>
+          </div>
+          <div style="display: grid; grid-template-columns: 220px 240px 160px 120px 1fr; padding: 15px 16px; border-bottom: 1px solid #e8ecf2; font-size: 13px; align-items: center;">
+            <div>Cursor</div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #2f3742;">mcp-notion.internal</div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #495260;">Aug 21 14:40</div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px;">96</div>
+            <div style="text-align: right;"><button style="background: #0b0f14; color: #fff; border: none; border-radius: 6px; padding: 7px 13px; font-size: 12px; font-weight: 500;">Register application</button></div>
+          </div>
+          <div style="display: grid; grid-template-columns: 220px 240px 160px 120px 1fr; padding: 15px 16px; font-size: 13px; align-items: center;">
+            <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px;">svc-agent-11</div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #2f3742;">mcp-files.staging</div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #495260;">Aug 24 03:55</div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px;">37</div>
+            <div style="text-align: right;"><button style="background: #0b0f14; color: #fff; border: none; border-radius: 6px; padding: 7px 13px; font-size: 12px; font-weight: 500;">Register application</button></div>
+          </div>
+        </div>
+        <div style="margin-top: 14px; font-size: 12px; color: #69737f; line-height: 1.5; max-width: 620px;">Discovery narrows the coverage gap but does not close it — it depends on sensor deployment. Coverage is reported alongside every export so an auditor sees the boundary of the evidence.</div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isActivity }}" hint-placeholder-val="{{ true }}">
+    <div style="padding: 26px 32px 0;">
+
+      <div style="display: flex; align-items: flex-start; gap: 24px;">
+        <div style="flex: 0 0 auto;">
+          <div style="font-size: 12px; letter-spacing: 0.01em; color: #69737f; font-weight: 600;">Agentic AI</div>
+          <div style="font-size: 28px; font-weight: 600; letter-spacing: -0.015em; margin-top: 3px;">Activity</div>
+        </div>
+        <div style="flex: 1 1 auto; display: flex; justify-content: center; padding-top: 12px;">
+          <div style="display: flex; border: 1px solid #cfd6e0; border-radius: 6px; padding: 3px; gap: 2px;">
+            <button onClick="{{ pickSecurity }}" style="{{ secBtnStyle }}">Security view</button>
+            <button onClick="{{ pickCompliance }}" style="{{ compBtnStyle }}">Compliance view</button>
+          </div>
+        </div>
+        <div style="flex: 0 0 auto; display: flex; gap: 10px; padding-top: 12px; align-items: center;">
+          <div style="border: 1px solid #cfd6e0; border-radius: 6px; padding: 8px 14px; font-size: 12px; display: flex; gap: 18px; align-items: center;"><span>{{ periodLabel }}</span><span style="color: #69737f; font-size: 9px;">▼</span></div>
+          <button onClick="{{ openExport }}" style="{{ exportBtnStyle }}">{{ exportLabel }}</button>
+        </div>
+      </div>
+
+      <sc-if value="{{ isSecurity }}" hint-placeholder-val="{{ true }}">
+        <div style="margin-top: 26px;">
+          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;">
+            <div onClick="{{ filterCoverage }}" style="border: 1px solid #d6dce5; border-radius: 10px; padding: 18px; min-height: 172px; box-sizing: border-box; display: flex; flex-direction: column; cursor: pointer; background: #eef2f7; box-shadow: 0 2px 6px rgba(11,15,20,0.10), 0 1px 1px rgba(11,15,20,0.05); transition: box-shadow 120ms ease, border-color 120ms ease, transform 120ms ease;" style-hover="border-color: #0b0f14; box-shadow: 0 5px 16px rgba(11,15,20,0.10); transform: translateY(-1px);">
+              <div style="font-size: 44px; font-weight: 600; letter-spacing: -0.03em; line-height: 1;">3</div>
+              <div style="font-size: 15px; font-weight: 600; margin-top: 12px;">Ungoverned agents / MCP servers</div>
+              <div style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: #495260; margin-top: auto; padding-top: 14px; border-top: 1px solid #dde2ea;">Open Discovery <span>→</span></div>
+            </div>
+            <div onClick="{{ filterAttempted }}" style="border: 1px solid #d6dce5; border-radius: 10px; padding: 18px; min-height: 172px; box-sizing: border-box; display: flex; flex-direction: column; cursor: pointer; background: #fbfcfe; box-shadow: 0 2px 6px rgba(11,15,20,0.10), 0 1px 1px rgba(11,15,20,0.05); transition: box-shadow 120ms ease, border-color 120ms ease, transform 120ms ease;" style-hover="border-color: #0b0f14; box-shadow: 0 5px 16px rgba(11,15,20,0.10); transform: translateY(-1px);">
+              <div style="font-size: 44px; font-weight: 600; letter-spacing: -0.03em; line-height: 1;">7</div>
+              <div style="font-size: 15px; font-weight: 600; margin-top: 12px;">Attempted deviations</div>
+              <div style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: #495260; margin-top: auto; padding-top: 14px; border-top: 1px solid #dde2ea;">Filter the table <span>→</span></div>
+            </div>
+            <div onClick="{{ filterFirstSeen }}" style="border: 1px solid #d6dce5; border-radius: 10px; padding: 18px; min-height: 172px; box-sizing: border-box; display: flex; flex-direction: column; cursor: pointer; background: #fbfcfe; box-shadow: 0 2px 6px rgba(11,15,20,0.10), 0 1px 1px rgba(11,15,20,0.05); transition: box-shadow 120ms ease, border-color 120ms ease, transform 120ms ease;" style-hover="border-color: #0b0f14; box-shadow: 0 5px 16px rgba(11,15,20,0.10); transform: translateY(-1px);">
+              <div style="font-size: 44px; font-weight: 600; letter-spacing: -0.03em; line-height: 1;">3</div>
+              <div style="font-size: 15px; font-weight: 600; margin-top: 12px;">First-seen resources</div>
+              <div style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: #495260; margin-top: auto; padding-top: 14px; border-top: 1px solid #dde2ea;">Filter the table <span>→</span></div>
+            </div>
+            <div onClick="{{ filterDrift }}" style="border: 1px solid #d6dce5; border-radius: 10px; padding: 18px; min-height: 172px; box-sizing: border-box; display: flex; flex-direction: column; cursor: pointer; background: #fbfcfe; box-shadow: 0 2px 6px rgba(11,15,20,0.10), 0 1px 1px rgba(11,15,20,0.05); transition: box-shadow 120ms ease, border-color 120ms ease, transform 120ms ease;" style-hover="border-color: #0b0f14; box-shadow: 0 5px 16px rgba(11,15,20,0.10); transform: translateY(-1px);">
+              <div style="font-size: 44px; font-weight: 600; letter-spacing: -0.03em; line-height: 1;">2</div>
+              <div style="font-size: 15px; font-weight: 600; margin-top: 12px;">Rules changed recently</div>
+              <div style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: #495260; margin-top: auto; padding-top: 14px; border-top: 1px solid #dde2ea;">Filter the table <span>→</span></div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isCompliance }}" hint-placeholder-val="{{ false }}">
+        <div style="margin-top: 26px;">
+          <div style="font-size: 12px; letter-spacing: 0.01em; color: #69737f; font-weight: 600; margin-bottom: 10px;">Period posture — Q3 2026 to date · 47,382 governed actions · 214 agents · 61 applications</div>
+          <div style="display: grid; grid-template-columns: 321px 321px 1fr; gap: 12px; align-items: stretch;">
+            <div onClick="{{ filterCoverage }}" style="border: 1px solid #d6dce5; border-radius: 10px; padding: 18px; min-height: 172px; box-sizing: border-box; display: flex; flex-direction: column; cursor: pointer; background: #eef2f7; box-shadow: 0 2px 6px rgba(11,15,20,0.10), 0 1px 1px rgba(11,15,20,0.05); transition: box-shadow 120ms ease, border-color 120ms ease, transform 120ms ease;" style-hover="border-color: #0b0f14; box-shadow: 0 5px 16px rgba(11,15,20,0.10); transform: translateY(-1px);">
+              <div style="font-size: 44px; font-weight: 600; letter-spacing: -0.03em; line-height: 1;">3</div>
+              <div style="font-size: 15px; font-weight: 600; margin-top: 12px;">Ungoverned agents / MCP servers</div>
+              <div style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: #495260; margin-top: auto; padding-top: 14px; border-top: 1px solid #dde2ea;">Open Discovery <span>→</span></div>
+            </div>
+            <div onClick="{{ filterUnauthorized }}" style="border: 1px solid #d6dce5; border-radius: 10px; padding: 18px; min-height: 172px; box-sizing: border-box; display: flex; flex-direction: column; cursor: pointer; background: #eef2f7; box-shadow: 0 2px 6px rgba(11,15,20,0.10), 0 1px 1px rgba(11,15,20,0.05); transition: box-shadow 120ms ease, border-color 120ms ease, transform 120ms ease;" style-hover="border-color: #0b0f14; box-shadow: 0 5px 16px rgba(11,15,20,0.10); transform: translateY(-1px);">
+              <div style="font-size: 44px; font-weight: 600; letter-spacing: -0.03em; line-height: 1;">94%</div>
+              <div style="font-size: 15px; font-weight: 600; margin-top: 12px;">Authorized and justified activities</div>
+              <div style="display: flex; align-items: center; gap: 8px; font-size: 12px; color: #0b0f14; line-height: 1.4; margin-top: 8px;">
+                <span style="position: relative; width: 15px; height: 14px; flex: 0 0 15px; display: flex; align-items: flex-end; justify-content: center;">
+                  <span style="position: absolute; top: 0; left: 0; width: 0; height: 0; border-left: 7.5px solid transparent; border-right: 7.5px solid transparent; border-bottom: 14px solid #0b0f14;"></span>
+                  <span style="position: relative; color: #ffffff; font-size: 9px; font-weight: 600; line-height: 1; padding-bottom: 2px;">!</span>
+                </span>
+                <span>Ungoverned activity missing (partial coverage)</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: #495260; margin-top: auto; padding-top: 14px; border-top: 1px solid #dde2ea;">Show 6% unauthorized · 2 items pending &gt;24h <span>→</span></div>
+            </div>
+            <div style="border: 1px solid #d6dce5; border-radius: 10px; padding: 18px; min-height: 172px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: center; background: #fbfcfe; box-shadow: 0 2px 6px rgba(11,15,20,0.10), 0 1px 1px rgba(11,15,20,0.05);">
+              <div style="font-size: 12px; letter-spacing: 0.01em; color: #69737f; font-weight: 600; margin-bottom: 10px;">Needs explanation before export</div>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px;">
+                <div onClick="{{ filterAttempted }}" style="display: flex; align-items: center; gap: 9px; padding: 9px 11px; border: 1px solid #dde2ea; border-radius: 6px; background: #ffffff; cursor: pointer;" style-hover="border-color: #0b0f14; background: #f7f9fc;">
+                  <span style="font-size: 24px; font-weight: 600; letter-spacing: -0.02em; line-height: 1; min-width: 22px;">7</span>
+                  <span style="font-size: 13px; color: #2f3742;">Attempted</span>
+                  <span style="margin-left: auto; color: #69737f;">→</span>
+                </div>
+                <div onClick="{{ filterNoReason }}" style="display: flex; align-items: center; gap: 9px; padding: 9px 11px; border: 1px solid #dde2ea; border-radius: 6px; background: #ffffff; cursor: pointer;" style-hover="border-color: #0b0f14; background: #f7f9fc;">
+                  <span style="font-size: 24px; font-weight: 600; letter-spacing: -0.02em; line-height: 1; min-width: 22px;">2</span>
+                  <span style="font-size: 13px; color: #2f3742;">No justification</span>
+                  <span style="margin-left: auto; color: #69737f;">→</span>
+                </div>
+                <div onClick="{{ filterDrift }}" style="display: flex; align-items: center; gap: 9px; padding: 9px 11px; border: 1px solid #dde2ea; border-radius: 6px; background: #ffffff; cursor: pointer;" style-hover="border-color: #0b0f14; background: #f7f9fc;">
+                  <span style="font-size: 24px; font-weight: 600; letter-spacing: -0.02em; line-height: 1; min-width: 22px;">2</span>
+                  <span style="font-size: 13px; color: #2f3742;">Rule changed</span>
+                  <span style="margin-left: auto; color: #69737f;">→</span>
+                </div>
+                <div onClick="{{ filterFirstSeen }}" style="display: flex; align-items: center; gap: 9px; padding: 9px 11px; border: 1px solid #dde2ea; border-radius: 6px; background: #ffffff; cursor: pointer;" style-hover="border-color: #0b0f14; background: #f7f9fc;">
+                  <span style="font-size: 24px; font-weight: 600; letter-spacing: -0.02em; line-height: 1; min-width: 22px;">3</span>
+                  <span style="font-size: 13px; color: #2f3742;">First-seen</span>
+                  <span style="margin-left: auto; color: #69737f;">→</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <div style="position: sticky; top: 48px; z-index: 20; background: #ffffff; margin-top: 22px; display: flex; align-items: center; gap: 8px; padding: 12px 0 14px;">
+        <button onClick="{{ openDrawer }}" style="display: flex; align-items: center; gap: 8px; border: 1px solid #0b0f14; border-radius: 6px; background: #ffffff; padding: 8px 13px; font-size: 12px; font-weight: 500;">
+          <span style="width: 10px; height: 1px; background: #0b0f14; box-shadow: 0 3px 0 #0b0f14, 0 -3px 0 #0b0f14;"></span>Filters
+        </button>
+        <sc-for list="{{ chips }}" as="chip" hint-placeholder-count="3">
+          <div style="{{ chip.style }}">
+            <span style="color: #69737f;">{{ chip.field }}</span>
+            <span style="font-weight: 500;">{{ chip.value }}</span>
+            <button onClick="{{ chip.remove }}" style="background: none; border: none; padding: 0 0 0 2px; font-size: 12px; color: #495260; line-height: 1;">×</button>
+          </div>
+        </sc-for>
+        <div style="flex: 1 1 auto;"></div>
+        <span style="font-size: 12px; color: #495260;">Group by</span>
+        <span style="position: relative; display: inline-flex; align-items: center;">
+          <select value="{{ groupBy }}" onChange="{{ onGroupBy }}" style="appearance: none; -webkit-appearance: none; border: 1px solid #cfd6e0; border-radius: 6px; padding: 7px 32px 7px 11px; font-size: 12px; background: #fff; color: #0b0f14;">
+            <option value="none">None</option>
+            <option value="agent">Agent</option>
+            <option value="user">User</option>
+            <option value="app">Application</option>
+            <option value="tier">Tool tier</option>
+            <option value="outcome">Outcome</option>
+            <option value="session">Session</option>
+          </select>
+          <span style="position: absolute; right: 12px; font-size: 9px; color: #69737f; pointer-events: none;">▼</span>
+        </span>
+        <span style="font-size: 12px; color: #495260; margin-left: 8px;">Sort</span>
+        <span style="position: relative; display: inline-flex; align-items: center;">
+          <select value="{{ sortBy }}" onChange="{{ onSort }}" style="appearance: none; -webkit-appearance: none; border: 1px solid #cfd6e0; border-radius: 6px; padding: 7px 32px 7px 11px; font-size: 12px; background: #fff; color: #0b0f14;">
+            <option value="recent">Newest first</option>
+            <option value="deviations">Deviations first</option>
+          </select>
+          <span style="position: absolute; right: 12px; font-size: 9px; color: #69737f; pointer-events: none;">▼</span>
+        </span>
+      </div>
+
+      <div style="display: flex; align-items: baseline; gap: 9px; padding: 2px 2px 10px;">
+        <span style="font-size: 15px; font-weight: 600; letter-spacing: -0.01em;">{{ scopeCount }}</span>
+        <span style="font-size: 13px; color: #495260;">{{ scopeLabel }}</span>
+      </div>
+      <div style="border: 1px solid #c6cdd9; border-radius: 10px;">
+      <table style="width: 100%; border-collapse: collapse; table-layout: fixed;">
+        <thead>
+          <tr style="background: #f7f9fc;">
+            <th style="position: sticky; top: 108px; z-index: 10; background: #f7f9fc; box-sizing: border-box; width: 158px; text-align: left; font-size: 13px; letter-spacing: 0.01em; font-weight: 600; color: #0b0f14; padding: 12px 14px 12px 30px; border-bottom: 1px solid #c6cdd9; cursor: pointer; user-select: none;" onClick="{{ sort.flag.click }}" style-hover="background: #f0f3f8;"><span style="display: inline-flex; align-items: center; gap: 5px;">Flag<span data-arrow="1" data-on="{{ sort.flag.on }}" style="font-size: 10px; color: #495260;">{{ sort.flag.arrow }}</span></span></th>
+            <th style="position: sticky; top: 108px; z-index: 10; background: #f7f9fc; box-sizing: border-box; width: 112px; text-align: left; font-size: 13px; letter-spacing: 0.01em; font-weight: 600; color: #0b0f14; padding: 12px 14px; border-bottom: 1px solid #c6cdd9; cursor: pointer; user-select: none;" onClick="{{ sort.time.click }}" style-hover="background: #f0f3f8;"><span style="display: inline-flex; align-items: center; gap: 5px;">Time<span data-arrow="1" data-on="{{ sort.time.on }}" style="font-size: 10px; color: #495260;">{{ sort.time.arrow }}</span></span></th>
+            <th style="position: sticky; top: 108px; z-index: 10; background: #f7f9fc; box-sizing: border-box; width: 172px; text-align: left; font-size: 13px; letter-spacing: 0.01em; font-weight: 600; color: #0b0f14; padding: 12px 14px; border-bottom: 1px solid #c6cdd9; cursor: pointer; user-select: none;" onClick="{{ sort.identity.click }}" style-hover="background: #f0f3f8;"><span style="display: inline-flex; align-items: center; gap: 5px;">Identity<span data-arrow="1" data-on="{{ sort.identity.on }}" style="font-size: 10px; color: #495260;">{{ sort.identity.arrow }}</span></span></th>
+            <th style="position: sticky; top: 108px; z-index: 10; background: #f7f9fc; box-sizing: border-box; width: 162px; text-align: left; font-size: 13px; letter-spacing: 0.01em; font-weight: 600; color: #0b0f14; padding: 12px 14px; border-bottom: 1px solid #c6cdd9; cursor: pointer; user-select: none;" onClick="{{ sort.agent.click }}" style-hover="background: #f0f3f8;"><span style="display: inline-flex; align-items: center; gap: 5px;">Agent<span data-arrow="1" data-on="{{ sort.agent.on }}" style="font-size: 10px; color: #495260;">{{ sort.agent.arrow }}</span></span></th>
+            <th style="position: sticky; top: 108px; z-index: 10; background: #f7f9fc; box-sizing: border-box; width: 94px; text-align: left; font-size: 13px; letter-spacing: 0.01em; font-weight: 600; color: #0b0f14; padding: 12px 14px; border-bottom: 1px solid #c6cdd9; cursor: pointer; user-select: none;" onClick="{{ sort.app.click }}" style-hover="background: #f0f3f8;"><span style="display: inline-flex; align-items: center; gap: 5px;">Application<span data-arrow="1" data-on="{{ sort.app.on }}" style="font-size: 10px; color: #495260;">{{ sort.app.arrow }}</span></span></th>
+            <th style="position: sticky; top: 108px; z-index: 10; background: #f7f9fc; box-sizing: border-box; width: 176px; text-align: left; font-size: 13px; letter-spacing: 0.01em; font-weight: 600; color: #0b0f14; padding: 12px 14px; border-bottom: 1px solid #c6cdd9; cursor: pointer; user-select: none;" onClick="{{ sort.tool.click }}" style-hover="background: #f0f3f8;"><span style="display: inline-flex; align-items: center; gap: 5px;">Tool<span data-arrow="1" data-on="{{ sort.tool.on }}" style="font-size: 10px; color: #495260;">{{ sort.tool.arrow }}</span></span></th>
+            <th style="position: sticky; top: 108px; z-index: 10; background: #f7f9fc; box-sizing: border-box; width: 172px; text-align: left; font-size: 13px; letter-spacing: 0.01em; font-weight: 600; color: #0b0f14; padding: 12px 14px; border-bottom: 1px solid #c6cdd9; cursor: pointer; user-select: none;" onClick="{{ sort.resource.click }}" style-hover="background: #f0f3f8;"><span style="display: inline-flex; align-items: center; gap: 5px;">Resource<span data-arrow="1" data-on="{{ sort.resource.on }}" style="font-size: 10px; color: #495260;">{{ sort.resource.arrow }}</span></span></th>
+            <th style="position: sticky; top: 108px; z-index: 10; background: #f7f9fc; box-sizing: border-box; width: 126px; text-align: left; font-size: 13px; letter-spacing: 0.01em; font-weight: 600; color: #0b0f14; padding: 12px 14px; border-bottom: 1px solid #c6cdd9; cursor: pointer; user-select: none;" onClick="{{ sort.outcome.click }}" style-hover="background: #f0f3f8;"><span style="display: inline-flex; align-items: center; gap: 5px;">Outcome<span data-arrow="1" data-on="{{ sort.outcome.on }}" style="font-size: 10px; color: #495260;">{{ sort.outcome.arrow }}</span></span></th>
+            <th style="position: sticky; top: 108px; z-index: 10; background: #f7f9fc; box-sizing: border-box; width: 114px; text-align: left; font-size: 13px; letter-spacing: 0.01em; font-weight: 600; color: #0b0f14; padding: 12px 14px; border-bottom: 1px solid #c6cdd9; cursor: pointer; user-select: none;" onClick="{{ sort.decision.click }}" style-hover="background: #f0f3f8;"><span style="display: inline-flex; align-items: center; gap: 5px;">Decision<span data-arrow="1" data-on="{{ sort.decision.on }}" style="font-size: 10px; color: #495260;">{{ sort.decision.arrow }}</span></span></th>
+            <th style="position: sticky; top: 108px; z-index: 10; background: #f7f9fc; box-sizing: border-box; width: 34px; border-bottom: 1px solid #d6dce5;"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <sc-for list="{{ groups }}" as="group" hint-placeholder-count="1">
+            <sc-if value="{{ group.showHeader }}" hint-placeholder-val="{{ false }}">
+              <tr>
+                <td colspan="10" style="padding: 9px 14px; background: #e8ecf2; border-bottom: 1px solid #d6dce5;">
+                  <span style="font-size: 12px; font-weight: 600;">{{ group.label }}</span>
+                  <span style="font-size: 11px; color: #495260; margin-left: 10px;">{{ group.meta }}</span>
+                </td>
+              </tr>
+            </sc-if>
+            <sc-for list="{{ group.rows }}" as="row" hint-placeholder-count="8">
+              <tr onClick="{{ row.toggle }}" style="{{ row.trStyle }}" style-hover="background: #f3f6fa;">
+                <td style="padding: 0 14px; vertical-align: middle; border-bottom: 1px solid #e8ecf2;">
+                  <sc-if value="{{ row.hasFlag }}" hint-placeholder-val="{{ false }}">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                      <span style="{{ row.dotStyle }}"></span>
+                      <span style="{{ row.chipStyle }}">{{ row.flagLabel }}</span>
+                    </div>
+                    <sc-if value="{{ row.hasSubFlag }}" hint-placeholder-val="{{ false }}">
+                      <div style="font-size: 11px; color: #69737f; font-family: 'IBM Plex Mono', monospace; margin: 4px 0 0 16px; white-space: nowrap;">{{ row.subFlag }}</div>
+                    </sc-if>
+                  </sc-if>
+                </td>
+                <td style="padding: 0 14px; vertical-align: middle; border-bottom: 1px solid #e8ecf2; font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #2f3742;">
+                  <div style="font-family: 'IBM Plex Sans', sans-serif; font-size: 13px; font-weight: 500; color: #0b0f14;">{{ row.day }}</div>
+                  <div style="color: #0b0f14;">{{ row.clock }}</div>
+                </td>
+                <td style="padding: 0 14px; vertical-align: middle; border-bottom: 1px solid #e8ecf2;">
+                  <div onClick="{{ row.onFilterUser }}" style="font-size: 13px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: pointer;" style-hover="text-decoration: underline;">{{ row.userName }}</div>
+                  <div style="font-size: 11px; color: #69737f; font-family: 'IBM Plex Mono', monospace; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ row.userMeta }}</div>
+                </td>
+                <td style="padding: 0 14px; vertical-align: middle; border-bottom: 1px solid #e8ecf2; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span onClick="{{ row.onFilterAgent }}" style="cursor: pointer;" style-hover="text-decoration: underline;">{{ row.agent }}</span></td>
+                <td style="padding: 0 14px; vertical-align: middle; border-bottom: 1px solid #e8ecf2; font-size: 13px;"><span onClick="{{ row.onFilterApp }}" style="cursor: pointer;" style-hover="text-decoration: underline;">{{ row.app }}</span></td>
+                <td style="padding: 0 14px; vertical-align: middle; border-bottom: 1px solid #e8ecf2;">
+                  <div onClick="{{ row.onFilterTool }}" style="font-size: 13px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: pointer;" style-hover="text-decoration: underline;">{{ row.tool }}</div>
+                  <div onClick="{{ row.onFilterTier }}" style="font-size: 11px; color: #69737f; font-family: 'IBM Plex Mono', monospace; cursor: pointer; display: inline-block;" style-hover="text-decoration: underline;">{{ row.tier }}</div>
+                </td>
+                <td style="padding: 0 14px; vertical-align: middle; border-bottom: 1px solid #e8ecf2;">
+                  <div style="font-size: 12px; font-family: 'IBM Plex Mono', monospace; color: #2f3742; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ row.resource }}</div>
+                  <div style="font-size: 11px; color: #69737f; font-family: 'IBM Plex Mono', monospace;">{{ row.resourceMeta }}</div>
+                </td>
+                <td style="padding: 0 14px; vertical-align: middle; border-bottom: 1px solid #e8ecf2;">
+                  <div style="display: flex; align-items: center; gap: 7px; font-size: 13px;">
+                    <sc-if value="{{ row.isPass }}" hint-placeholder-val="{{ true }}"><span style="box-sizing: border-box; width: 13px; height: 13px; flex: 0 0 13px; border-radius: 50%; border: 1.5px solid #0b0f14; background: #ffffff;"></span></sc-if>
+                    <sc-if value="{{ row.isBlocked }}" hint-placeholder-val="{{ false }}"><span style="box-sizing: border-box; width: 13px; height: 13px; flex: 0 0 13px; border-radius: 50%; background: #0b0f14; display: flex; align-items: center; justify-content: center;"><span style="width: 7px; height: 1.5px; background: #ffffff;"></span></span></sc-if>
+                    <sc-if value="{{ row.isAwaiting }}" hint-placeholder-val="{{ false }}"><span style="box-sizing: border-box; width: 13px; height: 13px; flex: 0 0 13px; display: flex; align-items: center; justify-content: center;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" width="13" height="13" style="display: block;"><g stroke="#0b0f14" stroke-width="1.15" stroke-linecap="round"><line x1="10.9" y1="7" x2="13.3" y2="7"></line><line x1="9.76" y1="9.76" x2="11.46" y2="11.46"></line><line x1="7" y1="10.9" x2="7" y2="13.3"></line><line x1="4.24" y1="9.76" x2="2.54" y2="11.46"></line><line x1="3.1" y1="7" x2="0.7" y2="7"></line><line x1="4.24" y1="4.24" x2="2.54" y2="2.54"></line><line x1="7" y1="3.1" x2="7" y2="0.7"></line><line x1="9.76" y1="4.24" x2="11.46" y2="2.54"></line></g></svg></span></sc-if>
+                    <span style="{{ row.outcomeStyle }}">{{ row.outcome }}</span>
+                  </div>
+                </td>
+                <td style="padding: 0 14px; vertical-align: middle; border-bottom: 1px solid #e8ecf2;">
+                  <span style="{{ row.decisionStyle }}">{{ row.decision }}</span>
+                  <sc-if value="{{ row.isAwaiting }}" hint-placeholder-val="{{ false }}">
+                    <div style="font-size: 11px; color: #69737f; font-family: 'IBM Plex Mono', monospace; white-space: nowrap;">{{ row.pendingFor }}</div>
+                  </sc-if>
+                  <sc-if value="{{ row.isManual }}" hint-placeholder-val="{{ false }}">
+                    <div style="font-size: 11px; color: #69737f; font-family: 'IBM Plex Mono', monospace; margin-top: 2px; white-space: nowrap;">{{ row.manualCause }}</div>
+                  </sc-if>
+                </td>
+                <td style="padding: 0 12px 0 0; vertical-align: middle; border-bottom: 1px solid #e8ecf2; text-align: right; color: #69737f; font-size: 10px;">{{ row.chevron }}</td>
+              </tr>
+
+              <sc-if value="{{ row.expanded }}" hint-placeholder-val="{{ false }}">
+                <tr>
+                  <td colspan="10" style="padding: 0; border-bottom: 1px solid #d6dce5; background: #ffffff;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0; padding: 22px 24px 24px 34px; border-left: 3px solid #0b0f14;">
+                      <div style="padding-right: 34px;">
+                        <sc-if value="{{ row.hasFlag }}" hint-placeholder-val="{{ false }}">
+                          <div style="margin-bottom: 24px;">
+                            <div style="display: inline-flex; align-items: center; gap: 8px; background: #0b0f14; color: #ffffff; padding: 5px 11px; border-radius: 4px; font-size: 12px; font-weight: 600;">
+                              <span style="width: 7px; height: 7px; border-radius: 50%; background: #ffffff; flex: 0 0 7px;"></span>{{ row.flagTitle }}
+                            </div>
+                            <div style="font-size: 12px; color: #69737f; line-height: 1.55; margin-top: 6px; max-width: 78ch;">{{ row.flagWhy }}</div>
+                          </div>
+                        </sc-if>
+                        <div style="font-size: 12px; letter-spacing: 0.01em; color: #69737f; font-weight: 600; margin-bottom: 12px;">Call detail</div>
+                        <div style="display: grid; grid-template-columns: 124px 1fr; row-gap: 10px; font-size: 13px; font-weight: 500;">
+                          <div style="color: #495260; font-weight: 400;">Application</div><div>{{ row.app }}</div>
+                          <div style="color: #495260; font-weight: 400;">Deployment</div><div style="font-family: 'IBM Plex Mono', monospace;">{{ row.deployment }}</div>
+                          <div style="color: #495260; font-weight: 400;">Request ID</div><div style="font-family: 'IBM Plex Mono', monospace;">{{ row.requestId }}</div>
+                          <div style="color: #495260; font-weight: 400;">Session ID</div><div style="font-family: 'IBM Plex Mono', monospace;">{{ row.sessionId }}</div>
+                          <div style="color: #495260; font-weight: 400;">Credential</div><div style="font-family: 'IBM Plex Mono', monospace;">{{ row.credential }}</div>
+                          <sc-if value="{{ row.isManual }}" hint-placeholder-val="{{ false }}">
+                            <div style="grid-column: 1 / -1; display: grid; grid-template-columns: 124px 1fr;">
+                              <div style="color: #495260; font-weight: 400;">Decision</div><div><div>{{ row.decidedBy }}</div><div>{{ row.decisionAfter }}</div></div>
+                            </div>
+                            <div style="grid-column: 1 / -1; display: grid; grid-template-columns: 124px 1fr;">
+                              <div style="color: #495260; font-weight: 400;">Justification</div><div style="{{ row.justStyle }}">{{ row.justification }}</div>
+                            </div>
+                          </sc-if>
+                        </div>
+                        <div style="font-size: 12px; letter-spacing: 0.01em; color: #69737f; font-weight: 600; margin: 20px 0 8px;">Parameters</div>
+                        <pre style="margin: 0; border: 1px solid #dde2ea; border-radius: 6px; background: #f7f9fc; padding: 14px 16px; font-family: 'IBM Plex Mono', monospace; font-size: 13px; line-height: 1.6; color: #1a212b; white-space: pre-wrap;">{{ row.params }}</pre>
+                        <div style="display: flex; gap: 9px; margin-top: 18px; flex-wrap: wrap;">
+                          <sc-if value="{{ row.isAwaiting }}" hint-placeholder-val="{{ false }}">
+                            <button style="background: #0b0f14; color: #fff; border: none; border-radius: 6px; padding: 9px 16px; font-size: 13px; font-weight: 500;">Approve</button>
+                          </sc-if>
+                          <sc-if value="{{ row.isAwaiting }}" hint-placeholder-val="{{ false }}">
+                            <button style="background: #fff; color: #0b0f14; border: 1px solid #0b0f14; border-radius: 6px; padding: 9px 16px; font-size: 13px; font-weight: 500;">Deny</button>
+                          </sc-if>
+                          <button onClick="{{ row.mark }}" style="{{ row.markStyle }}">{{ row.markLabel }}</button>
+                          <button style="background: #fff; color: #2f3742; border: 1px dashed #b3bccb; border-radius: 6px; padding: 9px 16px; font-size: 13px;">Ask Hush about this event</button>
+                        </div>
+                      </div>
+                      <div style="border-left: 1px solid #dde2ea; padding-left: 34px;">
+                        <div style="font-size: 12px; letter-spacing: 0.01em; color: #69737f; font-weight: 600; margin-bottom: 12px;">Outcome reasoning</div>
+                        <sc-for list="{{ row.gates }}" as="gate" hint-placeholder-count="3">
+                          <div style="border: 1px solid #dde2ea; border-radius: 8px; background: #f7f9fc; padding: 13px 15px; margin-bottom: 10px; cursor: pointer; box-shadow: 0 2px 6px rgba(11,15,20,0.08), 0 1px 1px rgba(11,15,20,0.04); transition: box-shadow 120ms ease, border-color 120ms ease, transform 120ms ease;" style-hover="border-color: #0b0f14; background: #ffffff; box-shadow: 0 5px 16px rgba(11,15,20,0.10); transform: translateY(-1px);">
+                            <div style="min-width: 0;">
+                              <div style="font-size: 13px; font-weight: 600; margin-bottom: 5px;">{{ gate.name }}</div>
+                              <div style="font-size: 13px; color: #2f3742; line-height: 1.55;">{{ gate.text }}</div>
+                              <a href="#" style="font-size: 13px; border-bottom: 1px solid #0b0f14; display: inline-block; margin-top: 9px;">{{ gate.link }}</a>
+                            </div>
+                          </div>
+                        </sc-for>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </sc-if>
+            </sc-for>
+          </sc-for>
+        </tbody>
+      </table>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 16px 2px 44px;">
+        <div style="font-size: 12px; color: #495260;">{{ countLine }}</div>
+        <sc-if value="{{ showPager }}" hint-placeholder-val="{{ true }}">
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <button style="border: 1px solid #cfd6e0; border-radius: 6px; background: #fff; padding: 6px 11px; font-size: 12px; color: #b3bccb;">‹</button>
+            <button style="border: 1px solid #0b0f14; border-radius: 6px; background: #0b0f14; color: #fff; padding: 6px 11px; font-size: 12px;">1</button>
+            <button style="border: 1px solid #cfd6e0; border-radius: 6px; background: #fff; padding: 6px 11px; font-size: 12px;">2</button>
+            <button style="border: 1px solid #cfd6e0; border-radius: 6px; background: #fff; padding: 6px 11px; font-size: 12px;">3</button>
+            <span style="font-size: 12px; color: #69737f; padding: 0 4px;">…</span>
+            <button style="border: 1px solid #cfd6e0; border-radius: 6px; background: #fff; padding: 6px 11px; font-size: 12px;">{{ lastPage }}</button>
+            <button style="border: 1px solid #cfd6e0; border-radius: 6px; background: #fff; padding: 6px 11px; font-size: 12px;">›</button>
+          </div>
+        </sc-if>
+        <sc-if value="{{ filtered }}" hint-placeholder-val="{{ false }}">
+          <button onClick="{{ clearFilters }}" style="border: 1px solid #0b0f14; border-radius: 6px; background: #fff; padding: 7px 13px; font-size: 12px; font-weight: 500;">Clear filter — back to all events</button>
+        </sc-if>
+      </div>
+    </div>
+    </sc-if>
+  </div>
+
+  <sc-if value="{{ drawerOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position: fixed; inset: 0; background: rgba(11,15,20,0.32); z-index: 40;" onClick="{{ closeDrawer }}"></div>
+  </sc-if>
+  <sc-if value="{{ drawerOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position: fixed; top: 0; right: 0; bottom: 0; width: 392px; background: #ffffff; z-index: 50; border-left: 1px solid #c6cdd9; display: flex; flex-direction: column; font-family: 'IBM Plex Sans', sans-serif;">
+      <div style="padding: 20px 24px; border-bottom: 1px solid #dde2ea; display: flex; align-items: center; justify-content: space-between;">
+        <div style="font-size: 16px; font-weight: 600;">Filters</div>
+        <button onClick="{{ closeDrawer }}" style="background: none; border: none; font-size: 18px; color: #495260; padding: 0;">×</button>
+      </div>
+      <div style="flex: 1 1 auto; overflow: auto; padding: 4px 24px 24px;">
+        <div style="padding: 18px 0 14px; border-bottom: 1px solid #e8ecf2;">
+          <div style="font-size: 12px; letter-spacing: 0.01em; color: #69737f; font-weight: 600; margin-bottom: 11px;">Time period</div>
+          <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+            <span style="border: 1px solid #0b0f14; border-radius: 6px; background: #0b0f14; color: #fff; padding: 6px 11px; font-size: 12px;">Last 30 days</span>
+            <span style="border: 1px solid #cfd6e0; border-radius: 6px; padding: 6px 11px; font-size: 12px;">This quarter</span>
+            <span style="border: 1px solid #cfd6e0; border-radius: 6px; padding: 6px 11px; font-size: 12px;">Q2 2026</span>
+            <span style="border: 1px solid #cfd6e0; border-radius: 6px; padding: 6px 11px; font-size: 12px;">Custom…</span>
+          </div>
+        </div>
+        <div style="padding: 18px 0 14px; border-bottom: 1px solid #e8ecf2;">
+          <div style="font-size: 12px; letter-spacing: 0.01em; color: #69737f; font-weight: 600; margin-bottom: 11px;">Deviation</div>
+          <div style="display: flex; flex-direction: column; gap: 10px; font-size: 13px;">
+            <label style="display: flex; align-items: center; gap: 10px;"><span style="width: 13px; height: 13px; border: 1px solid #78828f; border-radius: 3px;"></span>Attempted — blocked or held<span style="margin-left: auto; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #69737f;">1,903</span></label>
+            <label style="display: flex; align-items: center; gap: 10px;"><span style="width: 13px; height: 13px; border: 1px solid #78828f; border-radius: 3px;"></span>No justification recorded<span style="margin-left: auto; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #69737f;">117</span></label>
+            <label style="display: flex; align-items: center; gap: 10px;"><span style="width: 13px; height: 13px; border: 1px solid #78828f; border-radius: 3px;"></span>Rule changed after the call<span style="margin-left: auto; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #69737f;">62</span></label>
+            <label style="display: flex; align-items: center; gap: 10px;"><span style="width: 13px; height: 13px; border: 1px solid #78828f; border-radius: 3px;"></span>First-seen resource<span style="margin-left: auto; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #69737f;">148</span></label>
+            <label style="display: flex; align-items: center; gap: 10px;"><span style="width: 13px; height: 13px; border: 1px solid #78828f; border-radius: 3px;"></span>Flagged by a person<span style="margin-left: auto; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #69737f;">9</span></label>
+            <label style="display: flex; align-items: center; gap: 10px;"><span style="width: 13px; height: 13px; border: 1px solid #78828f; border-radius: 3px;"></span>Reviewed &amp; closed<span style="margin-left: auto; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #69737f;">71</span></label>
+          </div>
+        </div>
+        <div style="padding: 18px 0 14px; border-bottom: 1px solid #e8ecf2;">
+          <div style="font-size: 12px; letter-spacing: 0.01em; color: #69737f; font-weight: 600; margin-bottom: 11px;">Outcome</div>
+          <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+            <span style="border: 1px solid #cfd6e0; border-radius: 6px; padding: 6px 11px; font-size: 12px;">Pass</span>
+            <span style="border: 1px solid #cfd6e0; border-radius: 6px; padding: 6px 11px; font-size: 12px;">Blocked</span>
+            <span style="border: 1px solid #cfd6e0; border-radius: 6px; padding: 6px 11px; font-size: 12px;">Awaiting</span>
+          </div>
+        </div>
+        <div style="padding: 18px 0 14px; border-bottom: 1px solid #e8ecf2;">
+          <div style="font-size: 12px; letter-spacing: 0.01em; color: #69737f; font-weight: 600; margin-bottom: 11px;">Identity</div>
+          <div style="border: 1px solid #cfd6e0; border-radius: 6px; padding: 8px 11px; font-size: 12px; color: #69737f;">Search users and service accounts…</div>
+          <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 9px;">
+            <span style="border: 1px solid #cfd6e0; border-radius: 6px; padding: 6px 11px; font-size: 12px;">Itay Ben-David</span>
+            <span style="border: 1px solid #cfd6e0; border-radius: 6px; padding: 6px 11px; font-size: 12px;">svc-agent-07</span>
+          </div>
+        </div>
+        <div style="padding: 18px 0 14px; border-bottom: 1px solid #e8ecf2;">
+          <div style="font-size: 12px; letter-spacing: 0.01em; color: #69737f; font-weight: 600; margin-bottom: 11px;">Agent · application · tool tier</div>
+          <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+            <span style="border: 1px solid #cfd6e0; border-radius: 6px; padding: 6px 11px; font-size: 12px;">All agents</span>
+            <span style="border: 1px solid #cfd6e0; border-radius: 6px; padding: 6px 11px; font-size: 12px;">All applications</span>
+            <span onClick="{{ tierRead }}" style="border: 1px solid #cfd6e0; border-radius: 6px; padding: 6px 11px; font-size: 12px; cursor: pointer;" style-hover="border-color: #0b0f14;">Read</span>
+            <span onClick="{{ tierWrite }}" style="border: 1px solid #cfd6e0; border-radius: 6px; padding: 6px 11px; font-size: 12px; cursor: pointer;" style-hover="border-color: #0b0f14;">Write</span>
+            <span onClick="{{ tierDestructive }}" style="border: 1px solid #cfd6e0; border-radius: 6px; padding: 6px 11px; font-size: 12px; cursor: pointer;" style-hover="border-color: #0b0f14;">Destructive</span>
+          </div>
+        </div>
+        <div style="padding: 18px 0 6px;">
+          <div style="font-size: 12px; letter-spacing: 0.01em; color: #69737f; font-weight: 600; margin-bottom: 11px;">Suggested queries</div>
+          <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 7px; font-size: 12px;">
+            <a href="#" style="display: inline-block; max-width: 100%; background: #ffffff; border: 1px solid #cfd6e0; border-radius: 999px; padding: 9px 16px; line-height: 1.4; color: #2f3742;" style-hover="border-color: #0b0f14; color: #0b0f14; text-decoration: none;">Everything Claude Code did in Q2</a>
+            <a href="#" style="display: inline-block; max-width: 100%; background: #ffffff; border: 1px solid #cfd6e0; border-radius: 999px; padding: 9px 16px; line-height: 1.4; color: #2f3742;" style-hover="border-color: #0b0f14; color: #0b0f14; text-decoration: none;">Destructive attempts, all agents, this quarter</a>
+            <a href="#" style="display: inline-block; max-width: 100%; background: #ffffff; border: 1px solid #cfd6e0; border-radius: 999px; padding: 9px 16px; line-height: 1.4; color: #2f3742;" style-hover="border-color: #0b0f14; color: #0b0f14; text-decoration: none;">Unreviewed deviations older than 7 days</a>
+          </div>
+        </div>
+      </div>
+      <div style="padding: 16px 24px; border-top: 1px solid #dde2ea; display: flex; gap: 9px;">
+        <button onClick="{{ closeDrawer }}" style="flex: 1 1 auto; background: #0b0f14; color: #fff; border: none; border-radius: 6px; padding: 11px; font-size: 13px; font-weight: 500;">Apply filters</button>
+        <button onClick="{{ clearFilters }}" style="background: #fff; border: 1px solid #cfd6e0; border-radius: 6px; padding: 11px 15px; font-size: 13px;">Reset</button>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ exportOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position: fixed; inset: 0; background: rgba(11,15,20,0.32); z-index: 40;" onClick="{{ closeExport }}"></div>
+  </sc-if>
+  <sc-if value="{{ exportOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position: fixed; top: 0; right: 0; bottom: 0; width: 440px; background: #ffffff; z-index: 50; border-left: 1px solid #c6cdd9; display: flex; flex-direction: column; font-family: 'IBM Plex Sans', sans-serif;">
+      <div style="padding: 20px 24px; border-bottom: 1px solid #dde2ea; display: flex; align-items: center; justify-content: space-between;">
+        <div>
+          <div style="font-size: 16px; font-weight: 600;">Export as evidence</div>
+          <div style="font-size: 12px; color: #495260; margin-top: 3px;">Exports the current view, not the whole log.</div>
+        </div>
+        <button onClick="{{ closeExport }}" style="background: none; border: none; font-size: 18px; color: #495260; padding: 0;">×</button>
+      </div>
+      <div style="flex: 1 1 auto; overflow: auto; padding: 20px 24px 24px;">
+        <div style="border: 1px solid #dde2ea; border-radius: 6px; padding: 15px 16px;">
+          <div style="font-size: 12px; letter-spacing: 0.01em; color: #69737f; font-weight: 600; margin-bottom: 11px;">Scope of this evidence</div>
+          <div style="display: grid; grid-template-columns: 104px 1fr; row-gap: 8px; font-size: 12px;">
+            <div style="color: #495260; font-weight: 400;">Period</div><div style="font-family: 'IBM Plex Mono', monospace;">2026-07-01 → 2026-08-25</div>
+            <div style="color: #495260; font-weight: 400;">Filters</div><div>{{ exportFilters }}</div>
+            <div style="color: #495260; font-weight: 400;">Events</div><div style="font-family: 'IBM Plex Mono', monospace;">{{ exportCount }}</div>
+            <div style="color: #495260; font-weight: 400;">Exceptions</div><div style="font-family: 'IBM Plex Mono', monospace;">{{ exportExceptions }}</div>
+            <div style="color: #495260; font-weight: 400;">Coverage</div><div>3 observed agents outside governance — declared</div>
+          </div>
+        </div>
+        <div style="font-size: 12px; letter-spacing: 0.01em; color: #69737f; font-weight: 600; margin: 22px 0 11px;">The pack contains</div>
+        <div style="display: flex; flex-direction: column; gap: 11px; font-size: 13px;">
+          <label style="display: flex; gap: 10px; align-items: flex-start;"><span style="width: 13px; height: 13px; background: #0b0f14; border-radius: 3px; flex: 0 0 13px; margin-top: 2px;"></span><span>Cover sheet — scope, generated by, generated at, integrity hash</span></label>
+          <label style="display: flex; gap: 10px; align-items: flex-start;"><span style="width: 13px; height: 13px; background: #0b0f14; border-radius: 3px; flex: 0 0 13px; margin-top: 2px;"></span><span>Posture summary — in-policy rate, outcome split, coverage statement</span></label>
+          <label style="display: flex; gap: 10px; align-items: flex-start;"><span style="width: 13px; height: 13px; background: #0b0f14; border-radius: 3px; flex: 0 0 13px; margin-top: 2px;"></span><span>Exception register — every deviation with its disposition and reviewer</span></label>
+          <label style="display: flex; gap: 10px; align-items: flex-start;"><span style="width: 13px; height: 13px; background: #0b0f14; border-radius: 3px; flex: 0 0 13px; margin-top: 2px;"></span><span>Governing rules appendix — rule versions in force at each call</span></label>
+          <label style="display: flex; gap: 10px; align-items: flex-start;"><span style="width: 13px; height: 13px; border: 1px solid #78828f; border-radius: 3px; flex: 0 0 13px; margin-top: 2px;"></span><span>Full event appendix — all {{ exportCount }} rows (CSV)</span></label>
+        </div>
+        <div style="border: 1px solid #dde2ea; border-radius: 6px; background: #f7f9fc; padding: 14px 16px; margin-top: 22px;">
+          <div style="font-size: 12px; color: #2f3742; line-height: 1.6;">{{ exportOpenCount }} exceptions have no reviewer disposition. They will be listed as <strong style="font-weight: 600;">open</strong> in the register — an auditor reads a blank disposition as an unanswered question.</div>
+          <a href="#" style="font-size: 12px; border-bottom: 1px solid #0b0f14; display: inline-block; margin-top: 9px;">Review the open exceptions first →</a>
+        </div>
+      </div>
+      <div style="padding: 16px 24px; border-top: 1px solid #dde2ea;">
+        <button style="width: 100%; background: #0b0f14; color: #fff; border: none; border-radius: 6px; padding: 12px; font-size: 13px; font-weight: 500;">Generate evidence pack</button>
+        <div style="font-size: 11px; color: #69737f; margin-top: 9px; line-height: 1.5;">Every export is itself logged — who exported what scope, when. Generated packs are immutable.</div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeMenu }}" style="position: fixed; inset: 0; z-index: 55;"></div>
+  </sc-if>
+  <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="{{ menuStyle }}">
+      <div onClick="{{ applyMenuFilter }}" style="display: flex; align-items: center; gap: 8px; padding: 9px 11px; border-radius: 5px; font-size: 13px; cursor: pointer;" style-hover="background: #eef2f7;">
+        <span style="color: #495260;">Filter by {{ menuField }}:</span><span style="font-weight: 500;">{{ menuValue }}</span>
+      </div>
+      <sc-if value="{{ menuCanGroup }}" hint-placeholder-val="{{ true }}">
+        <div onClick="{{ applyMenuGroup }}" style="display: flex; align-items: center; gap: 8px; padding: 9px 11px; border-radius: 5px; font-size: 13px; cursor: pointer;" style-hover="background: #eef2f7;">
+          <span style="color: #495260;">Group by</span><span style="font-weight: 500;">{{ menuField }}</span>
+        </div>
+      </sc-if>
+    </div>
+  </sc-if>
+  <div style="position: fixed; bottom: 26px; right: 30px; background: #0b0f14; color: #fff; padding: 11px 18px; border-radius: 999px; font-size: 13px; font-weight: 500; display: flex; align-items: center; gap: 9px; z-index: 30; font-family: 'IBM Plex Sans', sans-serif;">
+    <span style="width: 6px; height: 6px; border-radius: 50%; background: #fff;"></span>Ask Hush
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const RAW = [
+  ["Today","14:12","Mor Levi","mor@hush.security","Claude Code","GitHub","Merge Pull Request","payments-core #412","","Awaiting","Manual",null,null],
+  ["Today","14:09","Mor Levi","mor@hush.security","Claude Code","GitHub","List Issues","payments-core","","Pass","Automated",null,null],
+  ["Today","13:58","Itay Ben-David","itay@hush.security","Claude Desktop","Datadog","Delete Monitor","prod-api-latency","","Blocked","Automated","attempted","Burst · 3 in 6 min"],
+  ["Today","13:57","Itay Ben-David","itay@hush.security","Claude Desktop","Datadog","Delete Dashboard","prod-overview","","Blocked","Automated","attempted","Burst · 3 in 6 min"],
+  ["Today","13:56","Itay Ben-David","itay@hush.security","Claude Desktop","Datadog","Revoke API Key","monitoring-key-04","","Awaiting","Manual","attempted","Burst · 3 in 6 min"],
+  ["Today","13:20","Mor Levi","mor@hush.security","Claude Code","GitHub","Merge Pull Request","payments-core #409","","Pass","Manual","no-reason",null],
+  ["Today","13:55","Itay Ben-David","itay@hush.security","Claude Desktop","Datadog","List Monitors","—","","Pass","Automated",null,null],
+  ["Today","12:40","Rafael Cohen","rafael@hush.security","Cursor","HubSpot","Update Contact Property","contact 88213","","Pass","Automated","first-seen",null],
+  ["Today","11:58","svc-billing-02","service account","openclaw-bundle-mcp","Stripe","List Invoices","acct_9f21b","","Pass","Automated",null,null],
+  ["Today","11:02","Noa Peretz","noa@hush.security","Claude Code","Linear","Create Issue","identity-gateway","","Pass","Manual",null,null],
+  ["Today","10:47","Noa Peretz","noa@hush.security","Claude Code","Linear","Save Issue","IDG-1042","","Pass","Automated",null,null],
+  ["Today","10:31","Dana Shaked","dana@hush.security","Claude Code","GitHub","Force Push","infra-terraform","","Blocked","Automated","attempted",null],
+  ["Today","09:52","Dana Shaked","dana@hush.security","Claude Code","GitHub","List Commits","infra-terraform","","Pass","Automated",null,null],
+  ["Today","09:14","svc-agent-07","service account","openclaw-bundle-mcp","Apollo.io","Bulk Contact Create","q3-outreach","312 records","Pass","Automated","drift",null],
+  ["Today","08:40","Yael Brandt","yael@hush.security","Windsurf","Snowflake","Run Query","analytics.events_raw","","Pass","Automated","first-seen",null],
+  ["Yesterday","22:15","svc-agent-07","service account","openclaw-bundle-mcp","Apollo.io","Enrich Contact","q3-outreach","","Pass","Automated","drift",null],
+  ["Yesterday","19:30","Mor Levi","mor@hush.security","Claude Code","GitHub","Force Push","payments-core","","Blocked","Automated","attempted",null],
+  ["Yesterday","18:02","Itay Ben-David","itay@hush.security","Claude Desktop","Datadog","Get Dashboard","prod-overview","","Pass","Manual",null,null],
+  ["Yesterday","16:44","Rafael Cohen","rafael@hush.security","Cursor","HubSpot","List Deals","pipeline-emea","","Pass","Automated","first-seen",null],
+  ["Yesterday","14:05","Noa Peretz","noa@hush.security","Claude Code","Linear","Update Issue","IDG-1042","","Pass","Manual","no-reason",null],
+  ["Yesterday","11:12","svc-billing-02","service account","openclaw-bundle-mcp","Stripe","Refund Charge","ch_3PfL2x","","Blocked","Automated","attempted",null],
+  ["Yesterday","09:03","Yael Brandt","yael@hush.security","Windsurf","Snowflake","Run Query","analytics.events_raw","","Pass","Automated",null,null],
+  ["Aug 23","21:47","Dana Shaked","dana@hush.security","Claude Code","GitHub","Create Branch","infra-terraform","","Pass","Automated",null,null],
+  ["Aug 23","20:10","Tomer Gil","not yet assigned","Claude Code","Jira","Transition Issue","PLAT-206","","Awaiting","Manual",null,null],
+  ["Aug 23","17:39","Rafael Cohen","rafael@hush.security","Cursor","HubSpot","Delete Contact","contact 71904","","Blocked","Automated","attempted",null],
+  ["Aug 23","15:20","Tomer Gil","not yet assigned","Claude Code","Jira","Transition Issue","PLAT-208","","Awaiting","Manual",null,null],
+  ["Aug 23","12:11","Mor Levi","mor@hush.security","Claude Code","GitHub","List Pull Requests","payments-core","","Pass","Automated",null,null]
+];
+
+const DESTRUCTIVE = ["Delete Monitor","Delete Dashboard","Revoke API Key","Force Push","Refund Charge","Delete Contact"];
+const READ = ["List Issues","List Monitors","List Invoices","List Commits","Get Dashboard","List Deals","Run Query","List Pull Requests"];
+
+const RULE_BY_USER = {
+  "Mor Levi": ['Assignment Rule "Platform — Full Access" (#A-011) · matched via group platform-eng', "v4"],
+  "Itay Ben-David": ['Assignment Rule "SecOps — Full Access" (#A-014) · matched via group secops-eng', "v3"],
+  "Rafael Cohen": ['Assignment Rule "GTM Tools" (#A-022) · matched via group revops', "v2"],
+  "Noa Peretz": ['Assignment Rule "Platform — Full Access" (#A-011) · matched via group platform-eng', "v4"],
+  "Dana Shaked": ['Assignment Rule "Infra — Restricted" (#A-018) · matched via group infra-oncall', "v6"],
+  "Yael Brandt": ['Assignment Rule "Analytics Read" (#A-031) · matched via group data-eng', "v1"],
+  "svc-agent-07": ['Assignment Rule "Outbound Automation" (#A-047) · service account, non-interactive', "v2"],
+  "svc-billing-02": ['Assignment Rule "Billing Automation" (#A-052) · service account, non-interactive', "v3"],
+  "Tomer Gil": ["No assignment rule matched", "—"]
+};
+
+const FLAG_META = {
+  "attempted": ["Attempted", "Attempted deviation — blocked at the gate",
+    "A destructive-tier action was attempted but blocked. The attempt itself is the finding."],
+  "first-seen": ["First-seen", "First contact with this resource",
+    "The call was allowed, but this agent has not accessed this resource before. This new access may need verification."],
+  "drift": ["Rule changed", "Governing rule changed after this call",
+    "The call was allowed at the time, but its governing rule has since changed. Its legitimacy under the updated rule may need verification."],
+  "no-reason": ["No justification", "Manual decision recorded without a justification",
+    "A person approved or denied this call, but recorded no reason. The record cannot be explained at export until a justification is added."],
+  "manual": ["Flagged", "Flagged by a person",
+    "No automated pattern fired here. A reviewer marked it for follow-up, and that judgement is part of the record."]
+};
+
+const FILTER_FIELDS = ["Deviation", "Outcome", "Coverage"];
+const CELL_FIELDS = ["Identity", "Agent", "Application", "Tool", "Tool tier"];
+
+class Component extends DCLogic {
+  state = {
+    lens: null, groupBy: "none", sortBy: null, colSort: null, expanded: {},
+    drawerOpen: false, exportOpen: false, view: "activity",
+    filter: null, filterLabel: null, cellFilter: null, menu: null, chips: null, reviewed: { e15: true, e19: true, e25: true }, manualFlag: {}
+  };
+
+  get lens() { return this.state.lens || this.props.lens || "security"; }
+  get sortBy() { return this.state.sortBy || (this.lens === "compliance" ? "deviations" : "recent"); }
+  get chips() {
+    if (this.state.chips) return this.state.chips;
+    return this.lens === "compliance"
+      ? [["Period", "Q3 2026 to date"], ["Tool tier", "All"]]
+      : [["Period", "Last 30 days"], ["Agent", "All"], ["Application", "All"]];
+  }
+
+  setLens(lens) { this.setState({ lens: lens, sortBy: null, chips: null, filter: null, expanded: {} }); }
+
+  applyFilter(kind, label, field) {
+    this.setState({
+      filter: kind, filterLabel: label,
+      chips: this.chips.filter(c => FILTER_FIELDS.indexOf(c[0]) < 0).concat([[field, label]]),
+      view: kind === "coverage" ? "discovery" : "activity"
+    });
+  }
+
+  openMenu(e, field, value) {
+    e.stopPropagation();
+    const r = e.currentTarget.getBoundingClientRect();
+    this.setState({ menu: { field: field, value: value, x: Math.round(r.left), y: Math.round(r.bottom + 6) } });
+  }
+
+  setCellFilter(field, value) {
+    this.setState({
+      cellFilter: { field: field, value: value },
+      chips: this.chips.filter(c => CELL_FIELDS.indexOf(c[0]) < 0).concat([[field, value]])
+    });
+  }
+
+  removeChip(i) {
+    const next = this.chips.slice();
+    const gone = next.splice(i, 1)[0];
+    const wasFilter = FILTER_FIELDS.indexOf(gone[0]) >= 0;
+    const wasCell = CELL_FIELDS.indexOf(gone[0]) >= 0;
+    this.setState({
+      chips: next,
+      filter: wasFilter ? null : this.state.filter,
+      filterLabel: wasFilter ? null : this.state.filterLabel,
+      cellFilter: wasCell ? null : this.state.cellFilter
+    });
+  }
+
+  flagOf(r, id) {
+    if (this.state.manualFlag[id]) return "manual";
+    return r[11];
+  }
+
+  tier(tool) { return DESTRUCTIVE.indexOf(tool) >= 0 ? "Destructive" : (READ.indexOf(tool) >= 0 ? "Read" : "Write"); }
+
+  buildRow(r, i) {
+    const id = "e" + i;
+    const flag = this.flagOf(r, id);
+    const reviewed = !!this.state.reviewed[id];
+    const expanded = !!this.state.expanded[id];
+    const outcome = r[9];
+    const tier = this.tier(r[6]);
+    const meta = flag ? FLAG_META[flag] : null;
+    const h = (this.props.density || "comfortable") === "compact" ? 44 : 56;
+    const ur = RULE_BY_USER[r[2]] || ["Assignment Rule (#A-000)", "v1"];
+    const cause = r[3] === "not yet assigned" ? "User request" : "Tool consent";
+    const pendingLabel = (day, clock) => {
+      const NOW = 14 * 60 + 15;
+      const t = clock.split(":");
+      const mins = NOW - (+t[0] * 60 + +t[1]) + (day === "Today" ? 0 : day === "Yesterday" ? 1440 : 2880);
+      const P = "Pending · ";
+      if (mins < 60) return P + mins + " min";
+      const hrs = Math.round(mins / 60);
+      if (hrs < 24) return P + hrs + " hr";
+      const days = Math.floor(hrs / 24);
+      return P + days + (days === 1 ? " day" : " days");
+    };
+    const approver = cause === "User request" ? "sec-admin@hush.security" : "itay@hush.security";
+    const urId = outcome === "Awaiting" ? "UR-2291" : "UR-2287";
+    const RESP = ["14 min", "38 min", "1 hr", "2 hr", "4 hr"];
+    const respTook = " · decision after " + RESP[i % RESP.length];
+    const verdict = r[10] === "Manual" && outcome !== "Awaiting"
+      ? " · " + (outcome === "Blocked" ? "Denied" : "Approved") + " by " + approver + " · " + r[0].toLowerCase() + " " + r[1] + respTook
+      : (outcome === "Awaiting" ? " · Awaiting a named approver" : "");
+
+    const gates = [
+      { name: "Agent allowlist", text: r[4] + " — permitted client type for " + r[5] + " (#AG-006, v2)", link: "View allowlist →" },
+      { name: "User authorization", text: cause === "User request" ? "No assignment rule matched · User Request #" + urId + verdict : ur[0].replace(/\(#([A-Za-z0-9-]+)\)/, "(#$1, " + ur[1] + ")"), link: cause === "User request" ? "View user request →" : "View rule →" },
+      { name: "Tool authorization", text: cause === "User request"
+        ? 'Tool Permission "' + r[6] + '" (#T-091, v1) · not evaluated — ' + (outcome === "Blocked" ? "denied at user authorization" : "held at user authorization")
+        : 'Tool Permission "' + r[6] + '" (#T-091, v1) · category default: ' + tier + " → " + (r[10] === "Manual" || outcome === "Awaiting" ? "Consent" : outcome === "Blocked" ? "Block" : "Allow") + verdict, link: "View tool setting →" }
+    ];
+
+    return {
+      id: id, day: r[0], clock: r[1], userName: r[2], userMeta: r[3], agent: r[4], app: r[5],
+      tool: r[6], tier: tier, resource: r[7], resourceMeta: r[8], outcome: outcome,
+      decision: outcome === "Awaiting" ? "" : r[10],
+      pendingFor: outcome === "Awaiting" ? pendingLabel(r[0], r[1]) : "",
+      isManual: r[10] === "Manual" && outcome !== "Awaiting",
+      manualCause: cause,
+      decidedBy: cause + " · " + (outcome === "Blocked" ? "denied by " : "approved by ") + approver + " · " + r[0].toLowerCase() + " " + r[1],
+      decisionAfter: "decision after " + RESP[i % RESP.length],
+      justification: flag === "no-reason"
+        ? "None recorded"
+        : ["Change ticket PLAT-1187 · release window approved", "Verified with requester over Slack · scope limited to one repo", "Incident INC-4402 · remediation step approved", "Owner confirmed the resource is non-production"][i % 4],
+      justStyle: flag === "no-reason" ? { color: "#0b0f14", fontWeight: 600 } : { color: "#0b0f14" },
+      isPass: outcome === "Pass", isBlocked: outcome === "Blocked", isAwaiting: outcome === "Awaiting",
+      hasFlag: !!flag, isAttempted: flag === "attempted" && !reviewed, isFirstSeen: flag === "first-seen" && !reviewed,
+      isDrift: flag === "drift" && !reviewed, isNoReason: flag === "no-reason" && !reviewed, isManualFlag: (flag === "manual" || reviewed) && !!flag,
+      flagKind: flag,
+      flagLabel: flag ? (reviewed ? "Reviewed" : meta[0]) : "",
+      flagTitle: flag ? meta[1] : "",
+      flagWhy: flag ? meta[2] : "",
+      hasSubFlag: !!r[12], subFlag: r[12] || "", reviewedFlag: reviewed,
+      expanded: expanded, chevron: expanded ? "▼" : "▶",
+      sortKey: (r[0] === "Today" ? 0 : r[0] === "Yesterday" ? 1 : 2) * 10000 - (parseInt(r[1], 10) * 60 + parseInt(r[1].slice(3), 10)),
+      deployment: "prod-gateway-01", requestId: "req_" + (7100 + i * 137).toString(16) + "b", sessionId: "sess_" + (4400 + i * 29) + "-cc09",
+      credential: "jit-token · ttl 300s",
+      params: '{\n  "resource": "' + r[7] + '",\n  "action": "' + r[6].toLowerCase().replace(/ /g, "_") + '"' + (r[8] ? ',\n  "count": ' + parseInt(r[8], 10) : "") + '\n}',
+      gates: gates,
+      trStyle: { cursor: "pointer", height: h + "px", background: expanded ? "#eef2f7" : "#ffffff", boxShadow: expanded ? "inset 3px 0 0 #0b0f14" : "none" },
+      dotStyle: { width: "8px", height: "8px", borderRadius: "50%", flex: "0 0 8px", background: reviewed ? "#b3bccb" : "#0b0f14" },
+      chipStyle: { display: "inline-block", border: "1px solid " + (reviewed ? "#dde2ea" : "#d6dce5"), borderRadius: "3px", padding: "2px 7px", fontSize: "11px", fontWeight: 500, whiteSpace: "nowrap", color: reviewed ? "#495260" : "#0b0f14", background: reviewed ? "#f7f9fc" : "#e8ecf2" },
+      outcomeStyle: { fontWeight: 400, color: "#0b0f14" },
+      decisionStyle: { fontSize: "13px", fontWeight: r[10] === "Manual" ? 600 : 400, color: r[10] === "Manual" ? "#0b0f14" : "#495260" },
+      markLabel: flag ? (reviewed ? "Reopen" : "Mark reviewed") : "Flag for review",
+      markStyle: { background: flag && !reviewed ? "#0b0f14" : "#ffffff", color: flag && !reviewed ? "#ffffff" : "#0b0f14", border: flag && !reviewed ? "none" : "1px solid #0b0f14", borderRadius: "6px", padding: "9px 16px", fontSize: "13px", fontWeight: 500 },
+      onFilterUser: (e) => this.openMenu(e, "Identity", r[2]),
+      onFilterAgent: (e) => this.openMenu(e, "Agent", r[4]),
+      onFilterApp: (e) => this.openMenu(e, "Application", r[5]),
+      onFilterTool: (e) => this.openMenu(e, "Tool", r[6]),
+      onFilterTier: (e) => this.openMenu(e, "Tool tier", tier),
+      toggle: () => this.setState(s => {
+        const e = Object.assign({}, s.expanded); e[id] = !e[id]; return { expanded: e };
+      }),
+      mark: (ev) => {
+        ev.stopPropagation();
+        this.setState(s => {
+          if (!flag) { const m = Object.assign({}, s.manualFlag); m[id] = true; return { manualFlag: m }; }
+          const rv = Object.assign({}, s.reviewed); rv[id] = !rv[id]; return { reviewed: rv };
+        });
+      }
+    };
+  }
+
+  renderVals() {
+    const lens = this.lens;
+    const isSec = lens === "security";
+    let rows = RAW.map((r, i) => this.buildRow(r, i));
+    const total = this.props.totalEvents || 47382;
+
+    const f = this.state.filter;
+    const cf = this.state.cellFilter;
+    if (cf) {
+      const key = cf.field === "Identity" ? "userName" : cf.field === "Agent" ? "agent" : cf.field === "Application" ? "app" : cf.field === "Tool tier" ? "tier" : "tool";
+      rows = rows.filter(r => r[key] === cf.value);
+    }
+    if (f && f !== "coverage") rows = rows.filter(r => f === "any" ? !!r.flagKind : f === "awaiting" ? r.isAwaiting : f === "unauthorized" ? !r.isPass : r.flagKind === f);
+
+    const rank = { attempted: 0, "no-reason": 1, drift: 2, "first-seen": 3, manual: 4 };
+    rows = rows.slice().sort((a, b) => a.sortKey - b.sortKey);
+    if (this.sortBy === "deviations") {
+      rows = rows.slice().sort((a, b) => ((a.flagKind ? rank[a.flagKind] : 9) - (b.flagKind ? rank[b.flagKind] : 9)) || (a.sortKey - b.sortKey));
+    }
+
+    const cs = this.state.colSort;
+    const COMP = {
+      flag: r => (r.flagKind ? rank[r.flagKind] : 9),
+      time: r => r.sortKey,
+      identity: r => r.userName.toLowerCase(),
+      agent: r => r.agent.toLowerCase(),
+      app: r => r.app.toLowerCase(),
+      tool: r => r.tool.toLowerCase(),
+      resource: r => r.resource.toLowerCase(),
+      outcome: r => ({ Blocked: 0, Awaiting: 1, Pass: 2 })[r.outcome],
+      decision: r => (r.decision === "Manual" ? 0 : r.decision === "Automated" ? 1 : 2)
+    };
+    if (cs && COMP[cs.key]) {
+      const get = COMP[cs.key];
+      const dir = cs.dir === "desc" ? -1 : 1;
+      rows = rows.slice().sort((a, b) => {
+        const x = get(a), y = get(b);
+        if (x < y) return -1 * dir;
+        if (x > y) return 1 * dir;
+        return a.sortKey - b.sortKey;
+      });
+    }
+    const sortCol = {};
+    ["flag", "time", "identity", "agent", "app", "tool", "resource", "outcome", "decision"].forEach(k => {
+      const on = cs && cs.key === k;
+      sortCol[k] = {
+        arrow: on && cs.dir === "desc" ? "↓" : "↑",
+        on: on ? "on" : "off",
+        click: (e) => {
+          e.stopPropagation();
+          const cur = this.state.colSort;
+          this.setState({ colSort: cur && cur.key === k ? (cur.dir === "asc" ? { key: k, dir: "desc" } : null) : { key: k, dir: "asc" } });
+        }
+      };
+    });
+
+    let groups;
+    const gb = this.state.groupBy;
+    if (gb === "none") {
+      groups = [{ showHeader: false, label: "", meta: "", rows: rows }];
+    } else {
+      const key = gb === "agent" ? "agent" : gb === "user" ? "userName" : gb === "app" ? "app" : gb === "tier" ? "tier" : gb === "outcome" ? "outcome" : "sessionId";
+      const map = {};
+      rows.forEach(r => { (map[r[key]] = map[r[key]] || []).push(r); });
+      const TIER_ORDER = ["Destructive", "Write", "Read"];
+      const OUTCOME_ORDER = ["Blocked", "Awaiting", "Pass"];
+      const keys = Object.keys(map);
+      if (gb === "tier") keys.sort((a, b) => TIER_ORDER.indexOf(a) - TIER_ORDER.indexOf(b));
+      if (gb === "outcome") keys.sort((a, b) => OUTCOME_ORDER.indexOf(a) - OUTCOME_ORDER.indexOf(b));
+      groups = keys.map(k => {
+        const rs = map[k];
+        const dev = rs.filter(r => r.hasFlag).length;
+        return { showHeader: true, label: k, meta: rs.length + (rs.length === 1 ? " event" : " events") + (dev ? " · " + dev + " flagged" : " · none flagged"), rows: rs };
+      });
+    }
+
+    const filtered = !!(f && f !== "coverage") || !!cf;
+    const shown = rows.length;
+    const countLine = filtered
+      ? "Showing " + shown + " of " + shown + " matching events · filtered from " + total.toLocaleString()
+      : "Showing 1–" + shown + " of " + total.toLocaleString() + " events";
+
+    const exRows = rows.filter(r => r.hasFlag);
+    const exCount = exRows.length;
+    const exReviewed = exRows.filter(r => r.reviewedFlag).length;
+    const exOpen = exCount - exReviewed;
+
+    const btn = (on) => ({ border: "none", background: on ? "#0b0f14" : "transparent", color: on ? "#ffffff" : "#2f3742", padding: "8px 17px", borderRadius: "5px", fontSize: "13px", fontWeight: on ? 600 : 400 });
+
+    return {
+      isSecurity: isSec, isCompliance: !isSec,
+      isActivity: this.state.view === "activity", isDiscovery: this.state.view === "discovery",
+      secBtnStyle: btn(isSec), compBtnStyle: btn(!isSec),
+      periodLabel: isSec ? "Last 30 days" : "Q3 2026 to date",
+      exportLabel: isSec ? "Share findings" : "Export as evidence",
+      exportBtnStyle: isSec
+        ? { border: "1px solid #0b0f14", borderRadius: "6px", background: "#ffffff", color: "#0b0f14", padding: "8px 15px", fontSize: "12px", fontWeight: 500 }
+        : { border: "none", borderRadius: "6px", background: "#0b0f14", color: "#ffffff", padding: "9px 17px", fontSize: "13px", fontWeight: 600 },
+      groups: groups, groupBy: gb, sortBy: this.sortBy, countLine: countLine, sort: sortCol,
+      filtered: filtered, showPager: !filtered,
+      scopeCount: filtered ? shown.toLocaleString() + " / " + total.toLocaleString() : total.toLocaleString(),
+      scopeLabel: "activities",
+      lastPage: Math.ceil(total / 25).toLocaleString(),
+      chips: this.chips.map((c, i) => ({
+        field: c[0], value: c[1],
+        style: { display: "flex", alignItems: "center", gap: "6px", border: "1px solid #cfd6e0", borderRadius: "6px", background: FILTER_FIELDS.indexOf(c[0]) >= 0 ? "#e8ecf2" : "#ffffff", padding: "7px 10px", fontSize: "12px" },
+        remove: () => this.removeChip(i)
+      })),
+      drawerOpen: this.state.drawerOpen, exportOpen: this.state.exportOpen,
+      menuOpen: !!this.state.menu,
+      menuField: this.state.menu ? this.state.menu.field.toLowerCase() : "",
+      menuValue: this.state.menu ? this.state.menu.value : "",
+      menuCanGroup: !!this.state.menu && this.state.menu.field !== "Tool",
+      menuStyle: this.state.menu
+        ? { position: "fixed", left: this.state.menu.x + "px", top: this.state.menu.y + "px", zIndex: 60, minWidth: "246px", background: "#ffffff", border: "1px solid #c6cdd9", borderRadius: "8px", boxShadow: "0 8px 24px rgba(11,15,20,0.16)", padding: "5px", fontFamily: "'IBM Plex Sans', sans-serif" }
+        : {},
+      closeMenu: () => this.setState({ menu: null }),
+      tierRead: () => { this.setCellFilter("Tool tier", "Read"); this.setState({ drawerOpen: false }); },
+      tierWrite: () => { this.setCellFilter("Tool tier", "Write"); this.setState({ drawerOpen: false }); },
+      tierDestructive: () => { this.setCellFilter("Tool tier", "Destructive"); this.setState({ drawerOpen: false }); },
+      applyMenuFilter: () => {
+        const m = this.state.menu;
+        this.setState({ menu: null });
+        if (m) this.setCellFilter(m.field, m.value);
+      },
+      applyMenuGroup: () => {
+        const m = this.state.menu;
+        if (!m) return;
+        const g = m.field === "Identity" ? "user" : m.field === "Agent" ? "agent" : m.field === "Tool tier" ? "tier" : "app";
+        this.setState({ menu: null, groupBy: g });
+      },
+      exportFilters: this.state.filterLabel || (cf ? cf.field + " = " + cf.value : "None — full period"),
+      exportCount: filtered ? shown.toString() : total.toLocaleString(),
+      exportExceptions: exCount + " · " + exReviewed + " reviewed, " + exOpen + " open",
+      exportOpenCount: exOpen,
+      pickSecurity: () => this.setLens("security"),
+      pickCompliance: () => this.setLens("compliance"),
+      onGroupBy: (e) => this.setState({ groupBy: e.target.value }),
+      onSort: (e) => this.setState({ sortBy: e.target.value }),
+      openDrawer: () => this.setState({ drawerOpen: true }),
+      closeDrawer: () => this.setState({ drawerOpen: false }),
+      clearFilters: () => this.setState({ filter: null, filterLabel: null, cellFilter: null, chips: [], drawerOpen: false }),
+      openExport: () => this.setState({ exportOpen: true }),
+      closeExport: () => this.setState({ exportOpen: false }),
+      backToActivity: () => this.setState({ view: "activity", filter: null, filterLabel: null, chips: null }),
+      filterCoverage: () => this.applyFilter("coverage", "No governing application", "Coverage"),
+      filterAttempted: () => this.applyFilter("attempted", "Attempted", "Deviation"),
+      filterFirstSeen: () => this.applyFilter("first-seen", "First-seen", "Deviation"),
+      filterDrift: () => this.applyFilter("drift", "Rule changed", "Deviation"),
+      filterNoReason: () => this.applyFilter("no-reason", "No justification", "Deviation"),
+      filterExceptions: () => this.applyFilter("any", "Any deviation", "Deviation"),
+      filterUnauthorized: () => this.applyFilter("unauthorized", "Blocked or awaiting", "Outcome"),
+      filterAwaiting: () => this.applyFilter("awaiting", "Awaiting", "Outcome")
+    };
+  }
+}
+
+</script>
+</body>
+</html>
