@@ -10,7 +10,7 @@
 <helmet>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <style>
   body { margin: 0; background: #eef1f5; -webkit-font-smoothing: antialiased; }
   a { color: #0b0f14; text-decoration: none; }
@@ -43,8 +43,8 @@
       <span style="font-size: 13px; color: #69737f; padding: 6px 12px; border-radius: 999px; cursor: pointer;" style-hover="background: #f0f3f8; color: #2f3742;">Applications</span>
       <span style="font-size: 13px; color: #69737f; padding: 6px 12px; border-radius: 999px; cursor: pointer;" style-hover="background: #f0f3f8; color: #2f3742;">Catalog</span>
       <span style="font-size: 13px; color: #69737f; padding: 6px 12px; border-radius: 999px; cursor: pointer;" style-hover="background: #f0f3f8; color: #2f3742;">User Requests</span>
-      <span style="font-size: 13px; font-weight: 500; color: #ffffff; background: #2f3742; padding: 6px 14px; border-radius: 999px;">Activity</span>
-      <span style="font-size: 13px; color: #69737f; padding: 6px 12px; border-radius: 999px; cursor: pointer;" style-hover="background: #f0f3f8; color: #2f3742;">Discovery</span>
+      <span onClick="{{ goActivity }}" style="{{ navActivityStyle }}">Activity</span>
+      <span onClick="{{ openDiscovery }}" style="{{ navDiscoveryStyle }}">Discovery</span>
       <div style="flex: 1 1 auto;"></div>
       <span style="font-size: 12px; font-family: 'IBM Plex Mono', monospace; color: #69737f; display: flex; align-items: center; gap: 6px;"><span style="width: 5px; height: 5px; border-radius: 50%; background: #0b0f14; display: inline-block;"></span>Live&#8202;·&#8202;updated 12s ago</span>
       <div style="position: relative; display: flex;">
@@ -70,8 +70,12 @@
       <div style="padding: 28px 32px 60px;">
         <button onClick="{{ backToActivity }}" style="background: none; border: none; padding: 0; font-size: 12px; color: #495260; margin-bottom: 18px;">← Back to Activity</button>
         <div style="font-size: 12px; letter-spacing: 0.01em; color: #69737f; font-weight: 600;">Agentic AI</div>
-        <div style="font-size: 28px; font-weight: 600; letter-spacing: -0.015em; margin: 4px 0 8px;">Discovery</div>
-        <div style="font-size: 13px; color: #495260; max-width: 620px; line-height: 1.55;">Runtime sensors observe agent traffic independently of configuration. These agents reached MCP servers that are not registered as applications in Hush - so their calls never passed a gate and produce no Activity rows.</div>
+        <div style="display: flex; align-items: baseline; gap: 10px; margin: 4px 0 8px;">
+          <div style="font-size: 28px; font-weight: 600; letter-spacing: -0.015em;">Discovery</div>
+          <div style="font-size: 13px; font-weight: 600; color: #0b0f14; letter-spacing: 0.02em;">[OUT OF SCOPE]</div>
+        </div>
+        <div style="opacity: 0.28;">
+        <div style="font-size: 13px; color: #495260; max-width: 620px; line-height: 1.55; text-wrap: pretty;">Runtime sensors observe agent traffic independently of configuration. These agents reached MCP servers that are not registered as applications in Hush - so their calls never passed a gate and produce no Activity rows.</div>
         <div style="margin-top: 26px; border: 1px solid #dde2ea; border-radius: 6px;">
           <div style="display: grid; grid-template-columns: 220px 240px 160px 120px 1fr; padding: 11px 16px; background: #f7f9fc; border-bottom: 1px solid #dde2ea; font-size: 11px; letter-spacing: 0.06em; color: #495260; font-weight: 500;">
             <div>Agent</div><div>Observed endpoint</div><div>First seen</div><div>Calls</div><div></div>
@@ -89,7 +93,8 @@
             <div style="text-align: right;"><button style="background: #0b0f14; color: #fff; border: none; border-radius: 6px; padding: 7px 13px; font-size: 12px; font-weight: 500;">Register application</button></div>
           </div>
         </div>
-        <div style="margin-top: 14px; font-size: 12px; color: #69737f; line-height: 1.5; max-width: 620px;">Discovery narrows the coverage gap but does not close it - it depends on sensor deployment. Coverage is reported alongside every export so an auditor sees the boundary of the evidence.</div>
+        <div style="margin-top: 14px; font-size: 12px; color: #69737f; line-height: 1.5; max-width: 620px; text-wrap: pretty;">Discovery narrows the coverage gap but does not close it - it depends on sensor deployment. Coverage is reported alongside every export so an auditor sees the boundary of the evidence.</div>
+        </div>
       </div>
     </sc-if>
 
@@ -116,11 +121,11 @@
         <div style="margin-top: 26px;">
           <div style="font-size: 12px; letter-spacing: 0.01em; color: #69737f; font-weight: 600; margin-bottom: 10px;">{{ postureLine }}</div>
           <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;">
-            <div style="border: 1px solid #d6dce5; border-radius: 10px; padding: 18px; min-height: 172px; box-sizing: border-box; display: flex; flex-direction: column; cursor: pointer; background: #eef2f7; box-shadow: 0 2px 6px rgba(11,15,20,0.10), 0 1px 1px rgba(11,15,20,0.05); transition: box-shadow 120ms ease, border-color 120ms ease, transform 120ms ease;" style-hover="border-color: #0b0f14; box-shadow: 0 5px 16px rgba(11,15,20,0.10); transform: translateY(-1px);">
+            <div onClick="{{ openDiscovery }}" style="border: 1px solid #d6dce5; border-radius: 10px; padding: 18px; min-height: 172px; box-sizing: border-box; display: flex; flex-direction: column; cursor: pointer; background: #eef2f7; box-shadow: 0 2px 6px rgba(11,15,20,0.10), 0 1px 1px rgba(11,15,20,0.05); transition: box-shadow 120ms ease, border-color 120ms ease, transform 120ms ease;" style-hover="border-color: #0b0f14; box-shadow: 0 5px 16px rgba(11,15,20,0.10); transform: translateY(-1px);">
               <div style="font-size: 44px; font-weight: 600; letter-spacing: -0.03em; line-height: 1;">3</div>
               <div style="font-size: 15px; font-weight: 600; margin-top: 12px;">Ungoverned agents / MCP servers</div>
               <div style="display: flex; align-items: center; gap: 8px; font-size: 12px; color: #0b0f14; line-height: 1.4; margin-top: 4px;">2 agents&nbsp;·&nbsp;1 MCP server</div>
-              <div style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: #495260; margin-top: auto; padding-top: 14px; border-top: 1px solid #dde2ea;">Open Discovery <span>→</span></div>
+              <div style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: #495260; margin-top: auto; padding-top: 14px; border-top: 1px solid #dde2ea;"><span style="border-bottom: 1px solid #495260;">Open Discovery</span> <span>→</span></div>
             </div>
             <div onClick="{{ filterAttempted }}" style="border: 1px solid #d6dce5; border-radius: 10px; padding: 18px; min-height: 172px; box-sizing: border-box; display: flex; flex-direction: column; cursor: pointer; background: #fbfcfe; box-shadow: 0 2px 6px rgba(11,15,20,0.10), 0 1px 1px rgba(11,15,20,0.05); transition: box-shadow 120ms ease, border-color 120ms ease, transform 120ms ease;" style-hover="border-color: #0b0f14; box-shadow: 0 5px 16px rgba(11,15,20,0.10); transform: translateY(-1px);">
               <div style="font-size: 44px; font-weight: 600; letter-spacing: -0.03em; line-height: 1;">7</div>
@@ -145,11 +150,11 @@
         <div style="margin-top: 26px;">
           <div style="font-size: 12px; letter-spacing: 0.01em; color: #69737f; font-weight: 600; margin-bottom: 10px;">{{ postureLine }}</div>
           <div style="display: grid; grid-template-columns: 321px 321px 1fr; gap: 12px; align-items: stretch;">
-            <div style="border: 1px solid #d6dce5; border-radius: 10px; padding: 18px; min-height: 172px; box-sizing: border-box; display: flex; flex-direction: column; cursor: pointer; background: #eef2f7; box-shadow: 0 2px 6px rgba(11,15,20,0.10), 0 1px 1px rgba(11,15,20,0.05); transition: box-shadow 120ms ease, border-color 120ms ease, transform 120ms ease;" style-hover="border-color: #0b0f14; box-shadow: 0 5px 16px rgba(11,15,20,0.10); transform: translateY(-1px);">
+            <div onClick="{{ openDiscovery }}" style="border: 1px solid #d6dce5; border-radius: 10px; padding: 18px; min-height: 172px; box-sizing: border-box; display: flex; flex-direction: column; cursor: pointer; background: #eef2f7; box-shadow: 0 2px 6px rgba(11,15,20,0.10), 0 1px 1px rgba(11,15,20,0.05); transition: box-shadow 120ms ease, border-color 120ms ease, transform 120ms ease;" style-hover="border-color: #0b0f14; box-shadow: 0 5px 16px rgba(11,15,20,0.10); transform: translateY(-1px);">
               <div style="font-size: 44px; font-weight: 600; letter-spacing: -0.03em; line-height: 1;">3</div>
               <div style="font-size: 15px; font-weight: 600; margin-top: 12px;">Ungoverned agents / MCP servers</div>
               <div style="display: flex; align-items: center; gap: 8px; font-size: 12px; color: #0b0f14; line-height: 1.4; margin-top: 4px;">2 agents&nbsp;·&nbsp;1 MCP server</div>
-              <div style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: #495260; margin-top: auto; padding-top: 14px; border-top: 1px solid #dde2ea;">Open Discovery <span>→</span></div>
+              <div style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: #495260; margin-top: auto; padding-top: 14px; border-top: 1px solid #dde2ea;"><span style="border-bottom: 1px solid #495260;">Open Discovery</span> <span>→</span></div>
             </div>
             <div onClick="{{ filterUnauthorized }}" style="border: 1px solid #d6dce5; border-radius: 10px; padding: 18px; min-height: 172px; box-sizing: border-box; display: flex; flex-direction: column; cursor: pointer; background: #eef2f7; box-shadow: 0 2px 6px rgba(11,15,20,0.10), 0 1px 1px rgba(11,15,20,0.05); transition: box-shadow 120ms ease, border-color 120ms ease, transform 120ms ease;" style-hover="border-color: #0b0f14; box-shadow: 0 5px 16px rgba(11,15,20,0.10); transform: translateY(-1px);">
               <div style="font-size: 44px; font-weight: 600; letter-spacing: -0.03em; line-height: 1;">94%</div>
@@ -161,7 +166,7 @@
                 </span>
                 <span>Ungoverned activity missing (partial coverage)</span>
               </div>
-              <div style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: #495260; margin-top: auto; padding-top: 14px; border-top: 1px solid #dde2ea;">Show 6% unauthorized · 2 items pending &gt;24h <span>→</span></div>
+              <div style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: #495260; margin-top: auto; padding-top: 14px; border-top: 1px solid #dde2ea;"><span onClick="{{ filterUnauthorizedStop }}" style="cursor: pointer;" style-hover="color: #0b0f14;">Show 6% unauthorized</span><span>·</span><span onClick="{{ filterPending24 }}" style="cursor: pointer;" style-hover="color: #0b0f14;">1 item pending &gt;24h</span> <span>→</span></div>
             </div>
             <div style="border: 1px solid #d6dce5; border-radius: 10px; padding: 18px; min-height: 172px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: center; background: #fbfcfe; box-shadow: 0 2px 6px rgba(11,15,20,0.10), 0 1px 1px rgba(11,15,20,0.05);">
               <div style="font-size: 12px; letter-spacing: 0.01em; color: #69737f; font-weight: 600; margin-bottom: 10px;">Needs explanation before export</div>
@@ -213,11 +218,16 @@
             <div onClick="{{ closeSelects }}" style="position: fixed; inset: 0; z-index: 55;"></div>
           </sc-if>
           <sc-if value="{{ groupMenuOpen }}" hint-placeholder-val="{{ false }}">
-            <div style="position: absolute; top: calc(100% + 6px); left: 0; z-index: 60; min-width: 186px; background: #ffffff; border: 1px solid #c6cdd9; border-radius: 8px; box-shadow: 0 8px 24px rgba(11,15,20,0.16); padding: 5px;">
-              <sc-for list="{{ groupOptions }}" as="opt" hint-placeholder-count="4">
-                <div onClick="{{ opt.pick }}" style="{{ opt.style }}" style-hover="background: #eef2f7;">
-                  <span>{{ opt.label }}</span><span style="{{ opt.tickStyle }}">✓</span>
-                </div>
+            <div style="position: absolute; top: calc(100% + 6px); left: 0; z-index: 60; min-width: 196px; background: #ffffff; border: 1px solid #c6cdd9; border-radius: 8px; box-shadow: 0 8px 24px rgba(11,15,20,0.16); padding: 5px;">
+              <sc-for list="{{ groupOptions }}" as="opt" hint-placeholder-count="9">
+                <sc-if value="{{ opt.isHeader }}" hint-placeholder-val="{{ false }}">
+                  <div style="{{ opt.style }}">{{ opt.label }}</div>
+                </sc-if>
+                <sc-if value="{{ opt.isItem }}" hint-placeholder-val="{{ true }}">
+                  <div onClick="{{ opt.pick }}" style="{{ opt.style }}" style-hover="background: #eef2f7;">
+                    <span>{{ opt.label }}</span><span style="{{ opt.tickStyle }}">✓</span>
+                  </div>
+                </sc-if>
               </sc-for>
             </div>
           </sc-if>
@@ -232,7 +242,7 @@
           </sc-if>
           <sc-if value="{{ sortMenuOpen }}" hint-placeholder-val="{{ false }}">
             <div style="position: absolute; top: calc(100% + 6px); right: 0; z-index: 60; min-width: 186px; background: #ffffff; border: 1px solid #c6cdd9; border-radius: 8px; box-shadow: 0 8px 24px rgba(11,15,20,0.16); padding: 5px;">
-              <sc-for list="{{ sortOptions }}" as="opt" hint-placeholder-count="2">
+              <sc-for list="{{ sortOptions }}" as="opt" hint-placeholder-count="3">
                 <div onClick="{{ opt.pick }}" style="{{ opt.style }}" style-hover="background: #eef2f7;">
                   <span>{{ opt.label }}</span><span style="{{ opt.tickStyle }}">✓</span>
                 </div>
@@ -252,7 +262,7 @@
           <tr style="background: #f7f9fc;">
             <th style="position: sticky; top: 108px; z-index: 10; background: #f7f9fc; box-shadow: inset 0 -1px 0 #c6cdd9, 0 2px 5px -5px rgba(11,15,20,0.14); box-sizing: border-box; width: 158px; text-align: left; font-size: 13px; letter-spacing: 0.01em; font-weight: 600; color: #0b0f14; padding: 12px 14px 12px 30px; border-bottom: 1px solid #c6cdd9; cursor: pointer; user-select: none;" onClick="{{ sort.flag.click }}" style-hover="background: #f0f3f8;"><span style="display: inline-flex; align-items: center; gap: 5px;">Flag<span data-arrow="1" data-on="{{ sort.flag.on }}" style="font-size: 13px; color: #495260;">{{ sort.flag.arrow }}</span></span></th>
             <th style="position: sticky; top: 108px; z-index: 10; background: #f7f9fc; box-shadow: inset 0 -1px 0 #c6cdd9, 0 2px 5px -5px rgba(11,15,20,0.14); box-sizing: border-box; width: 112px; text-align: left; font-size: 13px; letter-spacing: 0.01em; font-weight: 600; color: #0b0f14; padding: 12px 14px; border-bottom: 1px solid #c6cdd9; cursor: pointer; user-select: none;" onClick="{{ sort.time.click }}" style-hover="background: #f0f3f8;"><span style="display: inline-flex; align-items: center; gap: 5px;">Time<span data-arrow="1" data-on="{{ sort.time.on }}" style="font-size: 13px; color: #495260;">{{ sort.time.arrow }}</span></span></th>
-            <th style="position: sticky; top: 108px; z-index: 10; background: #f7f9fc; box-shadow: inset 0 -1px 0 #c6cdd9, 0 2px 5px -5px rgba(11,15,20,0.14); box-sizing: border-box; width: 172px; text-align: left; font-size: 13px; letter-spacing: 0.01em; font-weight: 600; color: #0b0f14; padding: 12px 14px; border-bottom: 1px solid #c6cdd9; cursor: pointer; user-select: none;" onClick="{{ sort.identity.click }}" style-hover="background: #f0f3f8;"><span style="display: inline-flex; align-items: center; gap: 5px;">Identity<span data-arrow="1" data-on="{{ sort.identity.on }}" style="font-size: 13px; color: #495260;">{{ sort.identity.arrow }}</span></span></th>
+            <th style="position: sticky; top: 108px; z-index: 10; background: #f7f9fc; box-shadow: inset 0 -1px 0 #c6cdd9, 0 2px 5px -5px rgba(11,15,20,0.14); box-sizing: border-box; width: 172px; text-align: left; font-size: 13px; letter-spacing: 0.01em; font-weight: 600; color: #0b0f14; padding: 12px 14px; border-bottom: 1px solid #c6cdd9; cursor: pointer; user-select: none;" onClick="{{ sort.identity.click }}" style-hover="background: #f0f3f8;"><span style="display: inline-flex; align-items: center; gap: 5px;">User<span data-arrow="1" data-on="{{ sort.identity.on }}" style="font-size: 13px; color: #495260;">{{ sort.identity.arrow }}</span></span></th>
             <th style="position: sticky; top: 108px; z-index: 10; background: #f7f9fc; box-shadow: inset 0 -1px 0 #c6cdd9, 0 2px 5px -5px rgba(11,15,20,0.14); box-sizing: border-box; width: 162px; text-align: left; font-size: 13px; letter-spacing: 0.01em; font-weight: 600; color: #0b0f14; padding: 12px 14px; border-bottom: 1px solid #c6cdd9; cursor: pointer; user-select: none;" onClick="{{ sort.agent.click }}" style-hover="background: #f0f3f8;"><span style="display: inline-flex; align-items: center; gap: 5px;">Agent<span data-arrow="1" data-on="{{ sort.agent.on }}" style="font-size: 13px; color: #495260;">{{ sort.agent.arrow }}</span></span></th>
             <th style="position: sticky; top: 108px; z-index: 10; background: #f7f9fc; box-shadow: inset 0 -1px 0 #c6cdd9, 0 2px 5px -5px rgba(11,15,20,0.14); box-sizing: border-box; width: 94px; text-align: left; font-size: 13px; letter-spacing: 0.01em; font-weight: 600; color: #0b0f14; padding: 12px 14px; border-bottom: 1px solid #c6cdd9; cursor: pointer; user-select: none;" onClick="{{ sort.app.click }}" style-hover="background: #f0f3f8;"><span style="display: inline-flex; align-items: center; gap: 5px;">Application<span data-arrow="1" data-on="{{ sort.app.on }}" style="font-size: 13px; color: #495260;">{{ sort.app.arrow }}</span></span></th>
             <th style="position: sticky; top: 108px; z-index: 10; background: #f7f9fc; box-shadow: inset 0 -1px 0 #c6cdd9, 0 2px 5px -5px rgba(11,15,20,0.14); box-sizing: border-box; width: 176px; text-align: left; font-size: 13px; letter-spacing: 0.01em; font-weight: 600; color: #0b0f14; padding: 12px 14px; border-bottom: 1px solid #c6cdd9; cursor: pointer; user-select: none;" onClick="{{ sort.tool.click }}" style-hover="background: #f0f3f8;"><span style="display: inline-flex; align-items: center; gap: 5px;">Tool<span data-arrow="1" data-on="{{ sort.tool.on }}" style="font-size: 13px; color: #495260;">{{ sort.tool.arrow }}</span></span></th>
@@ -421,7 +431,7 @@
       </div>
       <div style="flex: 1 1 auto; overflow: auto; padding: 4px 24px 24px;">
         <div style="padding: 18px 0 14px; border-bottom: 1px solid #e8ecf2;">
-          <div style="font-size: 12px; letter-spacing: 0.01em; color: #69737f; font-weight: 600; margin-bottom: 11px;">Time period</div>
+          <div style="font-size: 12px; letter-spacing: 0.04em; color: #2f3742; font-weight: 300; margin-bottom: 11px;">Time period</div>
           <div style="display: flex; flex-wrap: wrap; gap: 6px;">
             <sc-for list="{{ periodOptions }}" as="opt" hint-placeholder-count="4">
               <span onClick="{{ opt.pick }}" style="{{ opt.style }}" style-hover="border-color: #0b0f14;">{{ opt.label }}</span>
@@ -429,7 +439,7 @@
           </div>
         </div>
         <div style="padding: 18px 0 14px; border-bottom: 1px solid #e8ecf2;">
-          <div style="font-size: 12px; letter-spacing: 0.01em; color: #69737f; font-weight: 600; margin-bottom: 11px;">Deviation</div>
+          <div style="font-size: 12px; letter-spacing: 0.04em; color: #2f3742; font-weight: 300; margin-bottom: 11px;">Deviation</div>
           <div style="display: flex; flex-direction: column; gap: 10px; font-size: 13px;">
             <sc-for list="{{ deviationOptions }}" as="opt" hint-placeholder-count="6">
               <label onClick="{{ opt.pick }}" style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
@@ -438,35 +448,96 @@
             </sc-for>
           </div>
         </div>
-        <div style="padding: 18px 0 14px; border-bottom: 1px solid #e8ecf2;">
-          <div style="font-size: 12px; letter-spacing: 0.01em; color: #69737f; font-weight: 600; margin-bottom: 11px;">Outcome</div>
-          <div style="display: flex; flex-wrap: wrap; gap: 6px;">
-            <sc-for list="{{ outcomeOptions }}" as="opt" hint-placeholder-count="3">
-              <span onClick="{{ opt.pick }}" style="{{ opt.style }}" style-hover="border-color: #0b0f14;">{{ opt.label }}</span>
-            </sc-for>
+        <div style="padding: 20px 0 14px; border-bottom: 1px solid #e8ecf2;">
+          <div style="font-size: 12px; letter-spacing: 0.04em; color: #2f3742; font-weight: 300; margin-bottom: 14px;">Who</div>
+          <div style="font-size: 12px; color: #495260; font-weight: 500; margin-bottom: 8px;">Agent</div>
+          <div style="position: relative;">
+            <input value="{{ agentQuery }}" onChange="{{ onAgentQuery }}" placeholder="Select from below or search agents…" style="width: 100%; box-sizing: border-box; font-family: 'IBM Plex Sans', sans-serif; border: 1px solid #cfd6e0; border-radius: 6px; padding: 8px 11px; font-size: 12px; color: #0b0f14; outline: none; background: #ffffff;" />
+            <sc-if value="{{ agentSuggestOpen }}" hint-placeholder-val="{{ false }}">
+            <div style="position: absolute; top: calc(100% + 4px); left: 0; right: 0; z-index: 8; background: #ffffff; border: 1px solid #c6cdd9; border-radius: 6px; box-shadow: 0 8px 24px rgba(11,15,20,0.16); padding: 4px; max-height: 172px; overflow: auto;">
+              <sc-for list="{{ agentSuggest }}" as="opt" hint-placeholder-count="3">
+                <div onClick="{{ opt.pick }}" style="{{ opt.style }}" style-hover="background: #eef2f7;">
+                  <span>{{ opt.label }}</span><span style="{{ opt.tickStyle }}">✓</span>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
           </div>
-        </div>
-        <div style="padding: 18px 0 14px; border-bottom: 1px solid #e8ecf2;">
-          <div style="font-size: 12px; letter-spacing: 0.01em; color: #69737f; font-weight: 600; margin-bottom: 11px;">Identity</div>
-          <div style="border: 1px solid #cfd6e0; border-radius: 6px; padding: 8px 11px; font-size: 12px; color: #69737f;">Search users and service accounts…</div>
           <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 9px;">
-            <sc-for list="{{ identityOptions }}" as="opt" hint-placeholder-count="4">
+            <sc-for list="{{ agentOptions }}" as="opt" hint-placeholder-count="5">
+              <span onClick="{{ opt.pick }}" style="{{ opt.style }}" style-hover="border-color: #0b0f14;">{{ opt.label }}</span>
+            </sc-for>
+          </div>
+          <div style="font-size: 12px; color: #495260; font-weight: 500; margin: 18px 0 8px;">User</div>
+          <div style="position: relative;">
+            <input value="{{ identityQuery }}" onChange="{{ onIdentityQuery }}" placeholder="Select from below or search users…" style="width: 100%; box-sizing: border-box; font-family: 'IBM Plex Sans', sans-serif; border: 1px solid #cfd6e0; border-radius: 6px; padding: 8px 11px; font-size: 12px; color: #0b0f14; outline: none; background: #ffffff;" />
+            <sc-if value="{{ identitySuggestOpen }}" hint-placeholder-val="{{ false }}">
+            <div style="position: absolute; top: calc(100% + 4px); left: 0; right: 0; z-index: 8; background: #ffffff; border: 1px solid #c6cdd9; border-radius: 6px; box-shadow: 0 8px 24px rgba(11,15,20,0.16); padding: 4px; max-height: 172px; overflow: auto;">
+              <sc-for list="{{ identitySuggest }}" as="opt" hint-placeholder-count="3">
+                <div onClick="{{ opt.pick }}" style="{{ opt.style }}" style-hover="background: #eef2f7;">
+                  <span>{{ opt.label }}</span><span style="{{ opt.tickStyle }}">✓</span>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+          </div>
+          <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 9px;">
+            <sc-for list="{{ identityOptions }}" as="opt" hint-placeholder-count="5">
               <span onClick="{{ opt.pick }}" style="{{ opt.style }}" style-hover="border-color: #0b0f14;">{{ opt.label }}</span>
             </sc-for>
           </div>
         </div>
-        <div style="padding: 18px 0 14px; border-bottom: 1px solid #e8ecf2;">
-          <div style="font-size: 12px; letter-spacing: 0.01em; color: #69737f; font-weight: 600; margin-bottom: 11px;">Agent · application · tool tier</div>
+        <div style="padding: 20px 0 14px; border-bottom: 1px solid #e8ecf2;">
+          <div style="font-size: 12px; letter-spacing: 0.04em; color: #2f3742; font-weight: 300; margin-bottom: 14px;">What</div>
+          <div style="font-size: 12px; color: #495260; font-weight: 500; margin-bottom: 8px;">Application</div>
+          <div style="position: relative;">
+            <input value="{{ appQuery }}" onChange="{{ onAppQuery }}" placeholder="Select from below or search applications…" style="width: 100%; box-sizing: border-box; font-family: 'IBM Plex Sans', sans-serif; border: 1px solid #cfd6e0; border-radius: 6px; padding: 8px 11px; font-size: 12px; color: #0b0f14; outline: none; background: #ffffff;" />
+            <sc-if value="{{ appSuggestOpen }}" hint-placeholder-val="{{ false }}">
+            <div style="position: absolute; top: calc(100% + 4px); left: 0; right: 0; z-index: 8; background: #ffffff; border: 1px solid #c6cdd9; border-radius: 6px; box-shadow: 0 8px 24px rgba(11,15,20,0.16); padding: 4px; max-height: 172px; overflow: auto;">
+              <sc-for list="{{ appSuggest }}" as="opt" hint-placeholder-count="3">
+                <div onClick="{{ opt.pick }}" style="{{ opt.style }}" style-hover="background: #eef2f7;">
+                  <span>{{ opt.label }}</span><span style="{{ opt.tickStyle }}">✓</span>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+          </div>
+          <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 9px;">
+            <sc-for list="{{ appOptions }}" as="opt" hint-placeholder-count="6">
+              <span onClick="{{ opt.pick }}" style="{{ opt.style }}" style-hover="border-color: #0b0f14;">{{ opt.label }}</span>
+            </sc-for>
+          </div>
+          <div style="font-size: 12px; color: #495260; font-weight: 500; margin: 18px 0 8px;">Tool tier</div>
           <div style="display: flex; flex-wrap: wrap; gap: 6px;">
-            <span style="border: 1px solid #cfd6e0; border-radius: 6px; padding: 6px 11px; font-size: 12px;">All agents</span>
-            <span style="border: 1px solid #cfd6e0; border-radius: 6px; padding: 6px 11px; font-size: 12px;">All applications</span>
             <sc-for list="{{ tierOptions }}" as="opt" hint-placeholder-count="3">
               <span onClick="{{ opt.pick }}" style="{{ opt.style }}" style-hover="border-color: #0b0f14;">{{ opt.label }}</span>
             </sc-for>
           </div>
         </div>
+        <div style="padding: 20px 0 14px; border-bottom: 1px solid #e8ecf2;">
+          <div style="font-size: 12px; letter-spacing: 0.04em; color: #2f3742; font-weight: 300; margin-bottom: 14px;">Result</div>
+          <div style="font-size: 12px; color: #495260; font-weight: 500; margin-bottom: 8px;">Outcome</div>
+          <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+            <sc-for list="{{ outcomeOptions }}" as="opt" hint-placeholder-count="3">
+              <span onClick="{{ opt.pick }}" style="{{ opt.style }}" style-hover="border-color: #0b0f14;">{{ opt.label }}</span>
+            </sc-for>
+          </div>
+          <div style="font-size: 12px; color: #495260; font-weight: 500; margin: 18px 0 8px;">Decision</div>
+          <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+            <sc-for list="{{ decisionOptions }}" as="opt" hint-placeholder-count="3">
+              <span onClick="{{ opt.pick }}" style="{{ opt.style }}" style-hover="border-color: #0b0f14;">{{ opt.label }}</span>
+            </sc-for>
+          </div>
+          <div style="font-size: 12px; color: #495260; font-weight: 500; margin: 18px 0 8px;">Response time</div>
+          <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+            <sc-for list="{{ respOptions }}" as="opt" hint-placeholder-count="2">
+              <span onClick="{{ opt.pick }}" style="{{ opt.style }}" style-hover="border-color: #0b0f14;">{{ opt.label }}</span>
+            </sc-for>
+          </div>
+          <div style="font-size: 11px; color: #69737f; margin-top: 9px; line-height: 1.5; text-wrap: pretty;">How long an Awaiting call is still pending.</div>
+        </div>
         <div style="padding: 18px 0 6px;">
-          <div style="font-size: 12px; letter-spacing: 0.01em; color: #69737f; font-weight: 600; margin-bottom: 11px;">Suggested queries</div>
+          <div style="font-size: 12px; letter-spacing: 0.04em; color: #2f3742; font-weight: 300; margin-bottom: 11px;">Suggested queries</div>
           <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 7px; font-size: 12px;">
             <sc-for list="{{ suggestions }}" as="q" hint-placeholder-count="3">
               <div onClick="{{ q.pick }}" style="{{ q.style }}" style-hover="border-color: #0b0f14; color: #0b0f14;">{{ q.label }}</div>
@@ -617,19 +688,29 @@ const PERIOD_STATS = {
   "Custom…": [8241, 147, 44]
 };
 const DEVS = [
-  ["attempted", "Attempted - blocked or held", "1,903", "Attempted"],
-  ["no-reason", "No justification recorded", "117", "No justification"],
-  ["drift", "Rule changed after the call", "62", "Rule changed"],
-  ["first-seen", "First-seen resource", "148", "First-seen"],
-  ["manual", "Flagged by a person", "9", "Flagged"],
-  ["reviewed", "Reviewed & closed", "71", "Reviewed"]
+  ["attempted", "Attempted - blocked or held", "7", "Attempted"],
+  ["no-reason", "No justification recorded", "2", "No justification"],
+  ["drift", "Rule changed after the call", "2", "Rule changed"],
+  ["first-seen", "First-seen resource", "3", "First-seen"],
+  ["manual", "Flagged by a person", "1", "Flagged"],
+  ["reviewed", "Reviewed & closed", "4", "Reviewed"]
 ];
 const DEV_LABEL = {};
 DEVS.forEach(d => { DEV_LABEL[d[0]] = d[3]; });
-const IDENTITIES = ["Mor Levi", "Itay Ben-David", "Rafael Cohen", "Noa Peretz", "svc-billing-02"];
+const IDENTITIES = ["Mor Levi", "Itay Ben-David", "Rafael Cohen", "Noa Peretz", "Dana Shaked", "Yael Brandt", "Tomer Gil"];
+const AGENTS = ["Claude Code", "Claude Desktop", "Cursor", "Windsurf"];
+const APPS = ["GitHub", "Datadog", "Linear", "HubSpot", "Apollo.io", "Jira", "Snowflake", "Stripe"];
 const TIERS = ["Read", "Write", "Destructive"];
-const GROUPS = [["none", "None"], ["agent", "Agent"], ["user", "User"], ["app", "Application"], ["tier", "Tool tier"], ["outcome", "Outcome"], ["session", "Session"]];
-const SORTS = [["recent", "Newest first"], ["deviations", "Deviations first"]];
+const GROUPS = [["none", "None"], ["agent", "Agent"], ["user", "User"], ["session", "Session"], ["app", "Application"], ["tier", "Tool tier"], ["outcome", "Outcome"], ["decision", "Decision"], ["pending", "Pending duration"]];
+const GROUP_MENU = [
+  ["item", "none", "None"],
+  ["head", "who", "Group by / Who"], ["item", "agent", "Agent"], ["item", "user", "User"], ["item", "session", "Session"],
+  ["head", "what", "Group by / What"], ["item", "app", "Application"], ["item", "tier", "Tool tier"],
+  ["head", "result", "Group by / Result"], ["item", "outcome", "Outcome"], ["item", "decision", "Decision"], ["item", "pending", "Pending duration"]
+];
+const DECISIONS = ["Automated", "Manual", "Pending decision"];
+const RESPS = [">24h", "<24h"];
+const SORTS = [["recent", "Newest first"], ["deviations", "Deviations first"], ["pending", "Longest pending first"]];
 const PRESETS = [
   ["Everything Claude Code did in Q2", { period: "Q2 2026" }, { field: "Agent", value: "Claude Code" }],
   ["Destructive attempts, all agents, this quarter", { period: "This quarter", tiers: ["Destructive"], deviations: ["attempted"] }, null],
@@ -642,7 +723,8 @@ class Component extends DCLogic {
     drawerOpen: false, exportOpen: false, view: "activity", selectOpen: null,
     filter: null, filterLabel: null, filterField: null, cellFilter: null, menu: null,
     applied: null, draft: null, addingQuery: false, queryText: "", customQueries: [],
-    reviewed: { e15: true, e19: true, e25: true }, manualFlag: {}
+    reviewed: { e15: true, e19: true, e25: true }, manualFlag: {},
+    qAgent: "", qApp: "", qIdentity: ""
   };
 
   theadRef = React.createRef();
@@ -669,13 +751,24 @@ class Component extends DCLogic {
   get sortBy() { return this.state.sortBy || (this.lens === "compliance" ? "deviations" : "recent"); }
 
   defaults() {
-    return { period: this.lens === "compliance" ? "Q3 2026 to date" : "Last 30 days", deviations: [], outcomes: [], identities: [], tiers: [] };
+    return { period: this.lens === "compliance" ? "Q3 2026 to date" : "Last 30 days", deviations: [], outcomes: [], identities: [], tiers: [], decisions: [], resps: [], agents: [], apps: [] };
   }
   get applied() { return this.state.applied || this.defaults(); }
   get draft() { return this.state.draft || this.applied; }
-  clone(o) { return { period: o.period, deviations: o.deviations.slice(), outcomes: o.outcomes.slice(), identities: o.identities.slice(), tiers: o.tiers.slice() }; }
+  clone(o) { return { period: o.period, deviations: o.deviations.slice(), outcomes: o.outcomes.slice(), identities: o.identities.slice(), tiers: o.tiers.slice(), decisions: (o.decisions || []).slice(), resps: (o.resps || []).slice(), agents: (o.agents || []).slice(), apps: (o.apps || []).slice() }; }
 
   setLens(lens) { this.setState({ lens: lens, sortBy: null, applied: null, draft: null, filter: null, filterLabel: null, cellFilter: null, expanded: {} }); }
+
+  suggest(list, q, sel, key, qKey, item, tick) {
+    const t = (q || "").trim().toLowerCase();
+    if (!t) return [];
+    const hits = list.filter(n => n.toLowerCase().indexOf(t) >= 0);
+    if (!hits.length) return [{ label: "No matches", style: Object.assign({}, item(false), { color: "#8a93a1", cursor: "default" }), tickStyle: tick(false), pick: () => {} }];
+    return hits.map(n => ({
+      label: n, style: item(sel.indexOf(n) >= 0), tickStyle: tick(sel.indexOf(n) >= 0),
+      pick: () => { this.toggleDraft(key, n); const p = {}; p[qKey] = ""; this.setState(p); }
+    }));
+  }
 
   toggleDraft(key, val) {
     const d = this.clone(this.draft);
@@ -722,8 +815,12 @@ class Component extends DCLogic {
     const out = [];
     A.deviations.forEach(v => out.push(["Deviation", DEV_LABEL[v], () => this.dropApplied("deviations", v)]));
     A.outcomes.forEach(v => out.push(["Outcome", v, () => this.dropApplied("outcomes", v)]));
-    A.identities.forEach(v => out.push(["Identity", v, () => this.dropApplied("identities", v)]));
+    A.identities.forEach(v => out.push(["User", v, () => this.dropApplied("identities", v)]));
     A.tiers.forEach(v => out.push(["Tool tier", v, () => this.dropApplied("tiers", v)]));
+    (A.agents || []).forEach(v => out.push(["Agent", v, () => this.dropApplied("agents", v)]));
+    (A.apps || []).forEach(v => out.push(["Application", v, () => this.dropApplied("apps", v)]));
+    (A.decisions || []).forEach(v => out.push(["Decision", v, () => this.dropApplied("decisions", v)]));
+    (A.resps || []).forEach(v => out.push(["Response time", v, () => this.dropApplied("resps", v)]));
     if (this.state.filter && this.state.filterLabel) {
       out.push([this.state.filterField || "Deviation", this.state.filterLabel, () => this.setState({ filter: null, filterLabel: null, filterField: null })]);
     }
@@ -752,10 +849,13 @@ class Component extends DCLogic {
     const h = (this.props.density || "comfortable") === "compact" ? 44 : 56;
     const ur = RULE_BY_USER[r[2]] || ["Assignment Rule (#A-000)", "v1"];
     const cause = r[3] === "not yet assigned" ? "User request" : "Tool consent";
-    const pendingLabel = (day, clock) => {
+    const pendMins = (day, clock) => {
       const NOW = 14 * 60 + 15;
       const t = clock.split(":");
-      const mins = NOW - (+t[0] * 60 + +t[1]) + (day === "Today" ? 0 : day === "Yesterday" ? 1440 : 2880);
+      return NOW - (+t[0] * 60 + +t[1]) + (day === "Today" ? 0 : day === "Yesterday" ? 1440 : 2880);
+    };
+    const pendingLabel = (day, clock) => {
+      const mins = pendMins(day, clock);
       const P = "Pending\u2009·\u2009";
       if (mins < 60) return P + mins + " min";
       const hrs = Math.round(mins / 60);
@@ -819,6 +919,11 @@ class Component extends DCLogic {
       showApprove: outcome === "Awaiting" && !isReq,
       hasPendJump: false,
       pendJump: "",
+      pendingMins: outcome === "Awaiting" && !isReq ? pendMins(r[0], r[1]) : 0,
+      isPendingOpen: outcome === "Awaiting" && !isReq,
+      isStalePending: outcome === "Awaiting" && !isReq && pendMins(r[0], r[1]) > 1440,
+      decisionBucket: outcome === "Awaiting" && !isReq ? "Pending decision" : (r[10] || "Automated"),
+      pendBucket: outcome === "Awaiting" && !isReq ? (pendMins(r[0], r[1]) > 1440 ? "Pending >24h" : "Pending <24h") : "Resolved",
       hasAfterJump: decided && !!pairKey,
       hasPlainAfter: decided && !pairKey,
       openPair: jumpTo,
@@ -868,7 +973,7 @@ class Component extends DCLogic {
       decisionStyle: { fontSize: "13px", fontWeight: r[10] === "Manual" ? 600 : 400, color: r[10] === "Manual" ? "#0b0f14" : "#495260" },
       markLabel: flag ? (reviewed ? "Reopen" : "Mark reviewed") : "Flag for review",
       markStyle: { background: flag && !reviewed ? "#0b0f14" : "#ffffff", color: flag && !reviewed ? "#ffffff" : "#0b0f14", border: flag && !reviewed ? "none" : "1px solid #0b0f14", borderRadius: "6px", padding: "9px 16px", fontSize: "13px", fontWeight: 500 },
-      onFilterUser: (e) => this.openMenu(e, "Identity", r[2]),
+      onFilterUser: (e) => this.openMenu(e, "User", r[2]),
       onFilterAgent: (e) => this.openMenu(e, "Agent", r[4]),
       onFilterApp: (e) => this.openMenu(e, "Application", r[5]),
       onFilterTool: (e) => this.openMenu(e, "Tool", r[6]),
@@ -895,21 +1000,34 @@ class Component extends DCLogic {
     const f = this.state.filter;
     const cf = this.state.cellFilter;
     if (cf) {
-      const key = cf.field === "Identity" ? "userName" : cf.field === "Agent" ? "agent" : cf.field === "Application" ? "app" : cf.field === "Tool tier" ? "tier" : "tool";
+      const key = cf.field === "User" ? "userName" : cf.field === "Agent" ? "agent" : cf.field === "Application" ? "app" : cf.field === "Tool tier" ? "tier" : "tool";
       rows = rows.filter(r => r[key] === cf.value);
     }
-    if (f && f !== "coverage") rows = rows.filter(r => f === "any" ? !!r.flagKind : f === "awaiting" ? r.isAwaiting : f === "unauthorized" ? !r.isPass : r.flagKind === f);
+    if (f && f !== "coverage") rows = rows.filter(r => f === "any" ? !!r.flagKind : f === "awaiting" || f === "unauthorized" ? r.isPendingOpen : r.flagKind === f);
 
     const A = this.applied;
     if (A.deviations.length) rows = rows.filter(r => A.deviations.some(d => d === "reviewed" ? r.reviewedFlag : (r.flagKind === d && !r.reviewedFlag)));
     if (A.outcomes.length) rows = rows.filter(r => A.outcomes.indexOf(r.outcome) >= 0);
     if (A.identities.length) rows = rows.filter(r => A.identities.indexOf(r.userName) >= 0);
     if (A.tiers.length) rows = rows.filter(r => A.tiers.indexOf(r.tier) >= 0);
+    if ((A.agents || []).length) rows = rows.filter(r => A.agents.indexOf(r.agent) >= 0);
+    if ((A.apps || []).length) rows = rows.filter(r => A.apps.indexOf(r.app) >= 0);
+    if ((A.decisions || []).length) rows = rows.filter(r => A.decisions.indexOf(r.decisionBucket) >= 0);
+    if ((A.resps || []).length) rows = rows.filter(r => r.isPendingOpen && A.resps.some(v => v === ">24h" ? r.pendingMins > 1440 : r.pendingMins <= 1440));
 
     const rank = { attempted: 0, "no-reason": 1, drift: 2, "first-seen": 3, manual: 4 };
     rows = rows.slice().sort((a, b) => a.sortKey - b.sortKey);
     if (this.sortBy === "deviations") {
-      rows = rows.slice().sort((a, b) => ((a.flagKind ? rank[a.flagKind] : 9) - (b.flagKind ? rank[b.flagKind] : 9)) || (a.sortKey - b.sortKey));
+      const tierOf = (r) => r.isStalePending ? 0 : (r.flagKind ? 1 : 2);
+      rows = rows.slice().sort((a, b) => {
+        const ta = tierOf(a), tb = tierOf(b);
+        if (ta !== tb) return ta - tb;
+        if (ta === 0) return (b.pendingMins - a.pendingMins) || (a.sortKey - b.sortKey);
+        if (ta === 1) return (rank[a.flagKind] - rank[b.flagKind]) || (a.sortKey - b.sortKey);
+        return a.sortKey - b.sortKey;
+      });
+    } else if (this.sortBy === "pending") {
+      rows = rows.slice().sort((a, b) => (b.pendingMins - a.pendingMins) || (a.sortKey - b.sortKey));
     }
 
     const cs = this.state.colSort;
@@ -953,14 +1071,17 @@ class Component extends DCLogic {
     if (gb === "none") {
       groups = [{ showHeader: false, label: "", meta: "", rows: rows }];
     } else {
-      const key = gb === "agent" ? "agent" : gb === "user" ? "userName" : gb === "app" ? "app" : gb === "tier" ? "tier" : gb === "outcome" ? "outcome" : "sessionId";
+      const key = gb === "agent" ? "agent" : gb === "user" ? "userName" : gb === "app" ? "app" : gb === "tier" ? "tier" : gb === "outcome" ? "outcome" : gb === "decision" ? "decisionBucket" : gb === "pending" ? "pendBucket" : "sessionId";
       const map = {};
       rows.forEach(r => { (map[r[key]] = map[r[key]] || []).push(r); });
       const TIER_ORDER = ["Destructive", "Write", "Read"];
       const OUTCOME_ORDER = ["Blocked", "Awaiting", "Pass"];
+      const PEND_ORDER = ["Pending >24h", "Pending <24h", "Resolved"];
       const keys = Object.keys(map);
       if (gb === "tier") keys.sort((a, b) => TIER_ORDER.indexOf(a) - TIER_ORDER.indexOf(b));
       if (gb === "outcome") keys.sort((a, b) => OUTCOME_ORDER.indexOf(a) - OUTCOME_ORDER.indexOf(b));
+      if (gb === "decision") keys.sort((a, b) => DECISIONS.indexOf(a) - DECISIONS.indexOf(b));
+      if (gb === "pending") keys.sort((a, b) => PEND_ORDER.indexOf(a) - PEND_ORDER.indexOf(b));
       groups = keys.map(k => {
         const rs = map[k];
         const dev = rs.filter(r => r.hasFlag).length;
@@ -968,7 +1089,7 @@ class Component extends DCLogic {
       });
     }
 
-    const anyApplied = A.deviations.length + A.outcomes.length + A.identities.length + A.tiers.length > 0;
+    const anyApplied = A.deviations.length + A.outcomes.length + A.identities.length + A.tiers.length + (A.decisions || []).length + (A.resps || []).length + (A.agents || []).length + (A.apps || []).length > 0;
     const filtered = !!(f && f !== "coverage") || !!cf || anyApplied;
     const shown = rows.length;
     const countLine = filtered
@@ -1022,10 +1143,11 @@ class Component extends DCLogic {
       toggleSortMenu: () => this.setState(s => ({ selectOpen: s.selectOpen === "sort" ? null : "sort" })),
       togglePeriodMenu: () => this.setState(s => ({ selectOpen: s.selectOpen === "period" ? null : "period" })),
       closeSelects: () => this.setState({ selectOpen: null }),
-      groupOptions: GROUPS.map(g => ({
-        label: g[1], style: item(g[0] === gb), tickStyle: tick(g[0] === gb),
-        pick: () => this.setState({ groupBy: g[0], selectOpen: null })
-      })),
+      groupOptions: GROUP_MENU.map(g => g[0] === "head"
+        ? { isHeader: true, isItem: false, label: g[2], tickStyle: tick(false),
+            style: { fontSize: "12px", letterSpacing: "0.04em", fontWeight: 300, color: "#2f3742", padding: "10px 10px 5px", marginTop: "4px", borderTop: "1px solid #e8ecf2" } }
+        : { isHeader: false, isItem: true, label: g[2], style: item(g[1] === gb), tickStyle: tick(g[1] === gb),
+            pick: () => this.setState({ groupBy: g[1], selectOpen: null }) }),
       sortOptions: SORTS.map(s => ({
         label: s[1], style: item(s[0] === this.sortBy), tickStyle: tick(s[0] === this.sortBy),
         pick: () => this.setState({ sortBy: s[0], colSort: null, selectOpen: null })
@@ -1042,9 +1164,33 @@ class Component extends DCLogic {
       outcomeOptions: ["Pass", "Blocked", "Awaiting"].map(o => ({
         label: o, style: pill(D.outcomes.indexOf(o) >= 0), pick: () => this.toggleDraft("outcomes", o)
       })),
+      decisionOptions: DECISIONS.map(v => ({
+        label: v, style: pill((D.decisions || []).indexOf(v) >= 0), pick: () => this.toggleDraft("decisions", v)
+      })),
+      respOptions: RESPS.map(v => ({
+        label: v, style: pill((D.resps || []).indexOf(v) >= 0), pick: () => this.toggleDraft("resps", v)
+      })),
+      agentQuery: this.state.qAgent || "",
+      appQuery: this.state.qApp || "",
+      identityQuery: this.state.qIdentity || "",
+      onAgentQuery: (e) => this.setState({ qAgent: e.target.value }),
+      onAppQuery: (e) => this.setState({ qApp: e.target.value }),
+      onIdentityQuery: (e) => this.setState({ qIdentity: e.target.value }),
+      agentOptions: AGENTS.map(n => ({
+        label: n, style: pill((D.agents || []).indexOf(n) >= 0), pick: () => this.toggleDraft("agents", n)
+      })),
+      appOptions: APPS.map(n => ({
+        label: n, style: pill((D.apps || []).indexOf(n) >= 0), pick: () => this.toggleDraft("apps", n)
+      })),
       identityOptions: IDENTITIES.map(n => ({
         label: n, style: pill(D.identities.indexOf(n) >= 0), pick: () => this.toggleDraft("identities", n)
       })),
+      agentSuggestOpen: !!(this.state.qAgent || "").trim(),
+      appSuggestOpen: !!(this.state.qApp || "").trim(),
+      identitySuggestOpen: !!(this.state.qIdentity || "").trim(),
+      agentSuggest: this.suggest(AGENTS, this.state.qAgent, D.agents || [], "agents", "qAgent", item, tick),
+      appSuggest: this.suggest(APPS, this.state.qApp, D.apps || [], "apps", "qApp", item, tick),
+      identitySuggest: this.suggest(IDENTITIES, this.state.qIdentity, D.identities, "identities", "qIdentity", item, tick),
       tierOptions: TIERS.map(t => ({
         label: t, style: pill(D.tiers.indexOf(t) >= 0), pick: () => this.toggleDraft("tiers", t)
       })),
@@ -1083,7 +1229,7 @@ class Component extends DCLogic {
       applyMenuGroup: () => {
         const m = this.state.menu;
         if (!m) return;
-        const g = m.field === "Identity" ? "user" : m.field === "Agent" ? "agent" : m.field === "Tool tier" ? "tier" : "app";
+        const g = m.field === "User" ? "user" : m.field === "Agent" ? "agent" : m.field === "Tool tier" ? "tier" : "app";
         this.setState({ menu: null, groupBy: g });
       },
       exportFilters: this.state.filterLabel || (cf ? cf.field + " = " + cf.value : "None - full period"),
@@ -1098,13 +1244,28 @@ class Component extends DCLogic {
       openExport: () => this.setState({ exportOpen: true }),
       closeExport: () => this.setState({ exportOpen: false }),
       backToActivity: () => this.setState({ view: "activity", filter: null, filterLabel: null, filterField: null }),
+      goActivity: () => this.setState({ view: "activity" }),
+      openDiscovery: () => this.setState({ view: "discovery", selectOpen: null, menu: null }),
+      navActivityStyle: this.state.view === "activity"
+        ? { fontSize: "13px", fontWeight: 500, color: "#ffffff", background: "#2f3742", padding: "6px 14px", borderRadius: "999px" }
+        : { fontSize: "13px", color: "#69737f", padding: "6px 12px", borderRadius: "999px", cursor: "pointer" },
+      navDiscoveryStyle: this.state.view === "discovery"
+        ? { fontSize: "13px", fontWeight: 500, color: "#ffffff", background: "#2f3742", padding: "6px 14px", borderRadius: "999px" }
+        : { fontSize: "13px", color: "#69737f", padding: "6px 12px", borderRadius: "999px", cursor: "pointer" },
+      filterUnauthorizedStop: (e) => { e.stopPropagation(); this.applyFilter("unauthorized", "Awaiting a decision", "Outcome"); },
+      filterPending24: (e) => {
+        e.stopPropagation();
+        const a = this.clone(this.defaults());
+        a.resps = [">24h"];
+        this.setState({ applied: a, draft: a, filter: null, filterLabel: null, filterField: null, cellFilter: null, view: "activity" });
+      },
       filterCoverage: () => this.applyFilter("coverage", "No governing application", "Coverage"),
       filterAttempted: () => this.applyFilter("attempted", "Attempted", "Deviation"),
       filterFirstSeen: () => this.applyFilter("first-seen", "First-seen", "Deviation"),
       filterDrift: () => this.applyFilter("drift", "Rule changed", "Deviation"),
       filterNoReason: () => this.applyFilter("no-reason", "No justification", "Deviation"),
       filterExceptions: () => this.applyFilter("any", "Any deviation", "Deviation"),
-      filterUnauthorized: () => this.applyFilter("unauthorized", "Blocked or awaiting", "Outcome"),
+      filterUnauthorized: () => this.applyFilter("unauthorized", "Awaiting a decision", "Outcome"),
       filterAwaiting: () => this.applyFilter("awaiting", "Awaiting", "Outcome")
     };
   }
