@@ -307,14 +307,16 @@
                   <div style="display: flex; align-items: center; gap: 7px; font-size: 13px;">
                     <sc-if value="{{ row.isPass }}" hint-placeholder-val="{{ true }}"><span style="box-sizing: border-box; width: 13px; height: 13px; flex: 0 0 13px; border-radius: 50%; border: 1.5px solid #0b0f14; background: #ffffff;"></span></sc-if>
                     <sc-if value="{{ row.isBlocked }}" hint-placeholder-val="{{ false }}"><span style="box-sizing: border-box; width: 13px; height: 13px; flex: 0 0 13px; border-radius: 50%; background: #0b0f14; display: flex; align-items: center; justify-content: center;"><span style="width: 7px; height: 1.5px; background: #ffffff;"></span></span></sc-if>
-                    <sc-if value="{{ row.isAwaiting }}" hint-placeholder-val="{{ false }}"><span style="box-sizing: border-box; width: 13px; height: 13px; flex: 0 0 13px; display: flex; align-items: center; justify-content: center;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" width="13" height="13" style="display: block;"><g stroke="#0b0f14" stroke-width="1.15" stroke-linecap="round"><line x1="10.9" y1="7" x2="13.3" y2="7"></line><line x1="9.76" y1="9.76" x2="11.46" y2="11.46"></line><line x1="7" y1="10.9" x2="7" y2="13.3"></line><line x1="4.24" y1="9.76" x2="2.54" y2="11.46"></line><line x1="3.1" y1="7" x2="0.7" y2="7"></line><line x1="4.24" y1="4.24" x2="2.54" y2="2.54"></line><line x1="7" y1="3.1" x2="7" y2="0.7"></line><line x1="9.76" y1="4.24" x2="11.46" y2="2.54"></line></g></svg></span></sc-if>
+                    <sc-if value="{{ row.showAwaitIcon }}" hint-placeholder-val="{{ false }}"><span style="box-sizing: border-box; width: 13px; height: 13px; flex: 0 0 13px; display: flex; align-items: center; justify-content: center;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" width="13" height="13" style="display: block;"><g stroke="#0b0f14" stroke-width="1.15" stroke-linecap="round" opacity="{{ row.awaitIconOpacity }}"><line x1="10.9" y1="7" x2="13.3" y2="7"></line><line x1="9.76" y1="9.76" x2="11.46" y2="11.46"></line><line x1="7" y1="10.9" x2="7" y2="13.3"></line><line x1="4.24" y1="9.76" x2="2.54" y2="11.46"></line><line x1="3.1" y1="7" x2="0.7" y2="7"></line><line x1="4.24" y1="4.24" x2="2.54" y2="2.54"></line><line x1="7" y1="3.1" x2="7" y2="0.7"></line><line x1="9.76" y1="4.24" x2="11.46" y2="2.54"></line></g></svg></span></sc-if>
+                    <sc-if value="{{ row.isResolvedReq }}" hint-placeholder-val="{{ false }}"><span style="width: 13px; height: 13px; flex: 0 0 13px;"></span></sc-if>
                     <span style="{{ row.outcomeStyle }}">{{ row.outcome }}</span>
                   </div>
+
                 </td>
                 <td style="padding: 0 14px; vertical-align: middle; border-bottom: 1px solid #e8ecf2;">
                   <span style="{{ row.decisionStyle }}">{{ row.decision }}</span>
                   <sc-if value="{{ row.isAwaiting }}" hint-placeholder-val="{{ false }}">
-                    <div style="font-size: 11px; color: #69737f; font-family: 'IBM Plex Mono', monospace; white-space: nowrap;">{{ row.pendingFor }}</div>
+                    <div style="font-size: 11px; color: #69737f; font-family: 'IBM Plex Mono', monospace; white-space: nowrap; margin-top: 3px;">{{ row.pendingFor }}</div>
                   </sc-if>
                   <sc-if value="{{ row.isManual }}" hint-placeholder-val="{{ false }}">
                     <div style="font-size: 11px; color: #69737f; font-family: 'IBM Plex Mono', monospace; margin-top: 2px; white-space: nowrap;">{{ row.manualCause }}</div>
@@ -859,9 +861,10 @@ class Component extends DCLogic {
       trStyle: { cursor: "pointer", height: h + "px", background: expanded ? "#eef2f7" : "#ffffff", boxShadow: expanded ? "inset 3px 0 0 #0b0f14" : "none" },
       dotStyle: { width: "8px", height: "8px", borderRadius: "50%", flex: "0 0 8px", background: reviewed ? "#b3bccb" : "#0b0f14" },
       chipStyle: { display: "inline-block", border: "1px solid " + (reviewed ? "#dde2ea" : "#d6dce5"), borderRadius: "3px", padding: "2px 7px", fontSize: "11px", fontWeight: 500, whiteSpace: "nowrap", color: reviewed ? "#495260" : "#0b0f14", background: reviewed ? "#f7f9fc" : "#e8ecf2" },
-      outcomeStyle: isReq
-        ? { fontWeight: 400, color: "#69737f", textDecoration: "line-through", textDecorationColor: "#8b95a3" }
-        : { fontWeight: 400, color: "#0b0f14" },
+      awaitIconOpacity: 1,
+      showAwaitIcon: outcome === "Awaiting" && !isReq,
+      isResolvedReq: isReq,
+      outcomeStyle: { fontWeight: 400, color: isReq ? "#a3adbb" : "#0b0f14" },
       decisionStyle: { fontSize: "13px", fontWeight: r[10] === "Manual" ? 600 : 400, color: r[10] === "Manual" ? "#0b0f14" : "#495260" },
       markLabel: flag ? (reviewed ? "Reopen" : "Mark reviewed") : "Flag for review",
       markStyle: { background: flag && !reviewed ? "#0b0f14" : "#ffffff", color: flag && !reviewed ? "#ffffff" : "#0b0f14", border: flag && !reviewed ? "none" : "1px solid #0b0f14", borderRadius: "6px", padding: "9px 16px", fontSize: "13px", fontWeight: 500 },
