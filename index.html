@@ -343,11 +343,11 @@
                           <div style="color: #495260; font-weight: 400;">Request ID</div><div style="font-family: 'IBM Plex Mono', monospace;">{{ row.requestId }}</div>
                           <div style="color: #495260; font-weight: 400;">Session ID</div><div style="font-family: 'IBM Plex Mono', monospace;">{{ row.sessionId }}</div>
                           <div style="color: #495260; font-weight: 400;">Credential</div><div style="font-family: 'IBM Plex Mono', monospace;">{{ row.credential }}</div>
-                          <sc-if value="{{ row.isManual }}" hint-placeholder-val="{{ false }}">
-                            <div style="grid-column: 1 / -1; display: grid; grid-template-columns: 124px 1fr;">
-                              <div style="color: #495260; font-weight: 400;">Decision</div><div><div>{{ row.decidedBy }}</div><div>{{ row.decisionAfter }}</div></div>
+                          <sc-if value="{{ row.showDecision }}" hint-placeholder-val="{{ false }}">
+                            <div style="grid-column: 1 / -1; display: grid; grid-template-columns: 124px 1fr; align-items: baseline;">
+                              <div style="color: #495260; font-weight: 400;">Decision</div><div><div style="{{ row.decidedByStyle }}">{{ row.decidedBy }}<sc-if value="{{ row.hasApprover }}" hint-placeholder-val="{{ false }}"><span style="text-decoration: underline; text-decoration-color: #b9c1cd; text-underline-offset: 2px; cursor: pointer;" style-hover="color: #0b0f14; text-decoration-color: #0b0f14;">{{ row.approver }}</span>{{ row.decidedAt }}</sc-if><sc-if value="{{ row.hasPendJump }}" hint-placeholder-val="{{ false }}"><span onClick="{{ row.openPair }}" style="text-decoration: underline; text-decoration-color: #b9c1cd; text-underline-offset: 2px; cursor: pointer;" style-hover="color: #0b0f14; text-decoration-color: #0b0f14;">{{ row.pendJump }}</span></sc-if></div><sc-if value="{{ row.hasAfterJump }}" hint-placeholder-val="{{ false }}"><div><span onClick="{{ row.openPair }}" style="text-decoration: underline; text-decoration-color: #b9c1cd; text-underline-offset: 2px; cursor: pointer;" style-hover="text-decoration-color: #0b0f14;">{{ row.decisionAfter }}</span></div></sc-if><sc-if value="{{ row.hasPlainAfter }}" hint-placeholder-val="{{ false }}"><div>{{ row.decisionAfter }}</div></sc-if></div>
                             </div>
-                            <div style="grid-column: 1 / -1; display: grid; grid-template-columns: 124px 1fr;">
+                            <div style="grid-column: 1 / -1; display: grid; grid-template-columns: 124px 1fr; align-items: baseline;">
                               <div style="color: #495260; font-weight: 400;">Justification</div><div style="{{ row.justStyle }}">{{ row.justification }}</div>
                             </div>
                           </sc-if>
@@ -355,10 +355,10 @@
                         <div style="font-size: 12px; letter-spacing: 0.01em; color: #69737f; font-weight: 600; margin: 20px 0 8px;">Parameters</div>
                         <pre style="margin: 0; border: 1px solid #dde2ea; border-radius: 6px; background: #f7f9fc; padding: 14px 16px; font-family: 'IBM Plex Mono', monospace; font-size: 13px; line-height: 1.6; color: #1a212b; white-space: pre-wrap;">{{ row.params }}</pre>
                         <div style="display: flex; gap: 9px; margin-top: 18px; flex-wrap: wrap;">
-                          <sc-if value="{{ row.isAwaiting }}" hint-placeholder-val="{{ false }}">
+                          <sc-if value="{{ row.showApprove }}" hint-placeholder-val="{{ false }}">
                             <button style="background: #0b0f14; color: #fff; border: none; border-radius: 6px; padding: 9px 16px; font-size: 13px; font-weight: 500;">Approve</button>
                           </sc-if>
-                          <sc-if value="{{ row.isAwaiting }}" hint-placeholder-val="{{ false }}">
+                          <sc-if value="{{ row.showApprove }}" hint-placeholder-val="{{ false }}">
                             <button style="background: #fff; color: #0b0f14; border: 1px solid #0b0f14; border-radius: 6px; padding: 9px 16px; font-size: 13px; font-weight: 500;">Deny</button>
                           </sc-if>
                           <button onClick="{{ row.mark }}" style="{{ row.markStyle }}">{{ row.markLabel }}</button>
@@ -371,7 +371,7 @@
                           <div style="border: 1px solid #dde2ea; border-radius: 8px; background: #f7f9fc; padding: 13px 15px; margin-bottom: 10px; cursor: pointer; box-shadow: 0 2px 6px rgba(11,15,20,0.08), 0 1px 1px rgba(11,15,20,0.04); transition: box-shadow 120ms ease, border-color 120ms ease, transform 120ms ease;" style-hover="border-color: #0b0f14; background: #ffffff; box-shadow: 0 5px 16px rgba(11,15,20,0.10); transform: translateY(-1px);">
                             <div style="min-width: 0;">
                               <div style="font-size: 13px; font-weight: 600; margin-bottom: 5px;">{{ gate.name }}</div>
-                              <div style="font-size: 13px; color: #2f3742; line-height: 1.55;">{{ gate.text }}</div>
+                              <div style="font-size: 13px; color: #2f3742; line-height: 1.55;">{{ gate.text }}<sc-if value="{{ gate.hasEmail }}" hint-placeholder-val="{{ false }}"><span style="text-decoration: underline; text-decoration-color: #b9c1cd; text-underline-offset: 2px; cursor: pointer;" style-hover="color: #0b0f14; text-decoration-color: #0b0f14;">{{ gate.email }}</span></sc-if>{{ gate.mid }}<sc-if value="{{ gate.hasJump }}" hint-placeholder-val="{{ false }}"><span onClick="{{ gate.jump }}" style="text-decoration: underline; text-decoration-color: #b9c1cd; text-underline-offset: 2px; cursor: pointer;" style-hover="text-decoration-color: #0b0f14;">{{ gate.jumpText }}</span></sc-if>{{ gate.tail }}</div>
                               <a href="#" style="font-size: 13px; border-bottom: 1px solid #0b0f14; display: inline-block; margin-top: 9px;">{{ gate.link }}</a>
                             </div>
                           </div>
@@ -571,7 +571,8 @@ const RAW = [
   ["Yesterday","11:12","svc-billing-02","service account","openclaw-bundle-mcp","Stripe","Refund Charge","ch_3PfL2x","","Blocked","Automated","attempted",null],
   ["Yesterday","09:03","Yael Brandt","yael@hush.security","Windsurf","Snowflake","Run Query","analytics.events_raw","","Pass","Automated",null,null],
   ["Aug 23","21:47","Dana Shaked","dana@hush.security","Claude Code","GitHub","Create Branch","infra-terraform","","Pass","Automated",null,null],
-  ["Aug 23","20:10","Tomer Gil","not yet assigned","Claude Code","Jira","Transition Issue","PLAT-206","","Awaiting","Manual",null,null],
+  ["Aug 23","21:05","Tomer Gil","not yet assigned","Claude Code","Jira","Transition Issue","PLAT-206","","Pass","Manual",null,null,"p206-res"],
+  ["Aug 23","20:10","Tomer Gil","not yet assigned","Claude Code","Jira","Transition Issue","PLAT-206","","Awaiting","Manual",null,null,"p206-req"],
   ["Aug 23","17:39","Rafael Cohen","rafael@hush.security","Cursor","HubSpot","Delete Contact","contact 71904","","Blocked","Automated","attempted",null],
   ["Aug 23","15:20","Tomer Gil","not yet assigned","Claude Code","Jira","Transition Issue","PLAT-208","","Awaiting","Manual",null,null],
   ["Aug 23","12:11","Mor Levi","mor@hush.security","Claude Code","GitHub","List Pull Requests","payments-core","","Pass","Automated",null,null]
@@ -761,34 +762,84 @@ class Component extends DCLogic {
       return P + days + (days === 1 ? " day" : " days");
     };
     const approver = cause === "User request" ? "sec-admin@hush.security" : "itay@hush.security";
-    const urId = outcome === "Awaiting" ? "UR-2291" : "UR-2287";
+    const pairKey = r[13] || null;
+    const isReq = pairKey === "p206-req", isRes = pairKey === "p206-res";
+    const pairIdx = pairKey ? RAW.findIndex(x => x[13] && x[13] !== pairKey && x[13].slice(0, 4) === pairKey.slice(0, 4)) : -1;
+    const pairRow = pairIdx >= 0 ? RAW[pairIdx] : null;
+    const toMin = (c) => +c.split(":")[0] * 60 + +c.split(":")[1];
+    const pendedMins = pairRow ? Math.abs(toMin(pairRow[1]) - toMin(r[1])) : 0;
+    const pendedFor = pendedMins < 60 ? pendedMins + " min" : Math.round(pendedMins / 60) + " hr";
+    const resolvedAt = isReq && pairRow ? pairRow[0] + " " + pairRow[1] : "";
+    const dayWord = (d) => (d === "Today" || d === "Yesterday" ? d.toLowerCase() : d);
+    const urId = pairKey ? "UR-2284" : outcome === "Awaiting" ? "UR-2291" : "UR-2287";
     const RESP = ["14 min", "38 min", "1 hr", "2 hr", "4 hr"];
-    const respTook = " · decision after " + RESP[i % RESP.length];
-    const verdict = r[10] === "Manual" && outcome !== "Awaiting"
-      ? " · " + (outcome === "Blocked" ? "Denied" : "Approved") + " by " + approver + " · " + r[0].toLowerCase() + " " + r[1] + respTook
-      : (outcome === "Awaiting" ? " · Awaiting a named approver" : "");
+    const respFor = pairKey ? pendedFor : RESP[i % RESP.length];
+    const respTook = " · decision after " + respFor;
+    const dSrc = isReq && pairRow ? pairRow : r;
+    const dOut = isReq && pairRow ? pairRow[9] : outcome;
+    const decided = (r[10] === "Manual" && outcome !== "Awaiting") || isReq;
+    const justIdx = pairKey ? Math.min(i, pairIdx) : i;
+    const jumpTo = pairIdx >= 0 ? (ev) => { ev.stopPropagation(); this.setState(s2 => { const e = Object.assign({}, s2.expanded); e["e" + pairIdx] = true; return { expanded: e }; }); } : null;
+    const vSeg = decided
+      ? { pre: " · " + (dOut === "Blocked" ? "Denied" : "Approved") + " by ", email: approver, mid: " · " + dayWord(dSrc[0]) + " " + dSrc[1] + " · ", jumpText: "decision after " + respFor }
+      : outcome === "Awaiting"
+        ? { pre: " · Awaiting a named approver" + (isReq ? " · " : ""), email: "", mid: "", jumpText: isReq ? "pended " + pendedFor : "" }
+        : { pre: "", email: "", mid: "", jumpText: "" };
+    const verdict = vSeg.pre + vSeg.email + vSeg.mid + vSeg.jumpText;
+
+    const segOf = (base, show) => show
+      ? { text: base, email: vSeg.email, hasEmail: !!vSeg.email, mid: vSeg.mid,
+          jumpText: pairKey ? vSeg.jumpText : "", hasJump: !!pairKey && !!vSeg.jumpText,
+          jump: jumpTo, tail: pairKey ? "" : vSeg.jumpText }
+      : { text: base };
+    const toolBase = cause === "User request"
+      ? 'Tool Permission "' + r[6] + '" (#T-091, v1) · ' + (dOut === "Blocked"
+          ? "not evaluated - denied at user authorization"
+          : dOut === "Awaiting"
+          ? "not evaluated - held at user authorization"
+          : "category default: " + tier + " → Allow")
+      : 'Tool Permission "' + r[6] + '" (#T-091, v1) · category default: ' + tier + " → " + (r[10] === "Manual" || outcome === "Awaiting" ? "Consent" : outcome === "Blocked" ? "Block" : "Allow") + vSeg.pre;
+    const toolShowSeg = cause !== "User request";
 
     const gates = [
-      { name: "Agent allowlist", text: r[4] + " - permitted client type for " + r[5] + " (#AG-006, v2)", link: "View allowlist →" },
-      { name: "User authorization", text: cause === "User request" ? "No assignment rule matched · User Request #" + urId + verdict : ur[0].replace(/\(#([A-Za-z0-9-]+)\)/, "(#$1, " + ur[1] + ")"), link: cause === "User request" ? "View user request →" : "View rule →" },
-      { name: "Tool authorization", text: cause === "User request"
-        ? 'Tool Permission "' + r[6] + '" (#T-091, v1) · not evaluated - ' + (outcome === "Blocked" ? "denied at user authorization" : "held at user authorization")
-        : 'Tool Permission "' + r[6] + '" (#T-091, v1) · category default: ' + tier + " → " + (r[10] === "Manual" || outcome === "Awaiting" ? "Consent" : outcome === "Blocked" ? "Block" : "Allow") + verdict, link: "View tool setting →" }
+      Object.assign({ name: "Agent allowlist", link: "View allowlist →" }, { text: r[4] + " - permitted client type for " + r[5] + " (#AG-006, v2)" }),
+      cause === "User request"
+        ? Object.assign({ name: "User authorization", link: "View user request →" }, segOf("No assignment rule matched · User Request #" + urId + vSeg.pre, true))
+        : Object.assign({ name: "User authorization", link: "View rule →" }, segOf(ur[0].replace(/\(#([A-Za-z0-9-]+)\)/, "(#$1, " + ur[1] + ")"), false)),
+      Object.assign({ name: "Tool authorization", link: "View tool setting →" }, segOf(toolBase, toolShowSeg))
     ];
 
     return {
       id: id, day: r[0], clock: r[1], userName: r[2], userMeta: r[3], agent: r[4], app: r[5],
       tool: r[6], tier: tier, resource: r[7], resourceMeta: r[8], outcome: outcome,
       decision: outcome === "Awaiting" ? "" : r[10],
-      pendingFor: outcome === "Awaiting" ? pendingLabel(r[0], r[1]) : "",
+      pendingFor: outcome === "Awaiting" ? (isReq ? "Pended\u2009·\u2009" + pendedFor : pendingLabel(r[0], r[1])) : "",
+      showApprove: outcome === "Awaiting" && !isReq,
+      hasPendJump: false,
+      pendJump: "",
+      hasAfterJump: decided && !!pairKey,
+      hasPlainAfter: decided && !pairKey,
+      openPair: jumpTo,
       isManual: r[10] === "Manual" && outcome !== "Awaiting",
+      showDecision: decided || outcome === "Awaiting",
+      hasDecisionAfter: decided,
       manualCause: cause,
-      decidedBy: cause + " · " + (outcome === "Blocked" ? "denied by " : "approved by ") + approver + " · " + r[0].toLowerCase() + " " + r[1],
-      decisionAfter: "decision after " + RESP[i % RESP.length],
-      justification: flag === "no-reason"
+      decidedByStyle: outcome === "Awaiting" && !isReq
+        ? { color: "#69737f", fontFamily: "'IBM Plex Mono', monospace", fontSize: "11px", fontWeight: 400 }
+        : { color: "#0b0f14" },
+      hasApprover: decided,
+      approver: approver,
+      decidedAt: " · " + dayWord(dSrc[0]) + " " + dSrc[1],
+      decidedBy: outcome === "Awaiting" && !isReq
+        ? "Awaiting · " + cause + " · " + pendingLabel(r[0], r[1]).replace("Pending\u2009·\u2009", "pending ")
+        : cause + " · " + (dOut === "Blocked" ? "denied by " : "approved by "),
+      decisionAfter: "Decision · after " + respFor,
+      justification: outcome === "Awaiting" && !isReq
         ? "None recorded"
-        : ["Change ticket PLAT-1187 · release window approved", "Verified with requester over Slack · scope limited to one repo", "Incident INC-4402 · remediation step approved", "Owner confirmed the resource is non-production"][i % 4],
-      justStyle: flag === "no-reason" ? { color: "#0b0f14", fontWeight: 600 } : { color: "#0b0f14" },
+        : flag === "no-reason"
+        ? "- None recorded -"
+        : ["Change ticket PLAT-1187 · release window approved", "Verified with requester over Slack · scope limited to one repo", "Incident INC-4402 · remediation step approved", "Owner confirmed the resource is non-production"][justIdx % 4],
+      justStyle: outcome === "Awaiting" && !isReq ? { color: "#69737f", fontFamily: "'IBM Plex Mono', monospace", fontSize: "11px", fontWeight: 400 } : flag === "no-reason" ? { color: "#0b0f14", fontWeight: 600 } : { color: "#0b0f14" },
       isPass: outcome === "Pass", isBlocked: outcome === "Blocked", isAwaiting: outcome === "Awaiting",
       hasFlag: !!flag, isAttempted: flag === "attempted" && !reviewed, isFirstSeen: flag === "first-seen" && !reviewed,
       isDrift: flag === "drift" && !reviewed, isNoReason: flag === "no-reason" && !reviewed, isManualFlag: (flag === "manual" || reviewed) && !!flag,
@@ -799,14 +850,18 @@ class Component extends DCLogic {
       hasSubFlag: !!r[12], subFlag: r[12] || "", reviewedFlag: reviewed,
       expanded: expanded, chevron: expanded ? "▼" : "▶",
       sortKey: (r[0] === "Today" ? 0 : r[0] === "Yesterday" ? 1 : 2) * 10000 - (parseInt(r[1], 10) * 60 + parseInt(r[1].slice(3), 10)),
-      deployment: "prod-gateway-01", requestId: "req_" + (7100 + i * 137).toString(16) + "b", sessionId: "sess_" + (4400 + i * 29) + "-cc09",
+      deployment: "prod-gateway-01",
+      requestId: "req_" + (7100 + (pairKey ? Math.min(i, pairIdx) : i) * 137).toString(16) + "b",
+      sessionId: "sess_" + (4400 + (pairKey ? Math.min(i, pairIdx) : i) * 29) + "-cc09",
       credential: "jit-token · ttl 300s",
       params: '{\n  "resource": "' + r[7] + '",\n  "action": "' + r[6].toLowerCase().replace(/ /g, "_") + '"' + (r[8] ? ',\n  "count": ' + parseInt(r[8], 10) : "") + '\n}',
       gates: gates,
       trStyle: { cursor: "pointer", height: h + "px", background: expanded ? "#eef2f7" : "#ffffff", boxShadow: expanded ? "inset 3px 0 0 #0b0f14" : "none" },
       dotStyle: { width: "8px", height: "8px", borderRadius: "50%", flex: "0 0 8px", background: reviewed ? "#b3bccb" : "#0b0f14" },
       chipStyle: { display: "inline-block", border: "1px solid " + (reviewed ? "#dde2ea" : "#d6dce5"), borderRadius: "3px", padding: "2px 7px", fontSize: "11px", fontWeight: 500, whiteSpace: "nowrap", color: reviewed ? "#495260" : "#0b0f14", background: reviewed ? "#f7f9fc" : "#e8ecf2" },
-      outcomeStyle: { fontWeight: 400, color: "#0b0f14" },
+      outcomeStyle: isReq
+        ? { fontWeight: 400, color: "#69737f", textDecoration: "line-through", textDecorationColor: "#8b95a3" }
+        : { fontWeight: 400, color: "#0b0f14" },
       decisionStyle: { fontSize: "13px", fontWeight: r[10] === "Manual" ? 600 : 400, color: r[10] === "Manual" ? "#0b0f14" : "#495260" },
       markLabel: flag ? (reviewed ? "Reopen" : "Mark reviewed") : "Flag for review",
       markStyle: { background: flag && !reviewed ? "#0b0f14" : "#ffffff", color: flag && !reviewed ? "#ffffff" : "#0b0f14", border: flag && !reviewed ? "none" : "1px solid #0b0f14", borderRadius: "6px", padding: "9px 16px", fontSize: "13px", fontWeight: 500 },
