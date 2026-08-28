@@ -46,7 +46,7 @@
       <span onClick="{{ goActivity }}" style="{{ navActivityStyle }}">Activity</span>
       <span onClick="{{ openDiscovery }}" style="{{ navDiscoveryStyle }}">Discovery</span>
       <div style="flex: 1 1 auto;"></div>
-      <span style="font-size: 12px; font-weight: 600; color: #69737f; display: flex; align-items: center; gap: 4px;">Updated Aug 30&#8202;·&#8202;13:20:56<span style="position: relative; display: flex;" onMouseEnter="{{ refreshIn }}" onMouseLeave="{{ refreshOut }}"><button onClick="{{ refresh }}" aria-label="Refresh" style="display: flex; align-items: center; justify-content: center; width: 24px; height: 24px; padding: 0; border: none; border-radius: 5px; background: transparent; color: #69737f; cursor: pointer;" style-hover="background: #eef1f5; color: #0b0f14;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9c3.1 0 5.8 1.6 7.4 4"></path><polyline points="20 3 20 7.5 15.5 7.5"></polyline><path d="M21 12a9 9 0 0 1-9 9c-3.1 0-5.8-1.6-7.4-4"></path><polyline points="4 21 4 16.5 8.5 16.5"></polyline></svg></button><sc-if value="{{ refreshHover }}" hint-placeholder-val="{{ false }}"><span style="position: absolute; top: calc(100% + 7px); left: 50%; transform: translateX(-50%); background: #1c1c1e; color: #ffffff; font-size: 13px; font-weight: 500; line-height: 1; padding: 9px 14px; border-radius: 10px; white-space: nowrap; pointer-events: none; z-index: 50; box-shadow: 0 4px 14px rgba(11,15,20,0.18);"><span style="position: absolute; top: -4px; left: 50%; width: 10px; height: 10px; background: #1c1c1e; transform: translateX(-50%) rotate(45deg); border-radius: 2px;"></span>Refresh</span></sc-if></span></span>
+      <span style="font-size: 12px; font-weight: 600; color: #69737f; display: flex; align-items: center; gap: 4px;">Updated Aug 30&#8202;·&#8202;14:12<span style="position: relative; display: flex;" onMouseEnter="{{ refreshIn }}" onMouseLeave="{{ refreshOut }}"><button onClick="{{ refresh }}" aria-label="Refresh" style="display: flex; align-items: center; justify-content: center; width: 24px; height: 24px; padding: 0; border: none; border-radius: 5px; background: transparent; color: #69737f; cursor: pointer;" style-hover="background: #eef1f5; color: #0b0f14;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9c3.1 0 5.8 1.6 7.4 4"></path><polyline points="20 3 20 7.5 15.5 7.5"></polyline><path d="M21 12a9 9 0 0 1-9 9c-3.1 0-5.8-1.6-7.4-4"></path><polyline points="4 21 4 16.5 8.5 16.5"></polyline></svg></button><sc-if value="{{ refreshHover }}" hint-placeholder-val="{{ false }}"><span style="position: absolute; top: calc(100% + 7px); left: 50%; transform: translateX(-50%); background: #1c1c1e; color: #ffffff; font-size: 13px; font-weight: 500; line-height: 1; padding: 9px 14px; border-radius: 10px; white-space: nowrap; pointer-events: none; z-index: 50; box-shadow: 0 4px 14px rgba(11,15,20,0.18);"><span style="position: absolute; top: -4px; left: 50%; width: 10px; height: 10px; background: #1c1c1e; transform: translateX(-50%) rotate(45deg); border-radius: 2px;"></span>Refresh</span></sc-if></span></span>
       <div style="position: relative; display: flex;">
         <button onClick="{{ togglePeriodMenu }}" style="display: flex; align-items: center; gap: 16px; border: 1px solid #cfd6e0; border-radius: 6px; background: #ffffff; padding: 6px 12px; font-size: 12px; color: #0b0f14;" style-hover="border-color: #0b0f14;">
           <span>{{ periodLabel }}</span><span style="color: #69737f; font-size: 9px;">▼</span>
@@ -621,28 +621,28 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script>
 const RAW = [
-  ["Today","14:12","Mor Levi","mor@hush.security","Claude Code","GitHub","Merge Pull Request","payments-core #412","","Awaiting","Manual",null,null],
-  ["Today","14:09","Mor Levi","mor@hush.security","Claude Code","GitHub","List Issues","payments-core","","Pass","Automated",null,null],
-  ["Today","13:58","Itay Ben-David","itay@hush.security","Claude Desktop","Datadog","Delete Monitor","prod-api-latency","","Blocked","Automated","attempted","Burst · 3 in 6 min"],
-  ["Today","13:57","Itay Ben-David","itay@hush.security","Claude Desktop","Datadog","Delete Dashboard","prod-overview","","Blocked","Automated","attempted","Burst · 3 in 6 min"],
-  ["Today","13:56","Itay Ben-David","itay@hush.security","Claude Desktop","Datadog","Revoke API Key","monitoring-key-04","","Awaiting","Manual","attempted","Burst · 3 in 6 min"],
-  ["Today","13:20","Mor Levi","mor@hush.security","Claude Code","GitHub","Merge Pull Request","payments-core #409","","Pass","Manual","no-reason",null],
-  ["Today","13:55","Itay Ben-David","itay@hush.security","Claude Desktop","Datadog","List Monitors","-","","Pass","Automated",null,null],
-  ["Today","12:40","Rafael Cohen","rafael@hush.security","Cursor","HubSpot","Update Contact Property","contact 88213","","Pass","Automated","first-seen",null],
-  ["Today","11:58","svc-billing-02","service account","openclaw-bundle-mcp","Stripe","List Invoices","acct_9f21b","","Pass","Automated",null,null],
-  ["Today","11:02","Noa Peretz","noa@hush.security","Claude Code","Linear","Create Issue","identity-gateway","","Pass","Manual",null,null],
-  ["Today","10:47","Noa Peretz","noa@hush.security","Claude Code","Linear","Save Issue","IDG-1042","","Pass","Automated",null,null],
-  ["Today","10:31","Dana Shaked","dana@hush.security","Claude Code","GitHub","Force Push","infra-terraform","","Blocked","Automated","attempted",null],
-  ["Today","09:52","Dana Shaked","dana@hush.security","Claude Code","GitHub","List Commits","infra-terraform","","Pass","Automated",null,null],
-  ["Today","09:14","svc-agent-07","service account","openclaw-bundle-mcp","Apollo.io","Bulk Contact Create","q3-outreach","312 records","Pass","Automated","drift",null],
-  ["Today","08:40","Yael Brandt","yael@hush.security","Windsurf","Snowflake","Run Query","analytics.events_raw","","Pass","Automated","first-seen",null],
-  ["Yesterday","22:15","svc-agent-07","service account","openclaw-bundle-mcp","Apollo.io","Enrich Contact","q3-outreach","","Pass","Automated","drift",null],
-  ["Yesterday","19:30","Mor Levi","mor@hush.security","Claude Code","GitHub","Force Push","payments-core","","Blocked","Automated","attempted",null],
-  ["Yesterday","18:02","Itay Ben-David","itay@hush.security","Claude Desktop","Datadog","Get Dashboard","prod-overview","","Pass","Manual",null,null],
-  ["Yesterday","16:44","Rafael Cohen","rafael@hush.security","Cursor","HubSpot","List Deals","pipeline-emea","","Pass","Automated","first-seen",null],
-  ["Yesterday","14:05","Noa Peretz","noa@hush.security","Claude Code","Linear","Update Issue","IDG-1042","","Pass","Manual","no-reason",null],
-  ["Yesterday","11:12","svc-billing-02","service account","openclaw-bundle-mcp","Stripe","Refund Charge","ch_3PfL2x","","Blocked","Automated","attempted",null],
-  ["Yesterday","09:03","Yael Brandt","yael@hush.security","Windsurf","Snowflake","Run Query","analytics.events_raw","","Pass","Automated",null,null],
+  ["Aug 30","14:12","Mor Levi","mor@hush.security","Claude Code","GitHub","Merge Pull Request","payments-core #412","","Awaiting","Manual",null,null],
+  ["Aug 30","14:09","Mor Levi","mor@hush.security","Claude Code","GitHub","List Issues","payments-core","","Pass","Automated",null,null],
+  ["Aug 30","13:58","Itay Ben-David","itay@hush.security","Claude Desktop","Datadog","Delete Monitor","prod-api-latency","","Blocked","Automated","attempted","Burst · 3 in 6 min"],
+  ["Aug 30","13:57","Itay Ben-David","itay@hush.security","Claude Desktop","Datadog","Delete Dashboard","prod-overview","","Blocked","Automated","attempted","Burst · 3 in 6 min"],
+  ["Aug 30","13:56","Itay Ben-David","itay@hush.security","Claude Desktop","Datadog","Revoke API Key","monitoring-key-04","","Awaiting","Manual","attempted","Burst · 3 in 6 min"],
+  ["Aug 30","13:20","Mor Levi","mor@hush.security","Claude Code","GitHub","Merge Pull Request","payments-core #409","","Pass","Manual","no-reason",null],
+  ["Aug 30","13:55","Itay Ben-David","itay@hush.security","Claude Desktop","Datadog","List Monitors","-","","Pass","Automated",null,null],
+  ["Aug 30","12:40","Rafael Cohen","rafael@hush.security","Cursor","HubSpot","Update Contact Property","contact 88213","","Pass","Automated","first-seen",null],
+  ["Aug 30","11:58","svc-billing-02","service account","openclaw-bundle-mcp","Stripe","List Invoices","acct_9f21b","","Pass","Automated",null,null],
+  ["Aug 30","11:02","Noa Peretz","noa@hush.security","Claude Code","Linear","Create Issue","identity-gateway","","Pass","Manual",null,null],
+  ["Aug 30","10:47","Noa Peretz","noa@hush.security","Claude Code","Linear","Save Issue","IDG-1042","","Pass","Automated",null,null],
+  ["Aug 30","10:31","Dana Shaked","dana@hush.security","Claude Code","GitHub","Force Push","infra-terraform","","Blocked","Automated","attempted",null],
+  ["Aug 30","09:52","Dana Shaked","dana@hush.security","Claude Code","GitHub","List Commits","infra-terraform","","Pass","Automated",null,null],
+  ["Aug 30","09:14","svc-agent-07","service account","openclaw-bundle-mcp","Apollo.io","Bulk Contact Create","q3-outreach","312 records","Pass","Automated","drift",null],
+  ["Aug 30","08:40","Yael Brandt","yael@hush.security","Windsurf","Snowflake","Run Query","analytics.events_raw","","Pass","Automated","first-seen",null],
+  ["Aug 29","22:15","svc-agent-07","service account","openclaw-bundle-mcp","Apollo.io","Enrich Contact","q3-outreach","","Pass","Automated","drift",null],
+  ["Aug 29","19:30","Mor Levi","mor@hush.security","Claude Code","GitHub","Force Push","payments-core","","Blocked","Automated","attempted",null],
+  ["Aug 29","18:02","Itay Ben-David","itay@hush.security","Claude Desktop","Datadog","Get Dashboard","prod-overview","","Pass","Manual",null,null],
+  ["Aug 29","16:44","Rafael Cohen","rafael@hush.security","Cursor","HubSpot","List Deals","pipeline-emea","","Pass","Automated","first-seen",null],
+  ["Aug 29","14:05","Noa Peretz","noa@hush.security","Claude Code","Linear","Update Issue","IDG-1042","","Pass","Manual","no-reason",null],
+  ["Aug 29","11:12","svc-billing-02","service account","openclaw-bundle-mcp","Stripe","Refund Charge","ch_3PfL2x","","Blocked","Automated","attempted",null],
+  ["Aug 29","09:03","Yael Brandt","yael@hush.security","Windsurf","Snowflake","Run Query","analytics.events_raw","","Pass","Automated",null,null],
   ["Aug 23","21:47","Dana Shaked","dana@hush.security","Claude Code","GitHub","Create Branch","infra-terraform","","Pass","Automated",null,null],
   ["Aug 23","21:05","Tomer Gil","not yet assigned","Claude Code","Jira","Transition Issue","PLAT-206","","Pass","Manual",null,null,"p206-res"],
   ["Aug 23","20:10","Tomer Gil","not yet assigned","Claude Code","Jira","Transition Issue","PLAT-206","","Awaiting","Manual",null,null,"p206-req"],
@@ -852,7 +852,7 @@ class Component extends DCLogic {
     const pendMins = (day, clock) => {
       const NOW = 14 * 60 + 15;
       const t = clock.split(":");
-      return NOW - (+t[0] * 60 + +t[1]) + (day === "Today" ? 0 : day === "Yesterday" ? 1440 : 2880);
+      return NOW - (+t[0] * 60 + +t[1]) + (day === "Aug 30" ? 0 : day === "Aug 29" ? 1440 : 2880);
     };
     const pendingLabel = (day, clock) => {
       const mins = pendMins(day, clock);
@@ -872,7 +872,7 @@ class Component extends DCLogic {
     const pendedMins = pairRow ? Math.abs(toMin(pairRow[1]) - toMin(r[1])) : 0;
     const pendedFor = pendedMins < 60 ? pendedMins + " min" : Math.round(pendedMins / 60) + " hr";
     const resolvedAt = isReq && pairRow ? pairRow[0] + " " + pairRow[1] : "";
-    const dayWord = (d) => (d === "Today" || d === "Yesterday" ? d.toLowerCase() : d);
+    const dayWord = (d) => d;
     const urId = pairKey ? "UR-2284" : outcome === "Awaiting" ? "UR-2291" : "UR-2287";
     const RESP = ["14 min", "38 min", "1 hr", "2 hr", "4 hr"];
     const respFor = pairKey ? pendedFor : RESP[i % RESP.length];
@@ -956,7 +956,7 @@ class Component extends DCLogic {
       flagWhy: flag ? meta[2] : "",
       hasSubFlag: !!r[12], subFlag: r[12] || "", reviewedFlag: reviewed,
       expanded: expanded, chevron: expanded ? "▼" : "▶",
-      sortKey: (r[0] === "Today" ? 0 : r[0] === "Yesterday" ? 1 : 2) * 10000 - (parseInt(r[1], 10) * 60 + parseInt(r[1].slice(3), 10)),
+      sortKey: (r[0] === "Aug 30" ? 0 : r[0] === "Aug 29" ? 1 : 2) * 10000 - (parseInt(r[1], 10) * 60 + parseInt(r[1].slice(3), 10)),
       deployment: "prod-gateway-01",
       requestId: "req_" + (7100 + (pairKey ? Math.min(i, pairIdx) : i) * 137).toString(16) + "b",
       sessionId: "sess_" + (4400 + (pairKey ? Math.min(i, pairIdx) : i) * 29) + "-cc09",
