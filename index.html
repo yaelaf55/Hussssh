@@ -721,7 +721,7 @@ class Component extends DCLogic {
   state = {
     lens: null, groupBy: "none", sortBy: null, colSort: null, expanded: {},
     drawerOpen: false, exportOpen: false, view: "activity", selectOpen: null,
-    filter: null, filterLabel: null, filterField: null, cellFilter: null, menu: null,
+    filter: null, filterLabel: null, filterField: null, cellFilters: [], menu: null,
     applied: null, draft: null, addingQuery: false, queryText: "", customQueries: [],
     reviewed: { e15: true, e19: true, e25: true }, manualFlag: {},
     qAgent: "", qApp: "", qIdentity: ""
@@ -757,7 +757,7 @@ class Component extends DCLogic {
   get draft() { return this.state.draft || this.applied; }
   clone(o) { return { period: o.period, deviations: o.deviations.slice(), outcomes: o.outcomes.slice(), identities: o.identities.slice(), tiers: o.tiers.slice(), decisions: (o.decisions || []).slice(), resps: (o.resps || []).slice(), agents: (o.agents || []).slice(), apps: (o.apps || []).slice() }; }
 
-  setLens(lens) { this.setState({ lens: lens, sortBy: null, applied: null, draft: null, filter: null, filterLabel: null, cellFilter: null, expanded: {} }); }
+  setLens(lens) { this.setState({ lens: lens, sortBy: null, applied: null, draft: null, filter: null, filterLabel: null, cellFilters: [], expanded: {} }); }
 
   suggest(list, q, sel, key, qKey, item, tick) {
     const t = (q || "").trim().toLowerCase();
@@ -802,7 +802,11 @@ class Component extends DCLogic {
     this.setState({ menu: { field: field, value: value, x: Math.round(r.left), y: Math.round(r.bottom + 6) } });
   }
 
-  setCellFilter(field, value) { this.setState({ cellFilter: { field: field, value: value } }); }
+  setCellFilter(field, value) {
+    const cur = this.state.cellFilters || [];
+    if (cur.some(c => c.field === field && c.value === value)) return;
+    this.setState({ cellFilters: cur.concat([{ field: field, value: value }]) });
+  }
 
   saveQueryText() {
     const t = (this.state.queryText || "").trim();
@@ -824,10 +828,9 @@ class Component extends DCLogic {
     if (this.state.filter && this.state.filterLabel) {
       out.push([this.state.filterField || "Deviation", this.state.filterLabel, () => this.setState({ filter: null, filterLabel: null, filterField: null })]);
     }
-    if (this.state.cellFilter) {
-      const c = this.state.cellFilter;
-      out.push([c.field, c.value, () => this.setState({ cellFilter: null })]);
-    }
+    (this.state.cellFilters || []).forEach((c, i) => {
+      out.push([c.field, c.value, () => this.setState({ cellFilters: (this.state.cellFilters || []).filter((x, j) => j !== i) })]);
+    });
     return out;
   }
 
@@ -998,11 +1001,11 @@ class Component extends DCLogic {
     const total = (PERIOD_STATS[this.applied.period] || PERIOD_STATS["Last 30 days"])[0];
 
     const f = this.state.filter;
-    const cf = this.state.cellFilter;
-    if (cf) {
+    const cfs = this.state.cellFilters || [];
+    cfs.forEach(cf => {
       const key = cf.field === "User" ? "userName" : cf.field === "Agent" ? "agent" : cf.field === "Application" ? "app" : cf.field === "Tool tier" ? "tier" : "tool";
       rows = rows.filter(r => r[key] === cf.value);
-    }
+    });
     if (f && f !== "coverage") rows = rows.filter(r => f === "any" ? !!r.flagKind : f === "awaiting" || f === "unauthorized" ? r.isPendingOpen : r.flagKind === f);
 
     const A = this.applied;
@@ -1090,7 +1093,7 @@ class Component extends DCLogic {
     }
 
     const anyApplied = A.deviations.length + A.outcomes.length + A.identities.length + A.tiers.length + (A.decisions || []).length + (A.resps || []).length + (A.agents || []).length + (A.apps || []).length > 0;
-    const filtered = !!(f && f !== "coverage") || !!cf || anyApplied;
+    const filtered = !!(f && f !== "coverage") || cfs.length > 0 || anyApplied;
     const shown = rows.length;
     const countLine = filtered
       ? "Showing " + shown + " of " + shown + " matching events · filtered from " + total.toLocaleString()
@@ -1203,7 +1206,7 @@ class Component extends DCLogic {
         pick: () => {
           const d = this.clone(this.defaults());
           Object.keys(p[1]).forEach(k => { d[k] = p[1][k]; });
-          this.setState({ draft: d, cellFilter: p[2] ? { field: p[2].field, value: p[2].value } : null, filter: null, filterLabel: null });
+          this.setState({ draft: d, cellFilters: p[2] ? [{ field: p[2].field, value: p[2].value }] : [], filter: null, filterLabel: null });
         }
       })).concat(this.state.customQueries.map(q => ({ label: q, style: queryPill, pick: () => {} }))),
       addingQuery: this.state.addingQuery,
@@ -1236,7 +1239,7 @@ class Component extends DCLogic {
         const g = m.field === "User" ? "user" : m.field === "Agent" ? "agent" : m.field === "Tool tier" ? "tier" : "app";
         this.setState({ menu: null, groupBy: g });
       },
-      exportFilters: this.state.filterLabel || (cf ? cf.field + " = " + cf.value : "None - full period"),
+      exportFilters: this.state.filterLabel || (cfs.length ? cfs.map(c => c.field + " = " + c.value).join(" · ") : "None - full period"),
       exportCount: filtered ? shown.toString() : total.toLocaleString(),
       exportExceptions: exCount + " · " + exReviewed + " reviewed, " + exOpen + " open",
       exportOpenCount: exOpen,
@@ -1244,7 +1247,7 @@ class Component extends DCLogic {
       pickCompliance: () => this.setLens("compliance"),
       openDrawer: () => this.setState({ drawerOpen: true, draft: this.clone(this.applied), selectOpen: null }),
       closeDrawer: () => this.setState({ drawerOpen: false }),
-      clearFilters: () => this.setState({ filter: null, filterLabel: null, filterField: null, cellFilter: null, applied: this.defaults(), draft: this.defaults(), drawerOpen: false }),
+      clearFilters: () => this.setState({ filter: null, filterLabel: null, filterField: null, cellFilters: [], applied: this.defaults(), draft: this.defaults(), drawerOpen: false }),
       openExport: () => this.setState({ exportOpen: true }),
       closeExport: () => this.setState({ exportOpen: false }),
       backToActivity: () => this.setState({ view: "activity", filter: null, filterLabel: null, filterField: null }),
@@ -1261,7 +1264,7 @@ class Component extends DCLogic {
         e.stopPropagation();
         const a = this.clone(this.defaults());
         a.resps = [">24h"];
-        this.setState({ applied: a, draft: a, filter: null, filterLabel: null, filterField: null, cellFilter: null, view: "activity" });
+        this.setState({ applied: a, draft: a, filter: null, filterLabel: null, filterField: null, cellFilters: [], view: "activity" });
       },
       filterCoverage: () => this.applyFilter("coverage", "No governing application", "Coverage"),
       filterAttempted: () => this.applyFilter("attempted", "Attempted", "Deviation"),
