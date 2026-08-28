@@ -197,18 +197,28 @@
         </div>
       </sc-if>
 
-      <div style="position: sticky; top: 48px; z-index: 20; background: #ffffff; margin-top: 22px; display: flex; align-items: center; gap: 8px; padding: 12px 0 14px;">
-        <button onClick="{{ openDrawer }}" style="display: flex; align-items: center; gap: 8px; border: 1px solid #0b0f14; border-radius: 6px; background: #ffffff; padding: 8px 13px; font-size: 12px; font-weight: 500;">
-          <span style="width: 10px; height: 1px; background: #0b0f14; box-shadow: 0 3px 0 #0b0f14, 0 -3px 0 #0b0f14;"></span>Filters
-        </button>
-        <sc-for list="{{ chips }}" as="chip" hint-placeholder-count="3">
-          <div style="{{ chip.style }}">
-            <span style="color: #69737f;">{{ chip.field }}</span>
-            <span style="font-weight: 500;">{{ chip.value }}</span>
-            <button onClick="{{ chip.remove }}" style="background: none; border: none; padding: 0 0 0 2px; font-size: 12px; color: #495260; line-height: 1;">×</button>
+      <div style="position: sticky; top: 48px; z-index: 20; background: #ffffff; margin-top: 22px; display: flex; align-items: flex-start; gap: 10px; padding: 12px 0 14px;">
+        <div style="display: flex; align-items: stretch; gap: 8px; flex: 0 0 auto;">
+          <button onClick="{{ openDrawer }}" style="display: flex; align-items: center; gap: 8px; border: 1px solid #0b0f14; border-radius: 6px; background: #ffffff; padding: 8px 13px; font-size: 12px; font-weight: 500;">
+            <span style="width: 10px; height: 1px; background: #0b0f14; box-shadow: 0 3px 0 #0b0f14, 0 -3px 0 #0b0f14;"></span>Filters
+          </button>
+          <div style="position: relative; display: flex; align-items: center; width: 252px;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#69737f" stroke-width="2" stroke-linecap="round" style="position: absolute; left: 12px; pointer-events: none; z-index: 1;"><circle cx="10.5" cy="10.5" r="6.5"></circle><path d="M15.5 15.5 21 21"></path></svg>
+            <input value="{{ searchQuery }}" onChange="{{ onSearch }}" placeholder="Search user, resource, or ID…" style="width: 100%; box-sizing: border-box; height: 100%; font-family: 'IBM Plex Sans', sans-serif; border: 1px solid #cfd6e0; border-radius: 999px; padding: 8px 28px 8px 31px; font-size: 12px; color: #0b0f14; outline: none; background: #ffffff;" style-focus="border-color: #0b0f14;" />
+            <sc-if value="{{ searchActive }}" hint-placeholder-val="{{ false }}">
+              <button onClick="{{ clearSearch }}" aria-label="Clear search" style="position: absolute; right: 7px; display: flex; align-items: center; justify-content: center; width: 16px; height: 16px; padding: 0; border: none; border-radius: 50%; background: #e4e9f0; color: #495260; font-size: 11px; line-height: 1; cursor: pointer;" style-hover="background: #cfd6e0;">×</button>
+            </sc-if>
           </div>
-        </sc-for>
-        <div style="flex: 1 1 auto;"></div>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px; flex: 1 1 auto; min-width: 0; align-self: stretch;">
+          <sc-for list="{{ chips }}" as="chip" hint-placeholder-count="3">
+            <div style="{{ chip.style }}">
+              <span style="color: #69737f;">{{ chip.field }}</span>
+              <span style="font-weight: 500;">{{ chip.value }}</span>
+              <button onClick="{{ chip.remove }}" style="background: none; border: none; padding: 0 0 0 2px; font-size: 12px; color: #495260; line-height: 1;">×</button>
+            </div>
+          </sc-for>
+        </div>
         <span style="font-size: 12px; color: #495260;">Group by</span>
         <div style="position: relative; display: flex;">
           <button onClick="{{ toggleGroupMenu }}" style="display: flex; align-items: center; gap: 14px; border: 1px solid #cfd6e0; border-radius: 6px; background: #ffffff; padding: 7px 11px; font-size: 12px; color: #0b0f14;" style-hover="border-color: #0b0f14;">
@@ -399,7 +409,21 @@
       </table>
       </div>
 
-      <div style="display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 16px 2px 44px;">
+      <sc-if value="{{ noMatches }}" hint-placeholder-val="{{ false }}">
+        <div style="border: 1px solid #dde2ea; border-top: none; background: #fbfcfd; padding: 42px 32px 46px; text-align: center;">
+          <div style="font-size: 14px; font-weight: 600; color: #0b0f14;">{{ emptyTitle }}</div>
+          <div style="max-width: 430px; margin: 9px auto 0; font-size: 13px; color: #495260; line-height: 1.65; text-wrap: pretty;">{{ emptyBody }}</div>
+          <div style="max-width: 430px; margin: 7px auto 0; font-size: 13px; color: #495260; line-height: 1.65;">You can also <a href="#" style="color: #0b0f14; font-weight: 500; text-decoration: underline; text-underline-offset: 2px;">Ask Hush</a>.</div>
+          <div style="display: flex; gap: 9px; justify-content: center; margin-top: 20px;">
+            <button onClick="{{ clearSearch }}" style="border: 1px solid #0b0f14; border-radius: 6px; background: #ffffff; padding: 8px 14px; font-size: 12px; font-weight: 500; color: #0b0f14; cursor: pointer;" style-hover="background: #f2f5f9;">Clear search</button>
+            <sc-if value="{{ hasOtherFilters }}" hint-placeholder-val="{{ false }}">
+              <button onClick="{{ clearFilters }}" style="border: 1px solid #cfd6e0; border-radius: 6px; background: #ffffff; padding: 8px 14px; font-size: 12px; color: #2f3742; cursor: pointer;" style-hover="border-color: #0b0f14;">Clear filters</button>
+            </sc-if>
+          </div>
+        </div>
+      </sc-if>
+
+      <div style="{{ bottomBarStyle }}">
         <div style="font-size: 12px; color: #495260;">{{ countLine }}</div>
         <sc-if value="{{ showPager }}" hint-placeholder-val="{{ true }}">
           <div style="display: flex; align-items: center; gap: 6px;">
@@ -721,7 +745,7 @@ class Component extends DCLogic {
   state = {
     lens: null, groupBy: "none", sortBy: null, colSort: null, expanded: {},
     drawerOpen: false, exportOpen: false, view: "activity", selectOpen: null,
-    filter: null, filterLabel: null, filterField: null, cellFilters: [], menu: null,
+    filter: null, filterLabel: null, filterField: null, cellFilters: [], menu: null, searchQuery: "",
     applied: null, draft: null, addingQuery: false, queryText: "", customQueries: [],
     reviewed: { e15: true, e19: true, e25: true }, manualFlag: {},
     qAgent: "", qApp: "", qIdentity: ""
@@ -757,7 +781,7 @@ class Component extends DCLogic {
   get draft() { return this.state.draft || this.applied; }
   clone(o) { return { period: o.period, deviations: o.deviations.slice(), outcomes: o.outcomes.slice(), identities: o.identities.slice(), tiers: o.tiers.slice(), decisions: (o.decisions || []).slice(), resps: (o.resps || []).slice(), agents: (o.agents || []).slice(), apps: (o.apps || []).slice() }; }
 
-  setLens(lens) { this.setState({ lens: lens, sortBy: null, applied: null, draft: null, filter: null, filterLabel: null, cellFilters: [], expanded: {} }); }
+  setLens(lens) { this.setState({ searchQuery: "", lens: lens, sortBy: null, applied: null, draft: null, filter: null, filterLabel: null, cellFilters: [], expanded: {} }); }
 
   suggest(list, q, sel, key, qKey, item, tick) {
     const t = (q || "").trim().toLowerCase();
@@ -1001,11 +1025,16 @@ class Component extends DCLogic {
     const total = (PERIOD_STATS[this.applied.period] || PERIOD_STATS["Last 30 days"])[0];
 
     const f = this.state.filter;
+    const sq = (this.state.searchQuery || "").trim().toLowerCase();
     const cfs = this.state.cellFilters || [];
     cfs.forEach(cf => {
       const key = cf.field === "User" ? "userName" : cf.field === "Agent" ? "agent" : cf.field === "Application" ? "app" : cf.field === "Tool tier" ? "tier" : "tool";
       rows = rows.filter(r => r[key] === cf.value);
     });
+    if (sq) {
+      const SK = ["userName", "agent", "app", "tool", "resource", "requestId", "sessionId"];
+      rows = rows.filter(r => SK.some(k => String(r[k] || "").toLowerCase().indexOf(sq) !== -1));
+    }
     if (f && f !== "coverage") rows = rows.filter(r => f === "any" ? !!r.flagKind : f === "awaiting" || f === "unauthorized" ? r.isPendingOpen : r.flagKind === f);
 
     const A = this.applied;
@@ -1093,11 +1122,19 @@ class Component extends DCLogic {
     }
 
     const anyApplied = A.deviations.length + A.outcomes.length + A.identities.length + A.tiers.length + (A.decisions || []).length + (A.resps || []).length + (A.agents || []).length + (A.apps || []).length > 0;
-    const filtered = !!(f && f !== "coverage") || cfs.length > 0 || anyApplied;
+    const hasOtherFilters = !!(f && f !== "coverage") || cfs.length > 0 || anyApplied;
+    const filtered = hasOtherFilters || !!sq;
     const shown = rows.length;
-    const countLine = filtered
+    const noMatches = shown === 0 && !!sq;
+    const periodTxt = typeof A.period === "string" && A.period ? A.period : "this period";
+    const activeDesc = this.chipList().map(c => c[0] + ": " + c[1]).join(", ");
+    const emptyTitle = "No matches for \u201c" + (this.state.searchQuery || "").trim() + "\u201d";
+    const emptyBody = hasOtherFilters
+      ? "Nothing matches within your current filters" + (activeDesc ? " (" + activeDesc + ")" : "") + ". Clear filters to search all " + total.toLocaleString() + " activities in " + periodTxt + ", or clear the search to return to your filtered view."
+      : "Nothing in " + periodTxt + " matches that user, resource, or ID. Search covers user, agent, application, tool, resource, request ID and session ID.";
+    const countLine = noMatches ? "" : (filtered
       ? "Showing " + shown + " of " + shown + " matching events · filtered from " + total.toLocaleString()
-      : "Showing 1–" + shown + " of " + total.toLocaleString() + " events";
+      : "Showing 1–" + shown + " of " + total.toLocaleString() + " events");
 
     const exRows = rows.filter(r => r.hasFlag);
     const exCount = exRows.length;
@@ -1239,6 +1276,17 @@ class Component extends DCLogic {
         const g = m.field === "User" ? "user" : m.field === "Agent" ? "agent" : m.field === "Tool tier" ? "tier" : "app";
         this.setState({ menu: null, groupBy: g });
       },
+      searchQuery: this.state.searchQuery || "",
+      searchActive: !!(this.state.searchQuery || "").length,
+      onSearch: (e) => this.setState({ searchQuery: e.target.value }),
+      clearSearch: () => this.setState({ searchQuery: "" }),
+      noMatches: noMatches,
+      hasOtherFilters: hasOtherFilters,
+      emptyTitle: emptyTitle,
+      emptyBody: emptyBody,
+      bottomBarStyle: noMatches
+        ? { display: "none" }
+        : { display: "grid", gridTemplateColumns: "1fr auto 1fr", alignItems: "center", padding: "16px 2px 44px" },
       exportFilters: this.state.filterLabel || (cfs.length ? cfs.map(c => c.field + " = " + c.value).join(" · ") : "None - full period"),
       exportCount: filtered ? shown.toString() : total.toLocaleString(),
       exportExceptions: exCount + " · " + exReviewed + " reviewed, " + exOpen + " open",
@@ -1247,7 +1295,7 @@ class Component extends DCLogic {
       pickCompliance: () => this.setLens("compliance"),
       openDrawer: () => this.setState({ drawerOpen: true, draft: this.clone(this.applied), selectOpen: null }),
       closeDrawer: () => this.setState({ drawerOpen: false }),
-      clearFilters: () => this.setState({ filter: null, filterLabel: null, filterField: null, cellFilters: [], applied: this.defaults(), draft: this.defaults(), drawerOpen: false }),
+      clearFilters: () => this.setState({ searchQuery: "", filter: null, filterLabel: null, filterField: null, cellFilters: [], applied: this.defaults(), draft: this.defaults(), drawerOpen: false }),
       openExport: () => this.setState({ exportOpen: true }),
       closeExport: () => this.setState({ exportOpen: false }),
       backToActivity: () => this.setState({ view: "activity", filter: null, filterLabel: null, filterField: null }),
