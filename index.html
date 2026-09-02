@@ -879,7 +879,11 @@ class Component extends DCLogic {
     const expanded = !!this.state.expanded[id];
     const outcome = r[9];
     const tier = this.tier(r[6]);
-    const meta = flag ? FLAG_META[flag] : null;
+    let meta = flag ? FLAG_META[flag] : null;
+    if (flag === "attempted" && outcome === "Awaiting") {
+      meta = [meta[0], "Attempted deviation - held for consent",
+        "A destructive-tier action was attempted and is held pending a human decision. The attempt itself is the finding regardless of the outcome."];
+    }
     const h = (this.props.density || "comfortable") === "compact" ? 44 : 56;
     const ur = RULE_BY_USER[r[2]] || ["Assignment Rule (#A-000)", "v1"];
     const cause = r[3] === "not yet assigned" ? "User request" : "Tool consent";
